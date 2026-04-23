@@ -1,0 +1,2215 @@
+<?php
+// Inicia el bloque de código PHP para la conexión a la base de datos
+
+try {
+    // Intenta establecer la conexión a la base de datos SQL Server
+
+    $conn = new PDO(
+        "sqlsrv:Server=srvdbcacdev.database.windows.net;Database=dblotocacdev",
+        "LotoAdmin",
+        "LotAdmin1.",
+        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+    );
+    // Crea una instancia de PDO para conectar a la base de datos con manejo de excepciones
+
+} catch(PDOException $e){
+    // Captura cualquier error de conexión y termina el script con el mensaje de error
+
+    die("Error: " . $e->getMessage());
+}
+?>
+
+<script>
+// Script para cargar los resultados de Diaria desde la API
+
+fetch('/api/resultado-diaria.php')
+  // Realiza una solicitud fetch a la API de resultados de Diaria
+
+  .then(response => response.json())
+  // Convierte la respuesta a JSON
+
+  .then(data => {
+    // Maneja los datos recibidos
+
+    if (!data.error) {
+        // Si no hay error en los datos
+
+      document.getElementById('par1').innerText = data.digito1;
+      // Actualiza el elemento con ID 'par1' con el primer dígito
+
+      document.getElementById('par2').innerText = data.digito2;
+      // Actualiza el elemento con ID 'par2' con el segundo dígito
+
+    } else {
+        // Si hay un error en los datos
+
+      console.error('Error API:', data.error);
+      // Registra el error en la consola
+
+    }
+  })
+  .catch(error => {
+    // Maneja errores de la solicitud fetch
+
+    console.error('Error al cargar resultados:', error);
+    // Registra el error en la consola
+
+  });
+</script>
+
+<script>
+// Script para cargar los resultados de Super Premio desde la API
+
+document.addEventListener("DOMContentLoaded", async function() {
+    // Espera a que el DOM esté completamente cargado antes de ejecutar
+
+    try {
+        // Intenta realizar la solicitud a la API
+
+        const response = await fetch('/api/ultimo_resultado.php');
+        // Realiza una solicitud fetch a la API de último resultado
+
+        if (!response.ok) throw new Error('Error en la API');
+        // Lanza un error si la respuesta no es OK
+
+        const data = await response.json();
+        // Convierte la respuesta a JSON
+
+        console.log("Super Premio API:", data);
+        // Registra los datos en la consola para depuración
+
+        // Actualizamos las esferas
+        for (let i = 1; i <= 5; i++) {
+            // Itera sobre los 5 números del Super Premio
+
+            const elem = document.getElementById('num' + i);
+            // Obtiene el elemento con ID 'num' seguido del número
+
+            if (elem) elem.innerText = data['par' + i] || '00';
+            // Actualiza el texto del elemento con el valor correspondiente o '00' si no existe
+
+        }
+
+    } catch (err) {
+        // Captura cualquier error
+
+        console.error("No se pudo cargar el Super Premio:", err);
+        // Registra el error en la consola
+
+    }
+});
+</script>
+
+
+<!-- POPUP PRINCIPAL-->
+<!-- POPUP PRINCIPAL-->
+<div id="popupOverlay" class="popup-overlay">
+  <div class="popup-content">
+    <div class="popup-image-wrapper">
+      <?php
+      // Traemos imagen y link
+      $stmt = $conn->prepare("SELECT imagen_url, link_url FROM paginaweb_sv_sobre_inicio WHERE seccion='popup_principal'");
+      $stmt->execute();
+      $popup = $stmt->fetch(PDO::FETCH_ASSOC);
+      ?>
+
+      <!-- Envolvemos la imagen en un enlace -->
+      <a href="<?= $popup['link_url'] ?>" target="_blank">
+        <img src="<?= $popup['imagen_url'] ?>" alt="Popup principal">
+      </a>
+
+      <button class="popup-close" id="cerrarPopup">&times;</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+// Script para manejar el popup principal
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Espera a que el DOM esté cargado
+
+  const popup = document.getElementById("popupOverlay");
+  // Obtiene el elemento del popup
+
+  const cerrar = document.getElementById("cerrarPopup");
+  // Obtiene el botón de cerrar
+
+  // Activar popup al cargar
+  popup.classList.add("active");
+  // Agrega la clase 'active' para mostrar el popup
+
+  // Cerrar con botón
+  cerrar.addEventListener("click", function() {
+    // Agrega evento click al botón cerrar
+
+    popup.classList.remove("active");
+    // Remueve la clase 'active' para ocultar el popup
+
+  });
+
+  // Cerrar si hacen click fuera de la imagen
+  popup.addEventListener("click", function(e) {
+    // Agrega evento click al popup
+
+    if (e.target === popup) {
+      // Si el click fue en el fondo del popup
+
+      popup.classList.remove("active");
+      // Oculta el popup
+
+    }
+  });
+});
+</script>
+
+<body> 
+
+  <style>
+@font-face {
+  font-family: 'HelveticaRounded';
+  src: url('/fonts/HelveticaRoundedLTStd-Bd.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+    html, body {
+  font-family: 'HelveticaRounded', Arial, sans-serif !important;
+  overflow-x: hidden !important;
+  width: 100%;
+}
+* {
+  font-family: 'HelveticaRounded', Arial, sans-serif !important;
+}
+
+    /* FUENTE PARA TODA LA PÁGINA */
+    body, h1, h2, h3, h4, h5, h6, p, button, a, span, div {
+      font-family: "Helvetica Rounded", "Helvetica Rounded Black", Arial, sans-serif !important;
+    }
+
+    /* ANIMACIÓN SUAVE PARA EL SCROLL */
+    .resultados-box {
+      transition: margin-top 0.3s ease !important;
+    }
+
+    .horarios {
+    font-size: 22px;
+    font-weight: bold;
+    color: #0070c0; /* COLOR QUE PEDISTE */
+    line-height: 1.5;
+  }
+
+  .boton {
+    display: inline-block;
+    background: white;
+    border: 2px solid #0070c0;   /* CONTORNO ELEGANTE */
+    color: #0070c0;
+    padding: 12px 28px;
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 12px;         /* MODERNO */
+    text-decoration: none;
+    transition: 0.3s ease;
+    box-shadow: 0px 4px 10px rgba(0, 112, 192, 0.25); /* SOMBRA PREMIUM */
+  }
+
+  .boton:hover {
+    background: #0070c0;         /* AZUL AL PASAR */
+    color: white;                /* TEXTO BLANCO */
+    transform: translateY(-3px); /* EFECTO DE ELEVAR */
+    box-shadow: 0px 8px 18px rgba(0, 112, 192, 0.40);
+  }
+
+  .resultados-header h2 {
+    font-size: 34px;        /* Más grande */
+    font-weight: 900;       /* Bold máximo */
+    text-align: center;
+    font-stretch: expanded;
+    margin: 0;
+  }
+
+  .titulo-naranja {
+    color: orange;
+  }
+
+  .titulo-azul {
+    color: #0070c0;
+  }
+/* Contenedor de resultados */
+.resultados-box {
+  padding: 40px 20px;
+  background-color: #f9f9f9;
+  border-radius: 16px;
+  box-shadow: 0px 8px 20px rgba(0,0,0,0.1);
+  max-width: 1200px;
+  margin: 0 auto 50px auto;
+  transition: margin-top 0.3s ease;
+}
+
+/* Título */
+.resultados-header h2 {
+  font-size: 40px;
+  font-weight: 900;
+  text-align: center;
+  font-stretch: expanded;
+  margin-bottom: 30px;
+}
+
+.titulo-naranja {
+  color: orange;
+}
+
+.titulo-azul {
+  color: #0070c0;
+}
+
+/* Carrusel */
+.resultados-carousel {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding-bottom: 10px;
+}
+
+.res-cards {
+  display: flex;
+  gap: 20px;
+}
+
+/* Tarjetas */
+.res-card {
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0px 6px 15px rgba(0,0,0,0.15);
+  flex: 0 0 250px;
+  padding: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.res-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 12px 25px rgba(0,0,0,0.25);
+}
+
+/* Imagen dentro de la tarjeta */
+.res-card img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+/* Números / esferas */
+.numeros {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 15px;
+  justify-content: center;
+}
+
+.bola-verde, .bola-amarilla {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 50%;
+  font-weight: bold;
+  color: white;
+  font-size: 18px;
+}
+
+.bola-verde {
+  background-color: #28a745;
+}
+
+.bola-amarilla {
+  background-color: #ffc107;
+  color: #000;
+}
+
+/* Mantener botones tal como los tenías antes */
+.btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Scroll horizontal */
+.resultados-carousel::-webkit-scrollbar {
+  height: 8px;
+}
+
+.resultados-carousel::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.2);
+  border-radius: 4px;
+}
+
+.resultados-carousel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Texto PRÓXIMO SORTEO */
+.proximo {
+  font-size: 26px;
+  font-weight: 900;
+  text-align: center;
+  color: #003399;
+  margin-top: 25px;
+}
+
+.youtube-video {
+  flex: 1 1 500px;
+  max-width: 700px;
+  margin-left: -30px; /* Mueve solo el video 3 cm a la izquierda */
+  margin-top: -80px;  /* Subir el video 2 cm más hacia arriba */
+  border-radius: 15px; /* Redondea las esquinas del video */
+}
+.youtube-video iframe {
+  width: 100%;
+  height: 315px;
+  border-radius: 15px; /* Redondea las esquinas del iframe */
+}
+
+.youtube-right {
+  flex: 0 0 auto;
+  min-width: 300px;
+  max-width: 500px;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra todo el contenido dentro de este bloque */
+}
+
+.boton-container {
+  display: flex;
+  justify-content: center; /* centra horizontalmente el botón */
+  width: 100%;             /* ocupa todo el ancho del contenedor */
+  margin-top: 20px;        /* separación del texto */
+}
+
+.youtube-boton {
+  padding: 12px 30px;
+  border-radius: 30px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white; /* Texto blanco */
+  background: orange; /* Fondo naranja */
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.youtube-boton:hover {
+  transform: scale(1.05);
+  background: #e68928; /* Fondo naranja más oscuro cuando el botón es hover */
+}
+
+/* Texto semi-bold */
+.youtube-info p {
+  font-weight: 600;      /* semi-bold */
+}
+
+.hero,
+.hero-carousel {
+  overflow: hidden;
+  max-width: 100vw;
+}
+
+.hero-slide {
+  display: none;
+  width: 100%;
+}
+
+.hero-slide.active {
+  display: block;
+}
+
+.hero-banner {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .youtube-content {
+    flex-direction: column;
+    align-items: center;
+  }
+  .youtube-video, .youtube-right {
+    margin-left: 0;
+    transform: none;
+  }
+  .youtube-text h2 {
+    font-size: 24px;
+  }
+  .youtube-info p {
+    font-size: 15px;
+  }
+}
+@media (max-width: 768px) {
+  .banner-container, .banner-superpremio, .banner-principal {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+}
+/* ===== FIX RSE SOLO MOBILE ===== */
+@media (max-width: 768px) {
+
+  /* Apilamos todo vertical */
+  .rse-content {
+    display: block !important; /* cambiamos a block para móvil */
+    text-align: center;        /* centra todo horizontalmente */
+  }
+
+  .rse-text {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  .rse-image {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+  }
+
+  .rse-image img {
+    display: inline-block !important;
+    margin: 0 auto !important;
+    max-width: 90% !important;
+    height: auto !important;
+  }
+
+  .rse .boton-container {
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  .rse-text p {
+    margin-left: 0 !important;
+    text-align: center !important;
+  }
+}
+@media (max-width: 768px) {
+  .rse-image img {
+    position: relative;
+    left: -10px;  /* mueve un poco a la izquierda */
+    top: 10px;    /* baja un poquito */
+  }
+}
+
+/* ===== HERO RESPONSIVE MOVIL COMO PC ===== */
+@media (max-width: 768px) {
+
+  /* Baja todo el carousel para que el header no lo tape */
+  .hero-carousel {
+    margin-top: 200px !important;
+  }
+
+  .hero {
+    display: flex !important;
+    flex-direction: row !important; /* texto izquierda, modelo derecha */
+    justify-content: space-between;
+    align-items: center;
+    position: relative !important;
+    width: 95%;
+    max-width: 100%;
+    margin: 0 auto;
+    flex-wrap: wrap; /* permite que no se salga en pantallas muy chicas */
+  }
+
+  /* Texto a la izquierda */
+  .texto-hero {
+    flex: 1 1 40%;
+    text-align: left !important;
+    margin-left: 10px;
+  }
+
+  .texto-hero h1 {
+    font-size: 1.2rem !important;
+    line-height: 1.3 !important;
+  }
+
+  .texto-hero .horarios {
+    font-size: 1rem !important;
+    margin: 5px 0 10px 0 !important;
+  }
+
+  .texto-hero .boton {
+    font-size: 0.9rem !important;
+    padding: 8px 18px !important;
+  }
+
+  /* Modelo a la derecha */
+  .hero img:not(.esfera) {
+    flex: 1 1 55%;
+    max-width: 100%;
+    height: auto;
+    display: block !important;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* Esferas: redimensionar y reposicionar proporcionalmente */
+  .esfera {
+    width: 35px !important;
+    height: 35px !important;
+    line-height: 35px !important;
+    font-size: 14px !important;
+    position: absolute !important;
+  }
+
+  /* Ajustar posiciones de cada esfera */
+  .esfera:nth-of-type(1) { top: 10% !important; left: 60% !important; }
+  .esfera:nth-of-type(2) { top: 65% !important; left: 55% !important; }
+  .esfera:nth-of-type(3) { top: 45% !important; left: 88% !important; }
+}
+
+@media (max-width: 768px) {
+
+  /* Evitar que la imagen se estire */
+  .hero img:not(.esfera) {
+    flex: 1 1 55%;
+    max-width: 100%;
+    height: auto !important; /* asegura proporciones correctas */
+    object-fit: contain; /* mantiene proporción */
+    display: block !important;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* Bola roja al lado izquierdo de la modelo */
+  /* Ajusta según tu HTML: si la bola roja es la primera .esfera, se coloca aquí */
+  .esfera:nth-of-type(1) { top: 40% !important; left: 42% !important; } /* bola roja */
+  .esfera:nth-of-type(2) { top: 10% !important; left: 60% !important; }
+  .esfera:nth-of-type(3) { top: 65% !important; left: 55% !important; }
+  .esfera:nth-of-type(4) { top: 45% !important; left: 88% !important; }
+}
+
+/* ===== RESPONSIVE MÓVIL SOLO RESULTADOS-BOX ===== */
+@media (max-width: 761px) {
+
+  /* Ajuste del contenedor principal */
+  .resultados-box {
+    padding: 20px 10px;
+    max-width: 95%;
+  }
+
+  /* Título centrado y más pequeño */
+  .resultados-header h2 {
+    font-size: 24px !important;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  #fecha-api {
+    font-size: 20px !important;
+  }
+
+  /* Carrusel apilado verticalmente */
+  .resultados-carousel {
+    flex-direction: column !important;
+    gap: 15px !important;
+  }
+
+  .res-cards {
+    flex-direction: column !important;
+    gap: 15px !important;
+  }
+
+  /* Tarjetas más anchas y centradas */
+  .res-card {
+    width: 90% !important;
+    max-width: 90% !important;
+    margin: 0 auto !important;
+  }
+
+  /* Imagen dentro de tarjeta */
+  .res-card img {
+    width: 70% !important;
+    height: auto !important;
+    margin: 0 auto !important;
+    display: block !important;
+  }
+
+  /* Números centrados y más pequeños */
+  .numeros {
+    justify-content: center !important;
+    gap: 5px !important;
+  }
+
+  .bola-verde, .bola-amarilla {
+    width: 35px !important;
+    height: 35px !important;
+    line-height: 35px !important;
+    font-size: 16px !important;
+  }
+
+  /* Botones apilados y centrados */
+  .btn-container {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  .btn-jugar, .btn-info {
+    font-size: 14px !important;
+    padding: 8px 12px !important;
+  }
+
+  /* Próximo sorteo más pequeño */
+  .proximo {
+    font-size: 20px !important;
+  }
+
+  #diaSorteo {
+    font-size: 14px !important;
+  }
+}
+@media (max-width: 768px) {
+  /* Hacer tarjetas un poco más altas para que quepa el botón */
+  .res-card {
+    min-height: 320px !important; /* ajusta este valor según necesites */
+  }
+}
+
+@media (max-width: 768px) {
+  /* Asegurar que las tarjetas se expandan según su contenido */
+  .res-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* fuerza que el contenido y los botones queden dentro */
+    min-height: auto; /* elimina la altura fija si existía */
+    padding-bottom: 20px; /* espacio extra para los botones */
+  }
+
+  /* Mantener los botones centrados y del mismo tamaño */
+  .res-card .btn-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-shrink: 0; /* evitar que se compriman */
+  }
+
+  .res-card .btn-container button {
+    width: 120px; /* mismo ancho para ambos botones */
+    padding: 10px 0; /* altura uniforme */
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  /* HACER LAS TARJETAS MÁS ALTAS */
+  .res-card {
+    min-height: 420px !important; /*  AJUSTÁ ESTE NÚMERO SI QUERÉS MÁS ALTO */
+  }
+
+  /* FORZAR BOTONES DENTRO DE LA TARJETA */
+  .btn-container {
+    margin-top: auto; /* ESTO ES LA CLAVE */
+  }
+
+  /* BOTONES MISMO TAMAÑO */
+  .btn-jugar,
+  .btn-info {
+    width: 100%;
+    max-width: 180px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  /* BOTONES A LA PAR */
+  .res-card .btn-container {
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* MISMO TAMAÑO */
+  .res-card .btn-jugar,
+  .res-card .btn-info {
+    width: 140px;
+    padding: 10px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  #jackpot-num-banner {
+    font-size: 32px !important; /* tamaño móvil */
+    left: 55% !important;       /* opcional: lo centra mejor */
+  }
+}
+
+@media (max-width: 768px) {
+  #jackpot-num-banner {
+    font-size: 24px !important;   /* MUCHO más pequeño */
+    left: 75% !important;         /* lo centra horizontalmente */
+    transform: translate(-50%, -50%) !important; /* centra perfecto */
+    top: 50% !important;
+    white-space: nowrap;          /* evita que se parta */
+  }
+}
+
+/* ===== NOTICIAS RESPONSIVE MOVIL ===== */
+@media (max-width: 768px) {
+
+  /* Contenedor general */
+  .noticias-box {
+    flex-direction: column;
+    padding: 20px 10px;
+  }
+
+  /* Columna izquierda arriba */
+  .noticias-left {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .noticias-left h3 {
+    font-size: 22px;
+  }
+
+  .noticias-boton {
+    margin-top: 10px;
+  }
+
+  /* Carrusel ocupa todo el ancho */
+  .noticias-right {
+    width: 100%;
+    position: relative;
+  }
+
+  /* Carrusel horizontal con scroll */
+  .carousel {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding-bottom: 10px;
+  }
+
+  .carousel::-webkit-scrollbar {
+    display: none; /* limpio en móvil */
+  }
+
+  /* Cards más grandes para dedo */
+  .card {
+    min-width: 85%;
+    flex: 0 0 auto;
+  }
+
+  /* Flechas visibles y usables */
+  .prev,
+  .next {
+    position: absolute;
+    top: 45%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    border: none;
+    font-size: 28px;
+    padding: 10px 14px;
+    border-radius: 50%;
+    z-index: 10;
+    cursor: pointer;
+  }
+
+  .prev {
+    left: 5px;
+  }
+
+  .next {
+    right: 5px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  /* Contenedor principal */
+  .noticias-box {
+    flex-direction: column;
+  }
+
+  /* Columna izquierda */
+  .noticias-left {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  /* Parte derecha */
+  .noticias-right {
+    width: 100%;
+    position: relative;
+  }
+
+  /* Carrusel se vuelve columna */
+  .carousel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transform: none !important;
+  }
+
+  /* Cada noticia ocupa todo el ancho */
+  .carousel .card {
+    min-width: 100%;
+    max-width: 100%;
+  }
+
+  /* OCULTAMOS FLECHAS EN MÓVIL */
+  .prev,
+  .next {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  img[src="/ImagesSV/IMG_3933_00013.png"] {
+    position: relative !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    margin: 0 !important;
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+
+  /* SOLO mover la imagen de la modelo un poco a la izquierda */
+  .hero img[src="/ImagesSV/modelo.png"] {
+    position: relative;
+    left: -25px;   /*  ajustá: -15px, -20px, -30px según necesites */
+  }
+
+}
+
+/* SOLO MÓVIL */
+@media (max-width: 768px) {
+  .rse-content {
+    display: flex;
+    flex-direction: column; /* apila verticalmente */
+    align-items: center;    /* centra el texto horizontalmente */
+  }
+
+  .rse-text {
+    order: 1;               
+    text-align: center;     
+    margin-bottom: 15px;    
+  }
+
+  .rse-image {
+    order: 2;               
+    align-self: flex-start; /* la alinea a la izquierda */
+    margin-left: 0;         
+    transform: translateX(-2cm); /* Mueve la imagen 1cm a la izquierda */
+  }
+
+  .rse-image img {
+    width: auto;
+    max-width: 80%;         
+    height: auto;
+    display: block;
+  }
+}
+
+/* ===== AJUSTE BANNERS SOLO MÓVIL ===== */
+@media (max-width: 768px) {
+
+  /* Contenedor general de banners (si existe) */
+  .banner-container,
+  .banner-superpremio,
+  .banner-apostemos {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  /* Imágenes de banners */
+  .banner-container img,
+  .banner-superpremio img,
+  .banner-apostemos img {
+    display: block;
+    margin: 0 auto !important;
+  }
+
+}
+/* ===== AJUSTE ESPACIOS BANNERS SOLO MÓVIL ===== */
+@media (max-width: 768px) {
+
+  /* Reduce los espacios en blanco forzados */
+  div[style*="height: 50px"] {
+    height: 15px !important; /* antes 50px */
+  }
+
+  /* Banner Superpremio */
+  .banner-superpremio {
+    margin-top: 18px !important;
+    margin-bottom: 10px !important;
+  }
+
+  /* Banner Apostemos (el que tiene margin 80px) */
+  a[href*="juega.loto.sv/fob"] > div {
+    margin: 20px auto 10px auto !important; /* antes 80px */
+  }
+
+  /* Imágenes sin espacios raros */
+  .banner-superpremio img,
+  a[href*="juega.loto.sv/fob"] img {
+    display: block;
+    margin: 0 auto !important;
+  }
+}
+
+/* Ajuste solo móvil para la sección YouTube */
+@media (max-width: 768px) {
+  .youtube-content {
+    flex-direction: column !important; /* apilar video y texto */
+    align-items: center !important;    /* centrar horizontalmente */
+    gap: 15px !important;              /* espacio uniforme */
+  }
+
+  .youtube-video {
+    width: 95% !important;             /* deja un pequeño margen a los lados */
+    margin: 0 auto !important;         /* centrar */
+  }
+
+  .youtube-right {
+    width: 95% !important;             /* mismo ancho que el video */
+    margin: 0 auto !important;         /* centrar */
+    text-align: center !important;     /* centrar texto y botón */
+  }
+
+  .youtube-text h2 {
+    font-size: 20px !important;        /* reducir tamaño si es necesario */
+    line-height: 1.3 !important;
+  }
+
+  .youtube-info p {
+    font-size: 14px !important;        /* ajustar párrafos */
+  }
+
+  .boton-container {
+    justify-content: center !important; /* centrar botón */
+    margin-top: 10px !important;       /* separar un poco del texto */
+  }
+}
+
+@media (max-width: 768px) {
+  .youtube-video {
+    margin-bottom: 4px !important; /* reduce espacio debajo del video */
+  }
+
+  .youtube-right {
+    margin-top: 0 !important; /* elimina el espacio arriba del container naranja */
+  }
+
+  /* ajuste lateral fino */
+  .youtube-video,
+  .youtube-right {
+    margin-left: 1px !important;
+    margin-right: 15px;
+  }
+
+  /* espacio después de TODA la sección (para que no se pegue a banners) */
+  .youtube {
+    margin-bottom: 20px !important;
+  }
+
+  .youtube-inner {
+    padding-bottom: 0;
+  }
+}
+@media (max-width: 768px) {
+
+  .video-subtext {
+    margin-bottom: 4px !important;
+  }
+
+  .youtube-video,
+  .youtube-right {
+    margin-left: 2px !important;
+    margin-right: 15px;
+  }
+
+  .youtube {
+    margin-bottom: 20px !important;
+  }
+
+}
+
+.hero-carousel {
+  position: relative;
+  overflow: visible;
+}
+
+.hero-slide {
+  display: none;
+}
+
+.hero-slide.active {
+  display: block;
+}
+
+/* Flechas */
+/* Flechas modernas */
+.carousel-btn {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 9999;
+}
+
+/* Posición */
+.carousel-btn.prev {
+  left: 20px;
+}
+
+.carousel-btn.next {
+  right: 20px;
+}
+
+/* Hover elegante */
+.carousel-btn:hover {
+  background: rgba(0, 0, 0, 0.75);
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Click */
+.carousel-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+/* Evita que los banners tapen las flechas */
+.hero-slide a,
+.hero-slide img {
+  z-index: 1;
+  position: relative;
+}
+
+/* Flechas siempre encima */
+.carousel-btn {
+  z-index: 10000;
+  pointer-events: auto;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .carousel-btn {
+    top: 42%;
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+  }
+
+  .carousel-btn.prev {
+    left: 8px;
+  }
+
+  .carousel-btn.next {
+    right: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-carousel .carousel-btn {
+    display: flex !important;
+  }
+}
+
+/* ===== POPUP NEGRO ===== */
+/* ===== POPUP NEGRO MEJORADO ===== */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  z-index: 999999;
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+
+.popup-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.popup-content{
+  position: relative;
+  max-width: 600px;
+  width: 100%;
+  display:flex;
+  justify-content:center;
+}
+.popup-content img {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 12px;
+  display: block;
+}
+
+.popup-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.popup-close:hover {
+  background: red;
+  transform: scale(1.1);
+}
+.popup-image-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Tarjeta Dobletea tu Suerte */
+.res-card.naranja {
+  background-color: #EF6C00;
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  color: white;
+}
+
+/* Contenedor de números */
+.numeros {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+/* Bolas grises */
+.bola-gris {
+  width: 45px;
+  height: 45px;
+  background: linear-gradient(145deg, #f2f2f2, #cfcfcf);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+  color: #333;
+  box-shadow: 
+    inset -3px -3px 6px rgba(0,0,0,0.15),
+    inset 3px 3px 6px rgba(255,255,255,0.6),
+    2px 2px 5px rgba(0,0,0,0.2);
+}
+
+.res-card.naranja .btn-jugar {
+  background-color: white;
+  color: #EF6C00;
+  font-weight: bold;
+}
+
+.res-card.naranja .btn-info {
+  background-color: rgba(255,255,255,0.2);
+  color: white;
+  border: 1px solid white;
+}
+
+@media (max-width: 768px){
+
+  .popup-overlay{
+    padding:10px;
+  }
+
+  .popup-content{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  }
+
+  .popup-image-wrapper{
+    display:flex;
+    justify-content:center;
+  }
+
+  .popup-content img{
+    max-width:90vw;
+    max-height:90vh;
+  }
+
+}
+
+.noticias-right {
+  overflow: hidden;
+  width: 100%;
+}
+
+.carousel {
+  display: flex;
+  gap: 20px;
+  transition: transform 0.4s ease;
+  will-change: transform;
+}
+
+.card {
+  min-width: 300px;
+  flex: 0 0 auto;
+}
+
+/*  DESCRIPCIÓN */
+.card-content {
+  padding: 10px;
+}
+
+.card-content p {
+  display: block !important;
+  font-size: 14px;
+  color: #333;
+  margin-top: 5px;
+
+  /* opcional: limitar a 3 líneas */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3; /* Propiedad estándar para compatibilidad */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-content p {
+  color: #fff;
+}
+  </style>
+
+  <div></div>
+
+<?php
+$stmt = $conn->prepare("
+    SELECT * 
+    FROM paginaweb_sv_sobre_inicio 
+    WHERE seccion='banner_principal'
+    ORDER BY orden ASC
+");
+$stmt->execute();
+$banners = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+  <div class="hero-carousel">
+
+  <!-- Flechas -->
+  <button class="carousel-btn prev">&#10094;</button>
+  <button class="carousel-btn next">&#10095;</button>
+
+  <div class="hero-slide active">
+    <!-- HERO ORIGINAL (NO SE TOCA) -->
+    <div class="hero" style="position: relative;">
+      <div class="texto-hero">
+        <h1>SINTONIZÁ EL PRÓXIMO SORTEO EN VIVO A LAS</h1>
+        <div class="horarios">11:00 AM Y 9:00 PM</div>
+
+        <a href="https://www.youtube.com/@LotoESElSalvador" class="boton">
+          MÍRALO AQUÍ >
+        </a>
+      </div>
+
+      <img src="/ImagesSV/modelo.png" alt="Conductora">
+
+      <img src="/ImagesSV/Esfera_3.png" class="esfera" style="position:absolute; width:5vw; top:20%; left:65%;">
+      <img src="/ImagesSV/Esfera_9.png" class="esfera" style="position:absolute; width:5vw; top:70%; left:59%;">
+      <img src="/ImagesSV/Esfera _11.png" class="esfera" style="position:absolute; width:5vw; top:50%; left:94%;">
+    </div>
+  </div>
+
+  <?php foreach($banners as $b): ?>
+  <div class="hero-slide">
+    <a href="<?= htmlspecialchars($b['link_url']) ?>" target="_blank">
+      <img src="<?= htmlspecialchars($b['imagen_url']) ?>" class="hero-banner">
+    </a>
+  </div>
+<?php endforeach; ?>
+
+  <!-- SLIDE JUEGO RESPONSABLE 
+  <div class="hero-slide">
+    <a href="https://loto.sv/index.php?pag=instacash" target="_blank">
+      <img src="/ImagesSV/BANNER-WEB--juega-responsable.png" class="hero-banner">
+    </a>
+  </div>
+-->
+</div>
+
+  <?php
+$CHANNEL_ID = "UCm2CdYYApcaticw4xAMTHcw";
+$rss_url = "https://www.youtube.com/feeds/videos.xml?channel_id=$CHANNEL_ID";
+
+$videoDate = "Cargando...";
+
+$rss = simplexml_load_file($rss_url);
+
+if ($rss && isset($rss->entry[0])) {
+    $videoTitle = (string)$rss->entry[0]->title;
+
+    // Buscar un patrón de fecha en el título (ejemplo: 29 de Diciembre 2025, 11:00 A.M.)
+    if (preg_match('/\d{1,2}\s*de\s*\w+\s*\d{4},?\s*\d{1,2}:\d{2}\s*(?:A\.M\.|P\.M\.|AM|PM)/i', $videoTitle, $matches)) {
+        $videoDate = $matches[0]; // Extrae solo: 29 de Diciembre 2025, 11:00 A.M.
+    } else {
+        $videoDate = "Fecha no disponible";
+    }
+}
+?>
+  <div class="resultados-box">
+  <!-- Título -->
+  <div class="resultados-header">
+    <h2>
+      <span class="titulo-naranja">ÚLTIMOS RESULTADOS,</span>
+      <span class="titulo-azul" id="fecha-api" style="font-size: 45px; color: #fff; font-family: Nunito; font-weight:795;">
+  <?php echo $videoDate; ?>
+</span>
+    </h2>
+    <br>
+    <?php
+// =================== Conexión ===================
+try {
+    $conn = new PDO(
+        "sqlsrv:Server=srvdbcacdev.database.windows.net;Database=dblotocacdev",
+        "LotoAdmin",
+        "LotAdmin1.",
+        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+    );
+} catch(PDOException $e){
+    die("Error de conexión: " . $e->getMessage());
+}
+
+// =================== Traer juegos ===================
+$stmt = $conn->prepare("
+    SELECT * 
+    FROM paginaweb_sv_sobre_inicio
+    WHERE seccion='juegos_home'
+    ORDER BY orden ASC
+");
+$stmt->execute();
+$juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+<!-- Carrusel -->
+<div class="resultados-carousel">
+  <div class="res-cards">
+
+    <!-- Dobletea tu Suerte (Naranja) -->
+    <div class="res-card naranja">
+      <img src="<?= $juegos[0]['imagen_url'] ?>" 
+           alt="<?= htmlspecialchars($juegos[0]['nombre']) ?>" 
+           style="width:210px; height:auto; position: relative; top:20px;">
+
+      <div class="numeros" style="position:relative; top:15px;">
+          <span class="bola-gris">1</span>
+          <span class="bola-gris">7</span>
+          <span class="bola-gris">8</span>
+          <span class="bola-gris">5</span>
+          <span class="bola-gris">9</span>
+          <span class="bola-gris">0</span>
+      </div>
+
+      <div class="btn-container">
+        <button class="btn-info" onclick="window.location.href='<?= $juegos[0]['link_jugar'] ?>'">
+          Jugá aquí
+        </button>
+
+        <a href="https://loto.sv/index.php?pag=dobletea_tu_suerte">
+  <button class="btn-info">Conocé más</button>
+</a>
+      </div>
+    </div>
+
+    <!-- Diaria (Verde) -->
+    <div class="res-card verde">
+      <img src="<?= $juegos[1]['imagen_url'] ?>" 
+           alt="<?= htmlspecialchars($juegos[1]['nombre']) ?>" 
+           style="width:190px; height:auto; position: relative; top:20px;">
+
+      <div class="numeros" style="position:relative; top:15px;">
+        <span class="bola-verde" id="par1">0</span>
+        <span class="bola-verde" id="par2">0</span>
+      </div>
+
+      <script>
+      async function cargarResultados() {
+          try {
+              const response = await fetch('https://paginawebsvcac.azurewebsites.net/api/resultados-diaria.php');
+              if (!response.ok) throw new Error('Error en la respuesta de la API');
+              const data = await response.json();
+
+              document.getElementById('par1').innerText = data.par1 || '0';
+              document.getElementById('par2').innerText = data.par2 || '0';
+          } catch (error) {
+              console.error('No se pudieron cargar los resultados:', error);
+          }
+      }
+      cargarResultados();
+      </script>
+
+      <div class="btn-container">
+  <button class="btn-jugar" onclick="window.location.href='https://loto.sv/index.php?pag=diaria'">
+    Jugá aquí
+  </button>
+
+  <a href="https://loto.sv/index.php?pag=diaria">
+    <button class="btn-info">Conocé más</button>
+  </a>
+</div>
+    </div>
+
+    <!-- Súper Premio (Rojo) -->
+    <div class="res-card roja">
+      <img src="<?= $juegos[2]['imagen_url'] ?>" 
+           alt="<?= htmlspecialchars($juegos[2]['nombre']) ?>" 
+           style="width: 90%; height: auto;">
+
+      <!-- Números -->
+      <div class="numeros">
+        <span class="bola-amarilla" id="num1">00</span>
+        <span class="bola-amarilla" id="num2">00</span>
+        <span class="bola-amarilla" id="num3">00</span>
+        <span class="bola-amarilla" id="num4">00</span>
+        <span class="bola-amarilla" id="num5">00</span>
+      </div>
+
+      <div class="btn-container">
+  <button class="btn-jugar" onclick="window.location.href='https://loto.sv/index.php?pag=super_premio'">
+    Jugá aquí
+  </button>
+
+  <a href="https://loto.sv/index.php?pag=super_premio">
+    <button class="btn-info">Conocé más</button>
+  </a>
+</div>
+
+    </div>
+
+  </div>
+</div>
+<br>
+<br>
+ <p class="proximo" style="font-size: 28px; font-weight: 900; text-align: center; font-stretch: expanded;">
+  <span style="color: #003399;">PRÓXIMO SORTEO EN VIVO:</span> 
+  <span style="color: white;">
+    <span id="hours">0</span>H :
+    <span id="minutes">0</span>M :
+    <span id="seconds">0</span>S
+  </span>
+</p>
+
+<!-- Opcional: mostrar fecha -->
+<div id="diaSorteo" style="color: white; font-size: 16px; text-align: center; margin-top: 10px;"></div>
+
+</div>
+  </div>
+  <br>
+
+<?php
+// ====================== CONSULTA JACKPOT ======================
+$stmt = $conn->prepare("
+    SELECT TOP 1 * 
+    FROM paginaweb_sv_sobre_inicio
+    WHERE seccion = 'popup_home'
+    ORDER BY orden ASC
+");
+$stmt->execute();
+$jackpot = $stmt->fetch(PDO::FETCH_ASSOC);
+?>
+
+<!-- BANNER JACKPOT -->
+<div style="width: 100%; text-align: center; position: relative; margin-bottom: 20px;">
+
+    <?php if($jackpot): ?>
+        <a href="<?= htmlspecialchars($jackpot['link_url'] ?? '#') ?>" target="_blank">
+            <img 
+                src="<?= htmlspecialchars($jackpot['imagen_url']) ?>" 
+                alt="Jackpot" 
+                style="width: 100%; max-width: 1700px; height: auto; border-radius: 16px; display: block; margin: 0 auto;"
+            >
+        </a>
+
+        <!-- NÚMERO DEL JACKPOT SOBRE EL BANNER -->
+        <div id="jackpot-num-banner" style="
+            position: absolute;
+            top: 47%;
+            left: 65%;
+            transform: translateY(-50%);
+            font-size: 62px;  
+            font-weight: 900;
+            color: #fafaf9ff;
+            text-shadow: 3px 3px 8px rgba(0,0,0,0.5);
+            z-index: 10;
+        ">
+            $ 0
+        </div>
+
+    <?php else: ?>
+        <!-- Fallback si no hay jackpot -->
+        <img 
+            src="/ImagesSV/BannerDefault.png" 
+            alt="Jackpot por defecto" 
+            style="width: 100%; max-width: 1700px; height: auto; border-radius: 16px; display: block; margin: 0 auto;"
+        >
+    <?php endif; ?>
+
+</div>
+
+<script>
+// Script para cargar el jackpot de Super Premio
+
+async function cargarJackpot() {
+    // Función asíncrona para cargar el jackpot
+
+    try {
+        // Intenta realizar la solicitud
+
+        const response = await fetch('/api/jackpot_superpremio.php');
+        // Realiza una solicitud fetch a la API del jackpot
+
+        if (!response.ok) throw new Error('Error en la API');
+        // Lanza un error si la respuesta no es OK
+
+        const data = await response.json();
+        // Convierte la respuesta a JSON
+
+        console.log("Jackpot API:", data);
+        // Registra los datos en la consola para depuración
+
+        const monto = data.jackpot != null ? Number(data.jackpot) : 0;
+        // Convierte el jackpot a número, o 0 si es null
+
+        // Formateamos con coma para miles
+        document.getElementById('jackpot-num-banner').innerText = "$" +
+            monto.toLocaleString("es-ES").replace(/\./g, ",");
+        // Actualiza el texto del elemento con el monto formateado
+
+    } catch (error) {
+        // Captura cualquier error
+
+        console.error("No se pudo cargar el Jackpot:", error);
+        // Registra el error en la consola
+
+    }
+}
+
+// Llamamos a la función
+cargarJackpot();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+  <?php
+$CHANNEL_ID = "UCm2CdYYApcaticw4xAMTHcw"; // ID de tu canal
+$rss_url = "https://www.youtube.com/feeds/videos.xml?channel_id=$CHANNEL_ID";
+
+// Cargar el RSS
+$rss = simplexml_load_file($rss_url);
+
+// Datos por defecto
+$videoId = "1qsx5zpIp7w";
+$videoTitle = "Sorteo LOTO 11:00 a.m 25 de Julio del 2025";
+$videoDate = date('j \d\e F \d\e Y');
+
+if ($rss && isset($rss->entry[0])) {
+    $videoId = (string)$rss->entry[0]->children('yt', true)->videoId;
+    $videoTitle = (string)$rss->entry[0]->title;
+    $videoDate = date('j \d\e F \d\e Y', strtotime($rss->entry[0]->published));
+}
+?>
+
+<br>
+<br>
+<br>
+<br>
+
+<!-- SECCIÓN YOUTUBE -->
+<?php
+$CHANNEL_ID = "UCm2CdYYApcaticw4xAMTHcw"; // ID de tu canal
+$rss_url = "https://www.youtube.com/feeds/videos.xml?channel_id=$CHANNEL_ID";
+
+// Cargar el RSS
+$rss = simplexml_load_file($rss_url);
+
+// Datos por defecto
+$videoId = "1qsx5zpIp7w";
+$videoTitle = "Sorteo LOTO 11:00 a.m 25 de Julio del 2025";
+
+if ($rss && isset($rss->entry[0])) {
+    $videoId = (string)$rss->entry[0]->children('yt', true)->videoId;
+    $videoTitle = (string)$rss->entry[0]->title;
+}
+?>
+
+<!-- SECCIÓN YOUTUBE -->
+<div class="youtube">
+  <div class="youtube-inner">
+    <div class="youtube-content">
+
+      <!-- Video -->
+      <div class="youtube-video">
+        <iframe width="100%" height="315"
+          src="https://www.youtube.com/embed/<?php echo $videoId; ?>"
+          title="YouTube video player"
+          frameborder="0"
+          allowfullscreen>
+        </iframe>
+
+        <!-- SOLO EL TÍTULO -->
+        <p class="video-subtext"><?php echo $videoTitle; ?></p>
+      </div>
+
+      <?php
+      // =================== Traer contenido dinámico ===================
+      $stmt = $conn->prepare("
+          SELECT TOP 1 * 
+          FROM paginaweb_sv_sobre_inicio
+          WHERE seccion='youtube_home'
+          ORDER BY id ASC
+      ");
+      $stmt->execute();
+      $youtube = $stmt->fetch(PDO::FETCH_ASSOC);
+      ?>
+
+      <!-- Texto a la derecha -->
+      <div class="youtube-right">
+        <div class="youtube-text-wrapper">
+
+          <div class="youtube-text">
+            <h2>
+              <?= nl2br($youtube['titulo'] ?? "VISUALIZÁ NUESTROS\nSORTEOS EN YOUTUBE\nLOS 365 DÍAS DEL AÑO") ?>
+            </h2>
+          </div>
+
+          <div class="youtube-info">
+            <p><?= $youtube['texto'] ?? "Sintonizá en vivo los sorteos..." ?></p>
+          </div>
+
+          <div class="boton-container">
+            <a href="<?= $youtube['link_url'] ?? '#' ?>" target="_blank">
+              <button class="youtube-boton">Ver más sorteos</button>
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+    </div> <!-- youtube-content -->
+  </div> <!-- youtube-inner -->
+</div> <!--  ESTE ES EL QUE TE FALTABA -->
+
+  <!-- Espacio en blanco -->
+  <div style="height: 50px;"></div>
+
+<?php
+$stmt = $conn->prepare("
+    SELECT TOP 1 * 
+    FROM paginaweb_sv_sobre_inicio
+    WHERE seccion='banner_superpremio'
+    ORDER BY id ASC
+");
+$stmt->execute();
+$superpremio = $stmt->fetch(PDO::FETCH_ASSOC);
+?>
+
+
+ <!-- Banner Superpremio -->
+<a href="<?= $superpremio['link_url'] ?? 'https://juega.loto.sv/' ?>" target="_blank">
+  <div class="banner-superpremio" style="width: 100%; max-width: 1700px; margin: 0 auto;">
+    
+    <img 
+      src="<?= $superpremio['imagen_url'] ?? '/ImagesSV/Banner Sp.gif' ?>" 
+      alt="Banner Superpremio"
+      style="width: 100%; height: auto; border-radius: 16px; display: block; margin: 0 auto;"
+    >
+
+  </div>
+</a>
+
+<?php
+// =================== Banner Apostemos ===================
+$stmt = $conn->prepare("
+    SELECT TOP 1 * 
+    FROM paginaweb_sv_sobre_inicio
+    WHERE seccion='banner_apostemos'
+    ORDER BY id ASC
+");
+$stmt->execute();
+$apostemos = $stmt->fetch(PDO::FETCH_ASSOC);
+?>
+
+<!-- Banner Apostemos dinámico -->
+<a href="<?= $apostemos['link_url'] ?? 'https://juega.loto.sv/fob/' ?>" target="_blank">
+  <div style="width: 100%; max-width: 1700px; text-align: center; margin: 80px auto 20px auto; cursor: pointer;">
+    
+    <img 
+      src="<?= $apostemos['imagen_url'] ?? '/ImagesSV/banner principal.jpg' ?>" 
+      alt="Banner Apostemos" 
+      style="width: 100%; max-width: 100%; height: auto; border-radius: 16px; display: inline-block;"
+    >
+
+  </div>
+</a>
+
+<?php
+$stmt = $conn->prepare("
+    SELECT * FROM paginaweb_sv_sobre_inicio 
+    WHERE seccion='noticias_home' 
+    ORDER BY orden ASC
+");
+$stmt->execute();
+$noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+<div style="height: 50px;"></div>
+
+<div class="noticias-box">
+
+  <div class="noticias-left">
+    <h3>Noticias relevantes</h3>
+    <button class="noticias-boton" onclick="window.location.href='index.php?pag=noticias';">
+      Ver más noticias
+    </button>
+  </div>
+
+  <div class="noticias-right">
+    <div class="carousel">
+
+      <?php foreach($noticias as $n): ?>
+        <div class="card">
+          <img src="<?= htmlspecialchars($n['imagen_url']); ?>" alt="Noticia">
+
+          <div class="card-content">
+            <h4><?= htmlspecialchars($n['titulo']); ?></h4>
+
+            <!--  IMPORTANTE -->
+            <p><?= nl2br(htmlspecialchars($n['texto'] ?? '')); ?></p>
+
+          </div>
+        </div>
+      <?php endforeach; ?>
+
+    </div>
+
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+  </div>
+
+</div>
+
+<script>
+// Script para el carrusel de noticias
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Espera a que el DOM esté cargado
+
+  const noticiasBox = document.querySelector('.noticias-box');
+  // Selecciona el contenedor de noticias
+
+  const carousel = noticiasBox.querySelector('.carousel');
+  // Selecciona el carrusel dentro del contenedor de noticias
+
+  const next = noticiasBox.querySelector('.next');
+  // Selecciona el botón siguiente
+
+  const prev = noticiasBox.querySelector('.prev');
+  // Selecciona el botón anterior
+
+  let index = 0;
+  // Índice actual del carrusel
+
+  function getVisibleCards() {
+    // Función para determinar cuántas tarjetas son visibles según el ancho de pantalla
+
+    return window.innerWidth <= 768 ? 1 : 3;
+    // Si la pantalla es móvil, muestra 1 tarjeta; de lo contrario, 3
+
+  }
+
+  function moveCarousel() {
+    // Función para mover el carrusel
+
+    const card = document.querySelector('.card');
+    // Selecciona la primera tarjeta para calcular el ancho
+
+    if (!card) return;
+    // Si no hay tarjetas, sale de la función
+
+    const gap = 20;
+    // Espacio entre tarjetas
+
+    const cardWidth = card.offsetWidth + gap;
+    // Calcula el ancho total de una tarjeta incluyendo el gap
+
+    carousel.style.transform = `translateX(${-index * cardWidth}px)`;
+    // Mueve el carrusel horizontalmente
+
+  }
+
+  next.addEventListener('click', () => {
+    // Agrega evento click al botón siguiente
+
+    const visibleCards = getVisibleCards();
+    // Obtiene el número de tarjetas visibles
+
+    const maxIndex = carousel.children.length - visibleCards;
+    // Calcula el índice máximo posible
+
+    if (index < maxIndex) {
+      // Si no está en el último índice
+
+      index++;
+      // Incrementa el índice
+
+      moveCarousel();
+      // Mueve el carrusel
+
+    }
+  });
+
+  prev.addEventListener('click', () => {
+    // Agrega evento click al botón anterior
+
+    if (index > 0) {
+      // Si no está en el primer índice
+
+      index--;
+      // Decrementa el índice
+
+      moveCarousel();
+      // Mueve el carrusel
+
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    // Agrega evento resize a la ventana
+
+    index = 0;
+    // Resetea el índice
+
+    moveCarousel();
+    // Mueve el carrusel a la posición inicial
+
+  });
+
+});
+</script>
+
+  <!-- Espacio en blanco -->
+  <div style="height: 50px;"></div>
+
+  <?php
+// =================== RSE HOME ===================
+$stmt = $conn->prepare("
+    SELECT TOP 1 * 
+    FROM paginaweb_sv_sobre_inicio
+    WHERE seccion='rse_home'
+    ORDER BY id ASC
+");
+$stmt->execute();
+$rse = $stmt->fetch(PDO::FETCH_ASSOC);
+?>
+
+  <div class="rse"> 
+  <div class="rse-content">
+
+    <!-- Texto y número -->
+    <div class="rse-text">
+      <h2 class="numero" id="contador">0</h2>
+
+      <p style="font-size:30px; font-weight:600; margin-left:25px;">
+        <?= $rse['texto'] ?? 'DESDE 2023 HASTA 2025' ?>
+      </p>
+    </div>
+
+    <!-- Imagen -->
+    <div class="rse-image">
+      <img 
+        src="<?= $rse['imagen_url'] ?? '/ImagesSV/IMG_3933_00013.png' ?>" 
+        alt="Imagen RSE">
+    </div>
+
+  </div>
+
+  <!-- Botón -->
+  <div class="boton-container">
+    <a href="index.php?pag=sobre_nosotros" class="rse-boton" style="text-decoration: none;">
+      Conocé más
+    </a>
+  </div>
+</div>
+
+  <script>
+    // Función animar número con + y coma como separador de miles
+    function animarContador(idElemento, valorFinal, duracion) {
+      // Función para animar un contador numérico
+
+      const elemento = document.getElementById(idElemento);
+      // Obtiene el elemento por su ID
+
+      let valorInicial = 0;
+      // Valor inicial del contador
+
+      const incremento = Math.ceil(valorFinal / (duracion / 30));
+      // Calcula el incremento por frame (ajusta la velocidad)
+
+      const intervalo = setInterval(() => {
+        // Ejecuta cada 30ms
+
+        valorInicial += incremento;
+        // Incrementa el valor
+
+        if (valorInicial >= valorFinal) {
+          // Si alcanza el valor final
+
+          valorInicial = valorFinal;
+          // Establece el valor final
+
+          clearInterval(intervalo);
+          // Detiene el intervalo
+
+        }
+        // Formatear con separador de miles (coma) y agregar + al inicio
+        elemento.textContent = "$" + valorInicial
+  .toLocaleString("es-ES")
+  .replace(/\./g, ",");
+        // Actualiza el texto del elemento con el valor formateado
+
+      }, 30);
+      // Intervalo de 30ms
+
+    }
+
+    // Llamada a la función
+    animarContador("contador", <?= $rse['titulo'] ?? 1962862 ?>, 2000);
+    // Anima el contador con el valor de la base de datos o un valor por defecto
+
+  </script>
+
+  <!-- SCRIPT SCROLL SUAVE (REEMPLAZA TRANSFORM POR MARGIN-TOP) -->
+  <script>
+    // Script para el efecto de scroll suave en la caja de resultados
+
+    window.addEventListener('scroll', function() {
+      // Agrega evento scroll a la ventana
+
+      const box = document.querySelector('.resultados-box');
+      // Selecciona la caja de resultados
+
+      if (window.scrollY > 0) {
+        // Si se ha hecho scroll hacia abajo
+
+        box.style.marginTop = "-40px";
+        // Reduce el margen superior para crear un efecto de movimiento
+
+      } else {
+        // Si está en la parte superior
+
+        box.style.marginTop = "0";
+        // Restablece el margen superior
+
+      }
+    });
+  </script>
+
+<script>
+// Script para el contador regresivo al próximo sorteo
+
+var diasSemana = ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
+// Array con los nombres de los días de la semana
+
+var mesesEnletras = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+// Array con los nombres de los meses
+
+const second = 1000,
+      minute = second * 60,
+      hour = minute * 60,
+      day = hour * 24;
+// Constantes para convertir tiempo
+
+var hoy = new Date();
+// Fecha actual
+
+var dia = hoy.getDate();
+// Día del mes actual
+
+var hora = hoy.getHours();
+// Hora actual
+
+var HoraSorteo = "";
+// Variable para la hora del próximo sorteo
+
+// Hora próximo Sorteo en SV
+if(hora < 11){
+    // Si es antes de las 11 AM
+
+    HoraSorteo = "11";
+    // Próximo sorteo a las 11 AM
+
+} else if(hora >= 11 && hora < 21){
+    // Si es entre 11 AM y 9 PM
+
+    HoraSorteo = "21";
+    // Próximo sorteo a las 9 PM
+
+} else if(hora >= 21){
+    // Si es después de las 9 PM
+
+    HoraSorteo = "11";
+    // Próximo sorteo mañana a las 11 AM
+
+    dia += 1;
+    // Incrementa el día
+
+}
+
+Number.prototype.padStart = function (n,str){
+    // Extiende el prototipo de Number para agregar padStart
+
+    return Array(n-String(this).length+1).join(str||'0')+this;
+    // Agrega ceros al inicio hasta alcanzar la longitud n
+
+}
+
+var fechaCompleta = diasSemana[hoy.getDay()] + " " + hoy.getDate() + " de " + mesesEnletras[hoy.getMonth()];
+// Construye la fecha completa en texto
+
+let countDown = new Date(hoy.getFullYear(), hoy.getMonth(), dia, HoraSorteo).getTime();
+// Calcula el timestamp del próximo sorteo
+
+let x = setInterval(function() {
+    // Función que se ejecuta cada segundo
+
+    let now = new Date().getTime();
+    // Timestamp actual
+
+    let distance = countDown - now;
+    // Diferencia en milisegundos
+
+    document.getElementById('hours').innerText = Math.floor((distance % day) / hour).padStart(2, "0");
+    // Actualiza las horas restantes
+
+    document.getElementById('minutes').innerText = Math.floor((distance % hour) / minute).padStart(2, "0");
+    // Actualiza los minutos restantes
+
+    document.getElementById('seconds').innerText = Math.floor((distance % minute) / second).padStart(2, "0");
+    // Actualiza los segundos restantes
+
+    document.getElementById('diaSorteo').innerText = fechaCompleta;
+    // Actualiza la fecha del sorteo
+
+    if(distance <= 0){
+        // Si el tiempo se agotó
+
+        clearInterval(x);
+        // Detiene el intervalo
+
+        document.getElementById('countdown-container').innerText = "¡Sorteo en vivo!";
+        // Muestra mensaje de sorteo en vivo
+
+    }
+}, second);
+</script>
+
+<script>
+// Script para el carrusel del hero (sección principal)
+
+  const slides = document.querySelectorAll('.hero-slide');
+  // Selecciona todas las diapositivas del hero
+
+  const prevBtn = document.querySelector('.carousel-btn.prev');
+  // Selecciona el botón anterior
+
+  const nextBtn = document.querySelector('.carousel-btn.next');
+  // Selecciona el botón siguiente
+
+  let currentSlide = 0;
+  // Índice de la diapositiva actual
+
+  function showSlide(index) {
+    // Función para mostrar la diapositiva en el índice dado
+
+    slides.forEach(slide => slide.classList.remove('active'));
+    // Remueve la clase 'active' de todas las diapositivas
+
+    slides[index].classList.add('active');
+    // Agrega la clase 'active' a la diapositiva actual
+
+  }
+
+  nextBtn.addEventListener('click', () => {
+    // Agrega evento click al botón siguiente
+
+    currentSlide = (currentSlide + 1) % slides.length;
+    // Incrementa el índice y lo mantiene dentro del rango
+
+    showSlide(currentSlide);
+    // Muestra la nueva diapositiva
+
+  });
+
+  prevBtn.addEventListener('click', () => {
+    // Agrega evento click al botón anterior
+
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    // Decrementa el índice y lo mantiene dentro del rango
+
+    showSlide(currentSlide);
+    // Muestra la nueva diapositiva
+
+  });
+</script>
+
+
+</body>

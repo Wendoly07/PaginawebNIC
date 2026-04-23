@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 777.69 865.82">
+  <defs>
+    <style>
+      .cls-1 {
+        font-size: 329.57px;
+      }
+
+      .cls-1, .cls-2 {
+        fill: #fff;
+        font-family: HelveticaNeue-Bold, 'Helvetica Neue';
+        font-weight: 700;
+      }
+
+      .cls-2 {
+        font-size: 455.35px;
+      }
+    </style>
+  </defs>
+  <text class="cls-2" transform="translate(267.72 428.22)"><tspan x="0" y="0">18</tspan></text>
+  <text class="cls-2" transform="translate(0 390.23)"><tspan x="0" y="0">+</tspan></text>
+  <text class="cls-1" transform="translate(14.01 707.3)"><tspan x="0" y="0">años</tspan></text>
+</svg>
