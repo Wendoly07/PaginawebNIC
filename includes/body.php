@@ -1342,8 +1342,10 @@ $banners = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="hero" style="position: relative;">
       <div class="texto-hero">
         <h1>SINTONIZÁ EL PRÓXIMO SORTEO EN VIVO A LAS</h1>
-        <div class="horarios">11:00 AM Y 9:00 PM</div>
-
+<div class="horarios">
+  12:00 AM, 3:00 PM,<br>
+  6:00 PM y 9:00 PM
+</div>
         <a href="https://www.youtube.com/@LotoESElSalvador" class="boton">
           MÍRALO AQUÍ >
         </a>
@@ -1365,13 +1367,6 @@ $banners = $stmt->fetchAll(PDO::FETCH_ASSOC);
   </div>
 <?php endforeach; ?>
 
-  <!-- SLIDE JUEGO RESPONSABLE 
-  <div class="hero-slide">
-    <a href="https://loto.sv/index.php?pag=instacash" target="_blank">
-      <img src="/ImagesSV/BANNER-WEB--juega-responsable.png" class="hero-banner">
-    </a>
-  </div>
--->
 </div>
 
   <?php

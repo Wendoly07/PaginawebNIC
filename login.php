@@ -277,7 +277,7 @@ $contenido = $stmt->fetch(PDO::FETCH_ASSOC);
 
         <!-- NICARAGUA -->
         <div>
-            <a href="https://loto.sv/?pag=body" target="_blank" style="text-decoration:none;">
+            <a href="https://paginawebnic.azurewebsites.net/?pag=body" target="_blank" style="text-decoration:none;">
                 <div class="country-card">
                     <div class="name">Nicaragua</div>
                     <div class="image-wrapper">
