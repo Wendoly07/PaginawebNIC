@@ -20,7 +20,7 @@ try {
 // Cargar la noticia destacada más reciente para mostrar arriba de la lista.
 $stmt = $conn->query("
     SELECT TOP 1 *
-    FROM paginaweb_sv_noticias
+    FROM paginaweb_nic_noticias
     WHERE es_principal = 1
     ORDER BY id DESC
 ");
@@ -32,7 +32,7 @@ $principal = $stmt->fetch(PDO::FETCH_ASSOC);
 // Cargar hasta 8 noticias secundarias ordenadas de la más reciente a la menos reciente.
 $stmt = $conn->query("
     SELECT TOP 8 *
-    FROM paginaweb_sv_noticias
+    FROM paginaweb_nic_noticias
     WHERE es_principal = 0
     ORDER BY id DESC
 ");

@@ -16,7 +16,7 @@ try {
 }
 
 // Traer la configuración de contenido de la página desde la tabla correspondiente.
-$stmt = $conn->query("SELECT * FROM paginaweb_quiero_ser_agente WHERE id=1");
+$stmt = $conn->query("SELECT * FROM paginaweb_nic_quiero_ser_agente WHERE id=1");
 $config = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $mensajeExito = "";
@@ -72,7 +72,6 @@ if (!empty($_FILES['FotoNegocio']['tmp_name'])) {
                 (:Nombre, :Apellidos, :Identidad, :Telefono, :Correo, :Negocio, :Direccion, :TipoNegocio, :Departamento, :Ciudad, :Municipio, :Barrio, :FotoNegocio)";
 
         $stmt = $conn->prepare($sql);
-
         $stmt->execute([
             ':Nombre' => $Nombre,
             ':Apellidos' => $Apellidos,
@@ -116,7 +115,6 @@ if (!empty($_FILES['FotoNegocio']['tmp_name'])) {
 
         $response = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
 
         if ($httpCode >= 200 && $httpCode < 300) {
             // Respuesta exitosa de la Logic App.
@@ -209,8 +207,9 @@ $municipiosSV = [
   .requisitos-container {
     display: flex;
     gap: 20px;
-    align-items: flex-start; /* alineado arriba con la imagen */
-    flex-wrap: wrap; /* para móviles */
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .requisitos-container .requisitos-texto {
@@ -229,11 +228,11 @@ $municipiosSV = [
 }
 
 .requisitos-list li {
-    display: flex;              /* fila con círculo y texto */
-    align-items: center;        /* verticalmente centrados */
-    gap: 10px;                  /* espacio entre círculo y texto */
+    display: flex;
+    align-items: center;
+    gap: 10px;
     margin-bottom: 10px;
-    font-size: 16px;
+    font-size: 19px;
     font-weight: 600;
     color: #0077CC;
 }

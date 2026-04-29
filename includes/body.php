@@ -31,7 +31,7 @@ fetch('/api/resultado-diaria.php')
   .then(data => {
     // Maneja los datos recibidos
 
-    if (!data.error) {
+      if (!data.error) {
         // Si no hay error en los datos
 
       document.getElementById('par1').innerText = data.digito1;
@@ -100,15 +100,13 @@ document.addEventListener("DOMContentLoaded", async function() {
 });
 </script>
 
-
-<!-- POPUP PRINCIPAL-->
 <!-- POPUP PRINCIPAL-->
 <div id="popupOverlay" class="popup-overlay">
   <div class="popup-content">
     <div class="popup-image-wrapper">
       <?php
       // Traemos imagen y link
-      $stmt = $conn->prepare("SELECT imagen_url, link_url FROM paginaweb_sv_sobre_inicio WHERE seccion='popup_principal'");
+      $stmt = $conn->prepare("SELECT imagen_url, link_url FROM paginaweb_nic_sobre_inicio WHERE seccion='popup_principal'");
       $stmt->execute();
       $popup = $stmt->fetch(PDO::FETCH_ASSOC);
       ?>
@@ -1252,6 +1250,128 @@ document.addEventListener("DOMContentLoaded", function() {
   color: white;
   border: 1px solid white;
 }
+/* premiado2 Card */
+.res-card.morado-premiado {
+  background-color: #9b51e0;
+  border-radius: 15px;
+  padding: 15px;
+  text-align: center;
+  color: white;
+  width: 200px;
+  height: 360px;
+  flex: 0 0 250px;
+}
+.res-card.morado-premiado .btn-jugar {
+  background-color: white;
+  color: #9b51e0;
+  font-weight: bold;
+}
+.res-card.morado-premiado .btn-info { 
+  background-color: rgba(255,255,255,0.2);
+  color: white;
+  border: 1px solid white;
+}
+/* Lot Dates Card */
+.res-card.rojo-fechas {
+  background-color: #e31f26;
+  border-radius: 15px;
+  padding: 15px;
+  text-align: center;
+  color: white;
+  width: 200px;
+  height: 360px;
+  flex: 0 0 250px;
+}
+
+.bola-blanca {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 18px;
+  background: linear-gradient(145deg, #f2f2f2, #cfcfcf);
+  color: #333;
+  box-shadow: inset -3px -3px 6px rgba(0,0,0,0.15), inset 3px 3px 6px rgba(255,255,255,0.6), 2px 2px 5px rgba(0,0,0,0.2);
+}
+
+.bola-mes-amarilla {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 13px;
+  background-color: #f5e200;
+  color: #333;
+}
+
+.res-card.rojo-fechas .btn-jugar {
+  background-color: white;
+  color: #e31f26;
+  font-weight: bold;
+}
+
+.res-card.rojo-fechas .btn-info {
+  background-color: rgba(255,255,255,0.2);
+  color: white;
+  border: 1px solid white;
+}
+
+
+/* Lot jugatres Card */
+.res-card.azul-jugatres {
+  background-color: #2AB5EF;
+  border-radius: 15px;
+  padding: 15px;
+  text-align: center;
+  color: white;
+  width: 200px;
+  height: 360px;
+  flex: 0 0 250px;
+}
+
+.bola-blanca {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 18px;
+  background: linear-gradient(145deg, #f2f2f2, #cfcfcf);
+  color: #333;
+  box-shadow: inset -3px -3px 6px rgba(0,0,0,0.15), inset 3px 3px 6px rgba(255,255,255,0.6), 2px 2px 5px rgba(0,0,0,0.2);
+}
+
+
+.res-card.marino-terminacion2 .btn-jugar {
+  background-color: white;
+  color: #015c91;
+  font-weight: bold;
+}
+
+.res-card.marino-terminacion2 .btn-info {    
+  background-color: rgba(255,255,255,0.2);
+  color: white;
+  border: 1px solid white;
+}
+.res-card.azul-jugatres .btn-jugar {
+  background-color: white;
+  color: #2AB5EF;
+  font-weight: bold;
+}
+
+.res-card.azul-jugatres .btn-info {    
+  background-color: rgba(255,255,255,0.2);
+  color: white;
+  border: 1px solid white;
+}
 
 @media (max-width: 768px){
 
@@ -1323,7 +1443,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <?php
 $stmt = $conn->prepare("
     SELECT * 
-    FROM paginaweb_sv_sobre_inicio 
+    FROM paginaweb_nic_sobre_inicio 
     WHERE seccion='banner_principal'
     ORDER BY orden ASC
 ");
@@ -1346,7 +1466,7 @@ $banners = $stmt->fetchAll(PDO::FETCH_ASSOC);
   12:00 AM, 3:00 PM,<br>
   6:00 PM y 9:00 PM
 </div>
-        <a href="https://www.youtube.com/@LotoESElSalvador" class="boton">
+        <a href="https://www.youtube.com/@LotoNicaragua" class="boton">
           MÍRALO AQUÍ >
         </a>
       </div>
@@ -1414,7 +1534,7 @@ try {
 // =================== Traer juegos ===================
 $stmt = $conn->prepare("
     SELECT * 
-    FROM paginaweb_sv_sobre_inicio
+    FROM paginaweb_nic_sobre_inicio
     WHERE seccion='juegos_home'
     ORDER BY orden ASC
 ");
@@ -1426,31 +1546,6 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="resultados-carousel">
   <div class="res-cards">
 
-    <!-- Dobletea tu Suerte (Naranja) -->
-    <div class="res-card naranja">
-      <img src="<?= $juegos[0]['imagen_url'] ?>" 
-           alt="<?= htmlspecialchars($juegos[0]['nombre']) ?>" 
-           style="width:210px; height:auto; position: relative; top:20px;">
-
-      <div class="numeros" style="position:relative; top:15px;">
-          <span class="bola-gris">1</span>
-          <span class="bola-gris">7</span>
-          <span class="bola-gris">8</span>
-          <span class="bola-gris">5</span>
-          <span class="bola-gris">9</span>
-          <span class="bola-gris">0</span>
-      </div>
-
-      <div class="btn-container">
-        <button class="btn-info" onclick="window.location.href='<?= $juegos[0]['link_jugar'] ?>'">
-          Jugá aquí
-        </button>
-
-        <a href="https://loto.sv/index.php?pag=dobletea_tu_suerte">
-  <button class="btn-info">Conocé más</button>
-</a>
-      </div>
-    </div>
 
     <!-- Diaria (Verde) -->
     <div class="res-card verde">
@@ -1490,33 +1585,86 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </div>
     </div>
 
-    <!-- Súper Premio (Rojo) -->
-    <div class="res-card roja">
-      <img src="<?= $juegos[2]['imagen_url'] ?>" 
-           alt="<?= htmlspecialchars($juegos[2]['nombre']) ?>" 
-           style="width: 90%; height: auto;">
+<!-- terminacion2-->
+    <div class="res-card marino-terminacion2">
+      <img src="/ImagesSV/logo-30-JUGA TRES.png"
+           alt="Juga Tres"
+           style="width:190px; height:auto; position:relative; top:20px;">
+      <div class="numeros" style="position:relative; top:15px;">
+        <span class="bola-blanca" id="fl-numero">--</span>
+      </div>
+      <div class="btn-container">
+        <button class="btn-jugar" onclick="window.location.href='index.php?pag=terminacion2'">
+          Jugá aquí
+        </button>
+        <a href="index.php?pag=terminacion2">
+          <button class="btn-info">Conocé más</button>
+        </a>
+      </div>
+    </div>
+    <!-- Lotus Dates (Red) -->
+    <div class="res-card rojo-fechas">
+      <img src="/ImagesSV/LOGO FECHAS LOTOS.png.png"
+           alt="Fechas Lotos"
+           style="width:190px; height:auto; position:relative; top:20px;">
 
-      <!-- Números -->
-      <div class="numeros">
-        <span class="bola-amarilla" id="num1">00</span>
-        <span class="bola-amarilla" id="num2">00</span>
-        <span class="bola-amarilla" id="num3">00</span>
-        <span class="bola-amarilla" id="num4">00</span>
-        <span class="bola-amarilla" id="num5">00</span>
+      <div class="numeros" style="position:relative; top:15px;">
+        <span class="bola-blanca" id="fl-numero">--</span>
+        <span class="bola-mes-amarilla" id="fl-mes">---</span>
       </div>
 
       <div class="btn-container">
-  <button class="btn-jugar" onclick="window.location.href='https://loto.sv/index.php?pag=super_premio'">
-    Jugá aquí
-  </button>
-
-  <a href="https://loto.sv/index.php?pag=super_premio">
-    <button class="btn-info">Conocé más</button>
-  </a>
-</div>
-
+        <button class="btn-jugar" onclick="window.location.href='index.php?pag=fechas_lotos'">
+          Jugá aquí
+        </button>
+        <a href="index.php?pag=fechas_lotos">
+          <button class="btn-info">Conocé más</button>
+        </a>
+      </div>
     </div>
+       <!-- Premiados 2 -->
+    <div class="res-card morado-premiado">
+      <img src="/ImagesSV/Premiado2.png"
+           alt="Fechas Lotos"
+           style="width:190px; height:auto; position:relative; top:20px;">
 
+      <div class="numeros" style="position:relative; top:15px;">
+<div class="nums">
+<span class="bola-blanca" id="numNumero">-</span>
+<span class="bola-blanca" id="numNumero">-</span>
+<span class="bola-blanca" id="numNumero">-</span>
+<span class="bola-blanca" id="numNumero">-</span>
+</div>
+      </div>
+            <div class="btn-container">
+        <button class="btn-jugar" onclick="window.location.href='index.php?pag=premiado'">
+          Jugá aquí
+        </button>
+        <a href="index.php?pag=premiado">
+          <button class="btn-info">Conocé más</button>
+        </a>
+      </div>
+    </div>
+        
+    <!-- JUGA TRES (Blue) -->
+    <div class="res-card azul-jugatres">
+      <img src="/ImagesSV/logo-30-JUGA TRES.png"
+           alt="Juga Tres"
+           style="width:190px; height:auto; position:relative; top:20px;">
+      <div class="numeros" style="position:relative; top:15px;">
+<span class="bola-blanca" id="numNumero">-</span>
+<span class="bola-blanca" id="numNumero">-</span>
+<span class="bola-blanca" id="numNumero">-</span>
+      </div>
+      <div class="btn-container">
+        <button class="btn-jugar" onclick="window.location.href='index.php?pag=juga_tres'">
+          Jugá aquí
+        </button>
+        <a href="index.php?pag=juga_tres">
+          <button class="btn-info">Conocé más</button>
+        </a>
+      </div>
+    </div>
   </div>
 </div>
 <br>
@@ -1541,7 +1689,7 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 // ====================== CONSULTA JACKPOT ======================
 $stmt = $conn->prepare("
     SELECT TOP 1 * 
-    FROM paginaweb_sv_sobre_inicio
+    FROM paginaweb_nic_sobre_inicio
     WHERE seccion = 'popup_home'
     ORDER BY orden ASC
 ");
@@ -1629,21 +1777,6 @@ async function cargarJackpot() {
 cargarJackpot();
 </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
   <?php
 $CHANNEL_ID = "UCm2CdYYApcaticw4xAMTHcw"; // ID de tu canal
 $rss_url = "https://www.youtube.com/feeds/videos.xml?channel_id=$CHANNEL_ID";
@@ -1691,10 +1824,10 @@ if ($rss && isset($rss->entry[0])) {
   <div class="youtube-inner">
     <div class="youtube-content">
 
-      <!-- Video -->
+      <!-- Video que sale a la par del mesaje visualiza nuestros sorteos -->
       <div class="youtube-video">
         <iframe width="100%" height="315"
-          src="https://www.youtube.com/embed/<?php echo $videoId; ?>"
+          src="https://www.youtube.com/embed/<?php echo $videoId; ?>"   
           title="YouTube video player"
           frameborder="0"
           allowfullscreen>
@@ -1708,7 +1841,7 @@ if ($rss && isset($rss->entry[0])) {
       // =================== Traer contenido dinámico ===================
       $stmt = $conn->prepare("
           SELECT TOP 1 * 
-          FROM paginaweb_sv_sobre_inicio
+          FROM paginaweb_nic_sobre_inicio
           WHERE seccion='youtube_home'
           ORDER BY id ASC
       ");
@@ -1749,7 +1882,7 @@ if ($rss && isset($rss->entry[0])) {
 <?php
 $stmt = $conn->prepare("
     SELECT TOP 1 * 
-    FROM paginaweb_sv_sobre_inicio
+    FROM paginaweb_nic_sobre_inicio
     WHERE seccion='banner_superpremio'
     ORDER BY id ASC
 ");
@@ -1775,7 +1908,7 @@ $superpremio = $stmt->fetch(PDO::FETCH_ASSOC);
 // =================== Banner Apostemos ===================
 $stmt = $conn->prepare("
     SELECT TOP 1 * 
-    FROM paginaweb_sv_sobre_inicio
+    FROM paginaweb_nic_sobre_inicio
     WHERE seccion='banner_apostemos'
     ORDER BY id ASC
 ");
@@ -1798,7 +1931,7 @@ $apostemos = $stmt->fetch(PDO::FETCH_ASSOC);
 
 <?php
 $stmt = $conn->prepare("
-    SELECT * FROM paginaweb_sv_sobre_inicio 
+    SELECT * FROM paginaweb_nic_sobre_inicio 
     WHERE seccion='noticias_home' 
     ORDER BY orden ASC
 ");
@@ -1948,7 +2081,7 @@ document.addEventListener("DOMContentLoaded", function() {
 // =================== RSE HOME ===================
 $stmt = $conn->prepare("
     SELECT TOP 1 * 
-    FROM paginaweb_sv_sobre_inicio
+    FROM paginaweb_nic_sobre_inicio
     WHERE seccion='rse_home'
     ORDER BY id ASC
 ");

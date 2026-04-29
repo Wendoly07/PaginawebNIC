@@ -130,31 +130,14 @@
         <!-- Enlaces a las diferentes páginas de juegos -->
         <p>
           <a href="index.php?pag=diaria" style="color: inherit; text-decoration: none;">
-        Diaria
-      </a>
-    </p>
-
+            Diaria
+          </a>
+        </p>
         <p>
-      <a href="index.php?pag=super_premio" style="color: inherit; text-decoration: none;">
-        SuperPremio
-      </a>
-    </p>
-        <p>
-      <a href="index.php?pag=instacash" style="color: inherit; text-decoration: none;">
-        InstaCash
-      </a>
-    </p>
-         <p>
-      <a href="index.php?pag=apostemos" style="color: inherit; text-decoration: none;">
-        Apostemos
-      </a>
-    </p>
-
-     <p>
-      <a href="index.php?pag=dobletea_tu_suerte" style="color: inherit; text-decoration: none;">
-        Dobletea tu suerte
-      </a>
-    </p>
+          <a href="index.php?pag=fechas_lotos" style="color: inherit; text-decoration: none;">
+            Fechas Lotos
+          </a>
+        </p>
 
 
       </div>

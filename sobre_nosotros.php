@@ -13,7 +13,7 @@ try {
     );
 
     // Cargar la configuración de contenido de la página desde la tabla correspondiente.
-    $stmt = $conn->query("SELECT * FROM paginaweb_sobre_nosotros WHERE id=1");
+    $stmt = $conn->query("SELECT * FROM paginaweb_nic_sobre_nosotros WHERE id=1");
     $datos = $stmt->fetch(PDO::FETCH_ASSOC);
 
 } catch (PDOException $e) {

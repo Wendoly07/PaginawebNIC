@@ -476,6 +476,11 @@ header {
   margin: 10px 0;
   margin-top: -10px;   /* sube las esferas */
 }
+      .num-number {
+        font-size: 18px;
+        font-weight: bold;
+        color: white;
+      }
 
 /* Esferas generales */
 .numeros span {

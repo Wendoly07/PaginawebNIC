@@ -55,10 +55,6 @@ switch ($pag) {
         // Página de Instacash
         include 'instacash.php';
         break;
-    case 'super_premio':
-        // Página del Super Premio
-        include 'super_premio.php';
-        break;
     case 'suerte':
         // Página de Suerte
         include 'suerte.php';
@@ -66,6 +62,22 @@ switch ($pag) {
     case 'dobletea_tu_suerte':
         // Página de la promoción Dobleteá tu suerte
         include 'dobletea_tu_suerte.php';
+        break;
+    case 'fechas_lotos':
+        // Página de Fechas Lotos
+        include 'fechas_lotos.php';
+        break;
+    case 'juga_tres':
+        // Página de Juga Tres
+        include 'juga_tres.php';
+        break;
+    case 'premiado':
+        // Página de Premiado
+        include 'premiado.php';
+        break;
+    case 'terminacion2':
+        // Página de Terminación 2
+        include 'terminacion2.php';
         break;
     default:
         // Si el valor no coincide con ninguna página conocida, muestra la página principal

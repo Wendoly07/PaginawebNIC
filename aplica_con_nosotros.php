@@ -19,7 +19,7 @@ try {
 }
 
 // Obtener contenido dinámico de la página desde la base de datos
-$stmt = $conn->query("SELECT * FROM paginaweb_sv_aplica_loto WHERE id = 1");
+$stmt = $conn->query("SELECT * FROM paginaweb_nic_aplica_loto WHERE id = 1");
 // Consulta la tabla que contiene la configuración de la página "Aplica con nosotros"
 $contenido = $stmt->fetch(PDO::FETCH_ASSOC);
 // Obtiene el registro como array asociativo

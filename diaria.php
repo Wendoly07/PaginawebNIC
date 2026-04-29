@@ -706,75 +706,75 @@ body {
   </div>
 
   <!-- RESULTADOS -->
-  <!-- Contenedor principal con el calendario y resultados de sorteos -->
+  <div class="resultados">
 
     <div class="col izquierda">
-      <!-- Bloque de información y título de resultados anteriores -->
       <h2>RESULTADOS ANTERIORES</h2>
       <div class="label-fecha">SELECCIONÁ LA FECHA</div>
     </div>
 
     <div class="col calendario">
-      
-  <!-- FILTROS MODERNOS -->
-  <!-- Selección de mes y año para mostrar resultados de calendario -->
-  <div class="filtros">
-    <select id="filtro-mes">
-      <option value="01">Enero</option>
-      <option value="02">Febrero</option>
-      <option value="03">Marzo</option>
-      <option value="04">Abril</option>
-      <option value="05">Mayo</option>
-      <option value="06">Junio</option>
-      <option value="07">Julio</option>
-      <option value="08">Agosto</option>
-      <option value="09">Septiembre</option>
-      <option value="10">Octubre</option>
-      <option value="11">Noviembre</option>
-      <option value="12">Diciembre</option>
-    </select>
+      <div class="filtros">
+        <select id="filtro-mes">
+          <option value="01">Enero</option>
+          <option value="02">Febrero</option>
+          <option value="03">Marzo</option>
+          <option value="04">Abril</option>
+          <option value="05">Mayo</option>
+          <option value="06">Junio</option>
+          <option value="07">Julio</option>
+          <option value="08">Agosto</option>
+          <option value="09">Septiembre</option>
+          <option value="10">Octubre</option>
+          <option value="11">Noviembre</option>
+          <option value="12">Diciembre</option>
+        </select>
+        <select id="filtro-ano">
+          <option value="2024">2024</option>
+          <option value="2025">2025</option>
+          <option value="2026">2026</option>
+        </select>
+      </div>
 
-    <select id="filtro-ano">
-      <option value="2024">2024</option>
-      <option value="2025">2025</option>
-      <option value="2026">2026</option>
-    </select>
+      <div class="calendario-real">
+        <table>
+          <thead>
+            <tr>
+              <th>DOM</th><th>LUN</th><th>MAR</th><th>MIE</th><th>JUE</th><th>VIE</th><th>SAB</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    
+      <div class="col derecha">
+      <div class="sorteo">
+        <h3>SORTEO 12:00 P.M.</h3>
+<span class="num-numero" id="num12_1">--</span>
+<span class="num-numero" id="num12_2">--</span>
+      </div>
+
+      <div class="sorteo">
+        <h3>SORTEO 3:00 P.M.</h3>
+<span class="num-numero" id="num12_1">--</span>
+<span class="num-numero" id="num12_2">--</span>
+      </div>
+
+      <div class="sorteo">
+        <h3>SORTEO 6:00 P.M.</h3>
+<span class="num-numero" id="num12_1">--</span>
+<span class="num-numero" id="num12_2">--</span>
+      </div>
+
+      <div class="sorteo">
+        <h3>SORTEO 9:00 P.M.</h3>
+<span class="num-numero" id="num12_1">--</span>
+<span class="num-numero" id="num12_2">--</span>
+      </div>
+    </div>
   </div>
-
-  <!-- CALENDARIO MODERNO -->
-  <div class="calendario-real">
-    <table>
-      <thead>
-        <tr>
-          <th>DOM</th><th>LUN</th><th>MAR</th><th>MIE</th><th>JUE</th><th>VIE</th><th>SAB</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td></td><td></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
-        <tr><td>6</td><td>7</td><td>8</td><td>9</td><td class="activo">10</td><td>11</td><td>12</td></tr>
-        <tr><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td></tr>
-        <tr><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td></tr>
-        <tr><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td><td></td><td></td></tr>
-      </tbody>
-    </table>
-  </div>
-
-</div>
-
-    <div class="col derecha">
-  <div class="sorteo">
-    <h3>SORTEO 11:00 A.M.</h3>
-    <span class="num" id="num11_1">0</span>
-    <span class="num" id="num11_2">0</span>
-  </div>
-
-  <div class="sorteo">
-    <h3>SORTEO 9:00 P.M.</h3>
-    <span class="num" id="num21_1">0</span>
-    <span class="num" id="num21_2">0</span>
-  </div>
-</div>
-</div>
 
   <!-- ACCORDION -->
   <!-- Sección desplegable principal con información editable de la Diaria -->

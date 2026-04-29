@@ -255,13 +255,10 @@
           <a href="#">JUEGOS ▾</a>
           <!-- Enlace principal del dropdown con flecha -->
           <div class="dropdown-content">
-            <!-- Contenido del menú desplegable -->
             <a href="index.php?pag=diaria">Diaria</a>
-            <a href="index.php?pag=super_premio">SuperPremio</a>
-            <a href="index.php?pag=instacash">InstaCash</a>
-            <a href="index.php?pag=apostemos">Apostemos</a>
-            <a href="index.php?pag=dobletea_tu_suerte">Dobletea tu suerte</a>
-            <!-- Enlaces a las diferentes páginas de juegos -->
+            <a href="index.php?pag=fechas_lotos">Fechas Loto</a>
+            <a href="index.php?pag=premiado">Premia2</a>
+            <a href="index.php?pag=juga_tres">Juga Tres</a>
           </div>
         </div>
         <a href="index.php?pag=noticias">NOTICIAS</a>
@@ -367,9 +364,5 @@ Creation date: 05/21/2025
 <img src=""https://ad.doubleclick.net/ddm/activity/src=14581472;type=invmedia;cat=loto_0;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;tfua=;npa=;gdpr=${GDPR};gdpr_consent=${GDPR_CONSENT_755};ord=1?"" width=""1"" height=""1"" alt=""""/>
 </noscript>
 <!-- End of event snippet: Please do not remove -->
-
-
-
-
 </body>
 </html>

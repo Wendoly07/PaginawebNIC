@@ -75,7 +75,7 @@ try {
     );
 
     // Consulta para obtener información de lotocentros desde la base de datos
-    $sqlLoto = "SELECT texto FROM paginaweb_sv_contactanos_acordeon ORDER BY id DESC";
+    $sqlLoto = "SELECT texto FROM paginaweb_nic_contactanos_acordeon ORDER BY id DESC";
     $stmtLoto = $conn->query($sqlLoto);
     $lotocentros = $stmtLoto->fetchAll(PDO::FETCH_ASSOC);
 
@@ -392,27 +392,22 @@ try {
 
     <!-- Información de oficinas LOTO -->
     <div class="office">
-      <h3>OFICINAS LOTO</h3>
+      <h3>OFICINA LOTO</h3>
 
       <!-- Oficina Central -->
       <div class="city">
         <img src="ImagesSV/pin ubicación.svg">
         Oficina Central
       </div>
-      <p style="text-align:center;">Carretera al Puerto de La Libertad, KM 11 ½, Antiguo Cuscatlán.</p>
+      <p style="text-align:center;"> Km 7.8 de la carretera a Masaya, Managua.</p>
 
       <!-- Lotocentro Metrocentro -->
-      <div class="city">
-        <img src="ImagesSV/pin ubicación.svg">
-        Lotocentro Metrocentro
-      </div>
-      <p style="text-align:center;">Centro Comercial Metrocentro, 1ra etapa. Frente a Teatro Luis Poma.</p>
 
       <!-- Información de contacto -->
       <div class="contact-info">
         <img src="ImagesSV/icono telefono.svg">
-        +(503) 2555-7900<br>
-        loto@loto.sv
+        +(505) 7517-9600<br>
+        info@loto.com.ni
       </div>
     </div>
 
