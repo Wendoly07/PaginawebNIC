@@ -1637,17 +1637,17 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
       </script>
 
       <div class="btn-container">
-  <button class="btn-jugar" onclick="window.location.href='https://loto.sv/index.php?pag=diaria'">
-    Jugá aquí
-  </button>
+        <button class="btn-jugar" onclick="window.location.href='https://loto.sv/index.php?pag=diaria'">
+          Jugá aquí
+        </button>
 
-  <a href="https://loto.sv/index.php?pag=diaria">
-    <button class="btn-info">Conocé más</button>
-  </a>
-</div>
+        <a href="https://loto.sv/index.php?pag=diaria">
+          <button class="btn-info">Conocé más</button>
+        </a>
+      </div>
     </div>
 
-<!-- terminacion2-->
+  <!-- terminacion2-->
     <div class="res-card marino-terminacion2">
       <img src="/ImagesSV/logo terminacion2.png"
            alt="Juga Tres"
@@ -1691,12 +1691,12 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
            style="width:190px; height:auto; position:relative; top:20px;">
 
       <div class="numeros" style="position:relative; top:15px;">
-<div class="nums">
-<span class="bola-blanca" id="numNumero">-</span>
-<span class="bola-blanca" id="numNumero">-</span>
-<span class="bola-blanca" id="numNumero">-</span>
-<span class="bola-blanca" id="numNumero">-</span>
-</div>
+        <div class="nums">
+        <span class="bola-blanca" id="numNumero">-</span>
+        <span class="bola-blanca" id="numNumero">-</span>
+        <span class="bola-blanca" id="numNumero">-</span>
+        <span class="bola-blanca" id="numNumero">-</span>
+        </div>
       </div>
             <div class="btn-container">
         <button class="btn-jugar" onclick="window.location.href='index.php?pag=premiado'">
@@ -1714,9 +1714,9 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
            alt="Juga Tres"
            style="width:190px; height:auto; position:relative; top:20px;">
       <div class="numeros" style="position:relative; top:15px;">
-<span class="bola-blanca" id="numNumero">-</span>
-<span class="bola-blanca" id="numNumero">-</span>
-<span class="bola-blanca" id="numNumero">-</span>
+        <span class="bola-blanca" id="numNumero">-</span>
+        <span class="bola-blanca" id="numNumero">-</span>
+        <span class="bola-blanca" id="numNumero">-</span>
       </div>
       <div class="btn-container">
         <button class="btn-jugar" onclick="window.location.href='index.php?pag=juga_tres'">
