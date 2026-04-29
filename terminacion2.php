@@ -113,7 +113,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
 
     .etiqueta-hola {
       background: yellow;
-      color: #2AB5EF;
+      color: #015c91;
       padding: 6px 14px;
       border-radius: 20px;
       font-weight: 900;
@@ -125,14 +125,14 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
       display: flex;
       justify-content: center;
       gap: 18px;
-      background: #2AB5EF;
+      background: #015c91;
       padding: 16px;
       flex-wrap: wrap;
     }
 
     .menu a { /* juega aquí y conocé más botones */
       background: linear-gradient(135deg, #ffffff, #c5eefe);
-      color: #2AB5EF;
+      color: #015c91;
       text-decoration: none;
       padding: 10px 22px;
       border-radius: 30px;
@@ -157,7 +157,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
 
     /* ================= RESULTADOS ================= */
     .resultados {
-      border: 1px solid #2AB5EF;
+      border: 1px solid #015c91;
       display: flex;
       max-width: 1100px;
       margin: 40px auto;
@@ -185,7 +185,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
     .izquierda h2 {
       font-size: 42px;
       font-weight: 900;
-      color: #2AB5EF;
+      color: #015c91;
       margin: 0;
       line-height: 1.1;
     }
@@ -194,7 +194,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
       font-size: 18px;
       font-weight: 700;
       background: yellow;
-      color: #2AB5EF;
+      color: #015c91;
       padding: 8px 16px;
       border-radius: 20px;
       display: inline-block;
@@ -241,7 +241,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     .calendario-real td.activo {
-      background: linear-gradient(135deg, #2AB5EF, #1c8bc2);
+      background: linear-gradient(135deg, #015c91, #01699d);
       color: white;
       border-radius: 50%;
       font-weight: bold;
@@ -263,7 +263,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
       box-shadow: inset 0 2px 5px rgba(0,0,0,0.15);
       cursor: pointer;
       font-weight: 700;
-      color: #2AB5EF;
+      color: #01699d;
       transition: 0.3s;
     }
 
@@ -287,7 +287,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
     .derecha h3 {
       font-size: 18px;
       font-weight: 900;
-      color: #2AB5EF;
+      color: #015c91;
       margin-bottom: 8px;
       text-align: center;
     }
@@ -316,7 +316,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
       border-radius: 12px;
       overflow: hidden;
       background: white;
-      border: 2px solid #2AB5EF;
+      border: 2px solid #015c91;
     }
 
     .accordion-header {
@@ -328,12 +328,12 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
       font-weight: 800;
       font-size: 20px;
       cursor: pointer;
-      background: #2AB5EF;
+      background: #015c91;
       transition: background 0.3s;
     }
 
     .accordion-header:hover {
-      background: #1c8bc2;
+      background: #01699d;
     }
 
     .accordion-header .arrow-circle {
@@ -455,14 +455,12 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
   <!-- HEADER IMAGEN DEL LOGO -->
   <div class="top">
     <div class="top-content"> 
-      <img src="/ImagesSV/logo-30-JUGA TRES.png" alt="Logo Terminacion2">
+      <img src="/ImagesSV/logo terminacion2.png" alt="Logo Terminacion2">
 
       <div class="ganador-box">
         <div class="ganador">ÚLTIMA FECHA GANADORA</div>
 
         <div class="nums">
-<span class="num-numero" id="numNumero">--</span>
-<span class="num-numero" id="numNumero">--</span>
 <span class="num-numero" id="numNumero">--</span>
         </div>
 
@@ -531,31 +529,23 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
     <div class="col derecha">
       <div class="sorteo">
         <h3>SORTEO 12:00 P.M.</h3>
-<span class="num-numero" id="num12_1">--</span>
-<span class="num-numero" id="num12_2">--</span>
-<span class="num-numero" id="num12_3">--</span>
+        <span class="num-numero" id="num12_num">--</span>
 
       </div>
 
       <div class="sorteo">
         <h3>SORTEO 3:00 P.M.</h3>
-<span class="num-numero" id="num12_1">--</span>
-<span class="num-numero" id="num12_2">--</span>
-<span class="num-numero" id="num12_3">--</span>
+        <span class="num-numero" id="num15_num">--</span>
       </div>
 
       <div class="sorteo">
         <h3>SORTEO 6:00 P.M.</h3>
-<span class="num-numero" id="num12_1">--</span>
-<span class="num-numero" id="num12_2">--</span>
-<span class="num-numero" id="num12_3">--</span>
+        <span class="num-numero" id="num18_num">--</span>
       </div>
 
       <div class="sorteo">
         <h3>SORTEO 9:00 P.M.</h3>
-<span class="num-numero" id="num12_1">--</span>
-<span class="num-numero" id="num12_2">--</span>
-<span class="num-numero" id="num12_3">--</span>
+        <span class="num-numero" id="num21_num">--</span>
       </div>
     </div>
 

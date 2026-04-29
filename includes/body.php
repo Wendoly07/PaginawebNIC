@@ -266,42 +266,17 @@ document.addEventListener("DOMContentLoaded", function() {
 /* Carrusel */
 .resultados-carousel {
   position: relative;
-  overflow: visible;
-  width: 100%;
-  max-width: 930px;
-  box-sizing: border-box;
-  margin: 0 auto;
-  padding: 0 58px 10px;
-}
-
-.resultados-window {
-  width: 790px;
-  max-width: 100%;
   overflow: hidden;
+  max-width: 100%;
   margin: 0 auto;
+  padding-bottom: 10px;
 }
 
 .res-cards {
   display: flex;
   gap: 20px;
-  transform: translateX(0);
   transition: transform 0.4s ease;
   will-change: transform;
-}
-
-/* Tarjetas */
-.res-card {
-  background-color: white;
-  border-radius: 16px;
-  box-shadow: 0px 6px 15px rgba(0,0,0,0.15);
-  flex: 0 0 250px;
-  padding: 15px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
-}
-
-.resultados-carousel .res-card {
-  flex: 0 0 250px !important;
 }
 
 .resultados-arrow {
@@ -317,11 +292,11 @@ document.addEventListener("DOMContentLoaded", function() {
   font-size: 26px;
   font-weight: 900;
   cursor: pointer;
-  z-index: 5;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .resultados-arrow:hover {
@@ -329,17 +304,23 @@ document.addEventListener("DOMContentLoaded", function() {
   transform: translateY(-50%) scale(1.08);
 }
 
-.resultados-arrow:disabled {
-  opacity: 0.35;
-  cursor: default;
-}
-
 .resultados-prev {
-  left: 8px;
+  left: 10px;
 }
 
 .resultados-next {
-  right: 8px;
+  right: 10px;
+}
+
+/* Tarjetas */
+.res-card {
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0px 6px 15px rgba(0,0,0,0.15);
+  flex: 0 0 250px;
+  padding: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
 }
 
 .res-card:hover {
@@ -797,23 +778,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
 @media (max-width: 768px) {
   .resultados-carousel {
-    padding: 0 44px 10px !important;
-  }
-
-  .resultados-window {
-    width: 100%;
+    padding-bottom: 10px !important;
   }
 
   .resultados-carousel .res-cards {
     flex-direction: row !important;
     gap: 15px !important;
-  }
-
-  .resultados-carousel .res-card {
-    flex: 0 0 100% !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
   }
 
   .resultados-arrow {
@@ -1432,7 +1402,16 @@ document.addEventListener("DOMContentLoaded", function() {
   box-shadow: inset -3px -3px 6px rgba(0,0,0,0.15), inset 3px 3px 6px rgba(255,255,255,0.6), 2px 2px 5px rgba(0,0,0,0.2);
 }
 
-
+.res-card.marino-terminacion2 {
+  background-color: #015c91;
+  border-radius: 15px;
+  padding: 15px;
+  text-align: center;
+  color: white;
+  width: 200px;
+  height: 360px;
+  flex: 0 0 250px;
+}
 .res-card.marino-terminacion2 .btn-jugar {
   background-color: white;
   color: #015c91;
@@ -1627,7 +1606,6 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <!-- Carrusel -->
 <div class="resultados-carousel">
-  <div class="resultados-window">
   <div class="res-cards">
 
 
@@ -1671,7 +1649,7 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <!-- terminacion2-->
     <div class="res-card marino-terminacion2">
-      <img src="/ImagesSV/logo-30-JUGA TRES.png"
+      <img src="/ImagesSV/logo terminacion2.png"
            alt="Juga Tres"
            style="width:190px; height:auto; position:relative; top:20px;">
       <div class="numeros" style="position:relative; top:15px;">
@@ -1750,74 +1728,72 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
       </div>
     </div>
   </div>
-  </div>
   <button class="resultados-arrow resultados-prev" type="button" aria-label="Resultados anteriores">&#10094;</button>
   <button class="resultados-arrow resultados-next" type="button" aria-label="Resultados siguientes">&#10095;</button>
 </div>
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-  const resultadosBox = document.querySelector(".resultados-carousel");
+document.addEventListener("DOMContentLoaded", function () {
+  const resultadosBox = document.querySelector('.resultados-carousel');
   if (!resultadosBox) return;
 
-  const track = resultadosBox.querySelector(".res-cards");
-  const prev = resultadosBox.querySelector(".resultados-prev");
-  const next = resultadosBox.querySelector(".resultados-next");
-  if (!track || !prev || !next) return;
+  const carousel = resultadosBox.querySelector('.res-cards');
+  const next = resultadosBox.querySelector('.resultados-next');
+  const prev = resultadosBox.querySelector('.resultados-prev');
+  if (!carousel || !next || !prev) return;
 
-  let index = 0;
-  track.style.transform = "translateX(0px)";
+  let currentTranslate = 0;
 
-  function getVisibleCards() {
-    return window.innerWidth <= 768 ? 1 : 3;
+  function getGap() {
+    const styles = window.getComputedStyle(carousel);
+    return parseFloat(styles.columnGap || styles.gap) || 0;
   }
 
-  function getStepWidth() {
-    const card = track.querySelector(".res-card");
-    if (!card) return 0;
+  function ajustarVentana() {
+    const card = carousel.querySelector('.res-card');
+    if (!card) return;
 
-    const styles = window.getComputedStyle(track);
-    const gap = parseFloat(styles.columnGap || styles.gap) || 0;
-    return card.offsetWidth + gap;
+    const gap = getGap();
+    const anchoTresTarjetas = (card.offsetWidth * 3) + (gap * 2);
+    const anchoDisponible = resultadosBox.parentElement.offsetWidth;
+
+    resultadosBox.style.width = `${Math.min(anchoTresTarjetas, anchoDisponible)}px`;
   }
 
-  function updateCarousel() {
-    const visibleCards = getVisibleCards();
-    const maxIndex = Math.max(track.children.length - visibleCards, 0);
-    index = Math.min(index, maxIndex);
-
-    track.style.transform = `translateX(${-index * getStepWidth()}px)`;
-    prev.disabled = index === 0;
-    next.disabled = index === maxIndex;
+  function getStep() {
+    return resultadosBox.clientWidth;
   }
 
-  next.addEventListener("click", function() {
-    const visibleCards = getVisibleCards();
-    const maxIndex = Math.max(track.children.length - visibleCards, 0);
-    if (index < maxIndex) {
-      index = Math.min(index + visibleCards, maxIndex);
-      updateCarousel();
-    }
+  function getMaxTranslate() {
+    return Math.max(carousel.scrollWidth - resultadosBox.clientWidth, 0);
+  }
+
+  function moveCarousel() {
+    const max = getMaxTranslate();
+
+    if (currentTranslate < 0) currentTranslate = 0;
+    if (currentTranslate > max) currentTranslate = max;
+
+    carousel.style.transform = `translateX(-${currentTranslate}px)`;
+  }
+
+  next.addEventListener('click', function () {
+    currentTranslate += getStep();
+    moveCarousel();
   });
 
-  prev.addEventListener("click", function() {
-    const visibleCards = getVisibleCards();
-    if (index > 0) {
-      index = Math.max(index - visibleCards, 0);
-      updateCarousel();
-    }
+  prev.addEventListener('click', function () {
+    currentTranslate -= getStep();
+    moveCarousel();
   });
 
-  window.addEventListener("resize", function() {
-    index = 0;
-    updateCarousel();
+  window.addEventListener('resize', function () {
+    ajustarVentana();
+    currentTranslate = 0;
+    moveCarousel();
   });
 
-  window.addEventListener("pageshow", function() {
-    index = 0;
-    updateCarousel();
-  });
-
-  updateCarousel();
+  ajustarVentana();
+  moveCarousel();
 });
 </script>
 <br>
