@@ -1750,28 +1750,20 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function ajustarVentana() {
-    const card = carousel.querySelector('.res-card');
-    if (!card) return;
+    const cards = carousel.querySelectorAll('.res-card');
+    if (!cards.length) return;
 
     const gap = getGap();
-    const anchoDosTarjetas = (card.offsetWidth * 2) + gap;
+    const primera = cards[0];
+    const segunda = cards[1] || cards[0];
+    const anchoDosTarjetas = segunda.offsetLeft + segunda.offsetWidth - primera.offsetLeft;
     const anchoDisponible = resultadosBox.parentElement.offsetWidth;
 
-    resultadosBox.style.width = `${Math.min(anchoDosTarjetas, anchoDisponible)}px`;
-  }
-
-  function getStep() {
-    const card = carousel.querySelector('.res-card');
-    if (!card) return 0;
-
-    return card.offsetWidth + getGap();
+    resultadosBox.style.width = `${Math.min(anchoDosTarjetas || primera.offsetWidth + gap, anchoDisponible)}px`;
   }
 
   function getVisibleCards() {
-    const step = getStep();
-    if (!step) return 1;
-
-    return Math.max(Math.floor((resultadosBox.clientWidth + getGap()) / step), 1);
+    return 2;
   }
 
   function getMaxIndex() {
@@ -1780,12 +1772,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function moveCarousel() {
     const maxIndex = getMaxIndex();
-    const step = getStep();
+    const cards = carousel.querySelectorAll('.res-card');
 
     if (currentIndex < 0) currentIndex = 0;
     if (currentIndex > maxIndex) currentIndex = maxIndex;
 
-    carousel.style.transform = `translateX(-${currentIndex * step}px)`;
+    const target = cards[currentIndex];
+    carousel.style.transform = `translateX(-${target ? target.offsetLeft : 0}px)`;
   }
 
   next.addEventListener('click', function () {
@@ -1805,6 +1798,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   ajustarVentana();
+  currentIndex = 0;
   moveCarousel();
 });
 </script>
