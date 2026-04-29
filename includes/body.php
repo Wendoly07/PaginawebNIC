@@ -265,51 +265,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
 /* Carrusel */
 .resultados-carousel {
-  position: relative;
-  overflow: hidden;
-  max-width: 100%;
-  margin: 0 auto;
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
   padding-bottom: 10px;
 }
 
 .res-cards {
   display: flex;
   gap: 20px;
-  transition: transform 0.4s ease;
-  will-change: transform;
-}
-
-.resultados-arrow {
-  position: absolute;
-  top: 48%;
-  transform: translateY(-50%);
-  width: 44px;
-  height: 44px;
-  border: none;
-  border-radius: 50%;
-  background: rgba(0,0,0,0.65);
-  color: #fff;
-  font-size: 26px;
-  font-weight: 900;
-  cursor: pointer;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s ease, transform 0.2s ease;
-}
-
-.resultados-arrow:hover {
-  background: rgba(0,0,0,0.8);
-  transform: translateY(-50%) scale(1.08);
-}
-
-.resultados-prev {
-  left: 10px;
-}
-
-.resultados-next {
-  right: 10px;
 }
 
 /* Tarjetas */
@@ -784,12 +748,6 @@ document.addEventListener("DOMContentLoaded", function() {
   .resultados-carousel .res-cards {
     flex-direction: row !important;
     gap: 15px !important;
-  }
-
-  .resultados-arrow {
-    width: 38px;
-    height: 38px;
-    font-size: 22px;
   }
 }
 
@@ -1729,79 +1687,7 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
       </div>
     </div>
   </div>
-  <button class="resultados-arrow resultados-prev" type="button" aria-label="Resultados anteriores">&#10094;</button>
-  <button class="resultados-arrow resultados-next" type="button" aria-label="Resultados siguientes">&#10095;</button>
 </div>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const resultadosBox = document.querySelector('.resultados-carousel');
-  if (!resultadosBox) return;
-
-  const carousel = resultadosBox.querySelector('.res-cards');
-  const next = resultadosBox.querySelector('.resultados-next');
-  const prev = resultadosBox.querySelector('.resultados-prev');
-  if (!carousel || !next || !prev) return;
-
-  let currentIndex = 0;
-
-  function getGap() {
-    const styles = window.getComputedStyle(carousel);
-    return parseFloat(styles.columnGap || styles.gap) || 0;
-  }
-
-  function ajustarVentana() {
-    const cards = carousel.querySelectorAll('.res-card');
-    if (!cards.length) return;
-
-    const gap = getGap();
-    const primera = cards[0];
-    const segunda = cards[1] || cards[0];
-    const anchoDosTarjetas = segunda.offsetLeft + segunda.offsetWidth - primera.offsetLeft;
-    const anchoDisponible = resultadosBox.parentElement.offsetWidth;
-
-    resultadosBox.style.width = `${Math.min(anchoDosTarjetas || primera.offsetWidth + gap, anchoDisponible)}px`;
-  }
-
-  function getVisibleCards() {
-    return 2;
-  }
-
-  function getMaxIndex() {
-    return Math.max(carousel.children.length - getVisibleCards(), 0);
-  }
-
-  function moveCarousel() {
-    const maxIndex = getMaxIndex();
-    const cards = carousel.querySelectorAll('.res-card');
-
-    if (currentIndex < 0) currentIndex = 0;
-    if (currentIndex > maxIndex) currentIndex = maxIndex;
-
-    const target = cards[currentIndex];
-    carousel.style.transform = `translateX(-${target ? target.offsetLeft : 0}px)`;
-  }
-
-  next.addEventListener('click', function () {
-    currentIndex += 2;
-    moveCarousel();
-  });
-
-  prev.addEventListener('click', function () {
-    currentIndex -= 2;
-    moveCarousel();
-  });
-
-  window.addEventListener('resize', function () {
-    ajustarVentana();
-    currentIndex = 0;
-    moveCarousel();
-  });
-
-  ajustarVentana();
-  currentIndex = 0;
-  moveCarousel();
-});
-</script>
 <br>
 <br>
  <p class="proximo" style="font-size: 28px; font-weight: 900; text-align: center; font-stretch: expanded;">
