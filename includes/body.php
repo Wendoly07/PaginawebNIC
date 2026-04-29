@@ -1647,23 +1647,6 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
       </div>
     </div>
 
-      <!-- terminacion2-->
-    <div class="res-card marino-terminacion2">
-      <img src="/ImagesSV/logo terminacion2.png"
-           alt="Juga Tres"
-           style="width:190px; height:auto; position:relative; top:20px;">
-      <div class="numeros" style="position:relative; top:15px;">
-        <span class="bola-blanca" id="fl-numero">--</span>
-      </div>
-      <div class="btn-container">
-        <button class="btn-jugar" onclick="window.location.href='index.php?pag=terminacion2'">
-          Jugá aquí
-        </button>
-        <a href="index.php?pag=terminacion2">
-          <button class="btn-info">Conocé más</button>
-        </a>
-      </div>
-    </div>
 
   <!-- terminacion2-->
     <div class="res-card marino-terminacion2">
@@ -1759,7 +1742,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const prev = resultadosBox.querySelector('.resultados-prev');
   if (!carousel || !next || !prev) return;
 
-  let currentTranslate = 0;
+  let currentIndex = 0;
 
   function getGap() {
     const styles = window.getComputedStyle(carousel);
@@ -1771,42 +1754,53 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!card) return;
 
     const gap = getGap();
-    const anchoTresTarjetas = (card.offsetWidth * 3) + (gap * 2);
+    const anchoDosTarjetas = (card.offsetWidth * 2) + gap;
     const anchoDisponible = resultadosBox.parentElement.offsetWidth;
 
-    resultadosBox.style.width = `${Math.min(anchoTresTarjetas, anchoDisponible)}px`;
+    resultadosBox.style.width = `${Math.min(anchoDosTarjetas, anchoDisponible)}px`;
   }
 
   function getStep() {
-    return resultadosBox.clientWidth;
+    const card = carousel.querySelector('.res-card');
+    if (!card) return 0;
+
+    return card.offsetWidth + getGap();
   }
 
-  function getMaxTranslate() {
-    return Math.max(carousel.scrollWidth - resultadosBox.clientWidth, 0);
+  function getVisibleCards() {
+    const step = getStep();
+    if (!step) return 1;
+
+    return Math.max(Math.floor((resultadosBox.clientWidth + getGap()) / step), 1);
+  }
+
+  function getMaxIndex() {
+    return Math.max(carousel.children.length - getVisibleCards(), 0);
   }
 
   function moveCarousel() {
-    const max = getMaxTranslate();
+    const maxIndex = getMaxIndex();
+    const step = getStep();
 
-    if (currentTranslate < 0) currentTranslate = 0;
-    if (currentTranslate > max) currentTranslate = max;
+    if (currentIndex < 0) currentIndex = 0;
+    if (currentIndex > maxIndex) currentIndex = maxIndex;
 
-    carousel.style.transform = `translateX(-${currentTranslate}px)`;
+    carousel.style.transform = `translateX(-${currentIndex * step}px)`;
   }
 
   next.addEventListener('click', function () {
-    currentTranslate += getStep();
+    currentIndex += 2;
     moveCarousel();
   });
 
   prev.addEventListener('click', function () {
-    currentTranslate -= getStep();
+    currentIndex -= 2;
     moveCarousel();
   });
 
   window.addEventListener('resize', function () {
     ajustarVentana();
-    currentTranslate = 0;
+    currentIndex = 0;
     moveCarousel();
   });
 
