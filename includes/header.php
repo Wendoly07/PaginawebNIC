@@ -347,11 +347,9 @@ Place this snippet between the <head> and </head> tags on every page of your sit
 </script>
 <!-- End of global snippet: Please do not remove -->
 
-<!--
-Event snippet for Loto_Traffic on : Please do not remove.
+<!--Event snippet for Loto_Traffic on : Please do not remove.
 Place this snippet on pages with events you’re tracking. 
-Creation date: 05/21/2025
--->
+Creation date: 05/21/2025-->
 <!-- Fragmento de evento para seguimiento de conversiones de LOTO -->
 <script>
   gtag('event', 'conversion', {

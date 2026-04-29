@@ -265,15 +265,28 @@ document.addEventListener("DOMContentLoaded", function() {
 
 /* Carrusel */
 .resultados-carousel {
-  display: flex;
-  overflow-x: auto;
-  gap: 20px;
-  padding-bottom: 10px;
+  position: relative;
+  overflow: visible;
+  width: 100%;
+  max-width: 930px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 0 58px 10px;
+}
+
+.resultados-window {
+  width: 790px;
+  max-width: 100%;
+  overflow: hidden;
+  margin: 0 auto;
 }
 
 .res-cards {
   display: flex;
   gap: 20px;
+  transform: translateX(0);
+  transition: transform 0.4s ease;
+  will-change: transform;
 }
 
 /* Tarjetas */
@@ -285,6 +298,48 @@ document.addEventListener("DOMContentLoaded", function() {
   padding: 15px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
+}
+
+.resultados-carousel .res-card {
+  flex: 0 0 250px !important;
+}
+
+.resultados-arrow {
+  position: absolute;
+  top: 48%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.65);
+  color: #fff;
+  font-size: 26px;
+  font-weight: 900;
+  cursor: pointer;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+}
+
+.resultados-arrow:hover {
+  background: rgba(0,0,0,0.8);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.resultados-arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.resultados-prev {
+  left: 8px;
+}
+
+.resultados-next {
+  right: 8px;
 }
 
 .res-card:hover {
@@ -737,6 +792,34 @@ document.addEventListener("DOMContentLoaded", function() {
   .res-card .btn-info {
     width: 140px;
     padding: 10px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .resultados-carousel {
+    padding: 0 44px 10px !important;
+  }
+
+  .resultados-window {
+    width: 100%;
+  }
+
+  .resultados-carousel .res-cards {
+    flex-direction: row !important;
+    gap: 15px !important;
+  }
+
+  .resultados-carousel .res-card {
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .resultados-arrow {
+    width: 38px;
+    height: 38px;
+    font-size: 22px;
   }
 }
 
@@ -1544,6 +1627,7 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <!-- Carrusel -->
 <div class="resultados-carousel">
+  <div class="resultados-window">
   <div class="res-cards">
 
 
@@ -1666,7 +1750,76 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
       </div>
     </div>
   </div>
+  </div>
+  <button class="resultados-arrow resultados-prev" type="button" aria-label="Resultados anteriores">&#10094;</button>
+  <button class="resultados-arrow resultados-next" type="button" aria-label="Resultados siguientes">&#10095;</button>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const resultadosBox = document.querySelector(".resultados-carousel");
+  if (!resultadosBox) return;
+
+  const track = resultadosBox.querySelector(".res-cards");
+  const prev = resultadosBox.querySelector(".resultados-prev");
+  const next = resultadosBox.querySelector(".resultados-next");
+  if (!track || !prev || !next) return;
+
+  let index = 0;
+  track.style.transform = "translateX(0px)";
+
+  function getVisibleCards() {
+    return window.innerWidth <= 768 ? 1 : 3;
+  }
+
+  function getStepWidth() {
+    const card = track.querySelector(".res-card");
+    if (!card) return 0;
+
+    const styles = window.getComputedStyle(track);
+    const gap = parseFloat(styles.columnGap || styles.gap) || 0;
+    return card.offsetWidth + gap;
+  }
+
+  function updateCarousel() {
+    const visibleCards = getVisibleCards();
+    const maxIndex = Math.max(track.children.length - visibleCards, 0);
+    index = Math.min(index, maxIndex);
+
+    track.style.transform = `translateX(${-index * getStepWidth()}px)`;
+    prev.disabled = index === 0;
+    next.disabled = index === maxIndex;
+  }
+
+  next.addEventListener("click", function() {
+    const visibleCards = getVisibleCards();
+    const maxIndex = Math.max(track.children.length - visibleCards, 0);
+    if (index < maxIndex) {
+      index = Math.min(index + visibleCards, maxIndex);
+      updateCarousel();
+    }
+  });
+
+  prev.addEventListener("click", function() {
+    const visibleCards = getVisibleCards();
+    if (index > 0) {
+      index = Math.max(index - visibleCards, 0);
+      updateCarousel();
+    }
+  });
+
+  window.addEventListener("resize", function() {
+    index = 0;
+    updateCarousel();
+  });
+
+  window.addEventListener("pageshow", function() {
+    index = 0;
+    updateCarousel();
+  });
+
+  updateCarousel();
+});
+</script>
 <br>
 <br>
  <p class="proximo" style="font-size: 28px; font-weight: 900; text-align: center; font-stretch: expanded;">
