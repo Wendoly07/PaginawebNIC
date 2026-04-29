@@ -751,27 +751,15 @@ body {
     
       <div class="col derecha">
       <div class="sorteo">
-        <h3>SORTEO 12:00 P.M.</h3>
-<span class="num-numero" id="num12_1">--</span>
-<span class="num-numero" id="num12_2">--</span>
-      </div>
-
-      <div class="sorteo">
-        <h3>SORTEO 3:00 P.M.</h3>
-<span class="num-numero" id="num12_1">--</span>
-<span class="num-numero" id="num12_2">--</span>
-      </div>
-
-      <div class="sorteo">
-        <h3>SORTEO 6:00 P.M.</h3>
-<span class="num-numero" id="num12_1">--</span>
-<span class="num-numero" id="num12_2">--</span>
+        <h3>SORTEO 11:00 A.M.</h3>
+<span class="num-numero" id="num11_1">--</span>
+<span class="num-numero" id="num11_2">--</span>
       </div>
 
       <div class="sorteo">
         <h3>SORTEO 9:00 P.M.</h3>
-<span class="num-numero" id="num12_1">--</span>
-<span class="num-numero" id="num12_2">--</span>
+<span class="num-numero" id="num21_1">--</span>
+<span class="num-numero" id="num21_2">--</span>
       </div>
     </div>
   </div>
@@ -910,12 +898,6 @@ let x = setInterval(function () {
         document.getElementById("num1").innerText = d.digito1;
         document.getElementById("num2").innerText = d.digito2;
 
-        // Actualiza los resultados de los sorteos en pantalla
-        document.getElementById("num11_1").innerText = d.digito1;
-        document.getElementById("num11_2").innerText = d.digito2;
-        document.getElementById("num21_1").innerText = d.digito1;
-        document.getElementById("num21_2").innerText = d.digito2;
-
       } else {
         console.error(d.error);
       }
@@ -1013,15 +995,18 @@ let x = setInterval(function () {
     return num.toString().padStart(2, '0');
   }
 
+  function pintarResultado(prefijo, numero) {
+    document.getElementById(`${prefijo}_1`).innerText = numero ? numero.charAt(0) : '--';
+    document.getElementById(`${prefijo}_2`).innerText = numero ? numero.charAt(1) : '--';
+  }
+
   // Función para obtener resultados desde la API remota según la fecha seleccionada
   function actualizarResultados(fecha) {
-    fetch(`https://paginawebsvcac.azurewebsites.net/api/resultados_calendario_diaria.php?fecha=${fecha}`)
+    fetch(`/api/resultados_calendario_diaria.php?fecha=${fecha}`)
       .then(res => res.json())
       .then(data => {
-        document.getElementById('num11_1').innerText = data['11:00'] ? data['11:00'].charAt(0) : '0';
-        document.getElementById('num11_2').innerText = data['11:00'] ? data['11:00'].charAt(1) : '0';
-        document.getElementById('num21_1').innerText = data['21:00'] ? data['21:00'].charAt(0) : '0';
-        document.getElementById('num21_2').innerText = data['21:00'] ? data['21:00'].charAt(1) : '0';
+        pintarResultado('num11', data['11:00']);
+        pintarResultado('num21', data['21:00']);
       })
       .catch(err => console.error('Error al obtener resultados:', err));
   }
