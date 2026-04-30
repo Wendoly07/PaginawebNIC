@@ -1320,7 +1320,7 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 /* premiado2 Card */
 .res-card.morado-premiado {
-  background-color: #9b51e0;
+  background-color: #6E2479;
   border-radius: 15px;
   padding: 15px;
   text-align: center;
@@ -1331,7 +1331,7 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 .res-card.morado-premiado .btn-jugar {
   background-color: white;
-  color: #9b51e0;
+  color: #6e2479;
   font-weight: bold;
 }
 .res-card.morado-premiado .btn-info { 
