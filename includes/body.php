@@ -1623,26 +1623,7 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="resultados-carousel">
   <button class="res-prev" type="button" aria-label="Resultados anteriores">&#10094;</button>
   <div class="res-cards">
-
-     <!-- terminacion2-->
-    <div class="res-card marino-terminacion2">
-      <img src="/ImagesSV/logo terminacion2.png"
-           alt="Juga Tres"
-           style="width:190px; height:auto; position:relative; top:20px;">
-      <div class="numeros" style="position:relative; top:15px;">
-        <span class="bola-blanca" id="fl-numero">--</span>
-      </div>
-      <div class="btn-container">
-        <button class="btn-jugar" onclick="window.location.href='index.php?pag=terminacion2'">
-          Jugá aquí
-        </button>
-        <a href="index.php?pag=terminacion2">
-          <button class="btn-info">Conocé más</button>
-        </a>
-      </div>
-    </div>
-   
-    <!-- Diaria (Verde) -->
+        <!-- Diaria (Verde) -->
     <div class="res-card verde">
       <img src="<?= $juegos[1]['imagen_url'] ?>" 
            alt="<?= htmlspecialchars($juegos[1]['nombre']) ?>" 
@@ -1679,7 +1660,7 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </a>
       </div>
     </div>
-    <!-- Lotus Dates (Red) -->
+        <!-- Lotus Dates (Red) -->
     <div class="res-card rojo-fechas">
       <img src="/ImagesSV/LOGO FECHAS LOTOS.png.png"
            alt="Fechas Lotos"
@@ -1695,6 +1676,25 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
           Jugá aquí
         </button>
         <a href="index.php?pag=fechas_lotos">
+          <button class="btn-info">Conocé más</button>
+        </a>
+      </div>
+    </div>
+  <!-- JUGA TRES (Blue) -->
+    <div class="res-card azul-jugatres">
+      <img src="/ImagesSV/logo-30-JUGA TRES.png"
+           alt="Juga Tres"
+           style="width:190px; height:auto; position:relative; top:20px;">
+      <div class="numeros" style="position:relative; top:15px;">
+        <span class="bola-blanca" id="numNumero">-</span>
+        <span class="bola-blanca" id="numNumero">-</span>
+        <span class="bola-blanca" id="numNumero">-</span>
+      </div>
+      <div class="btn-container">
+        <button class="btn-jugar" onclick="window.location.href='index.php?pag=juga_tres'">
+          Jugá aquí
+        </button>
+        <a href="index.php?pag=juga_tres">
           <button class="btn-info">Conocé más</button>
         </a>
       </div>
@@ -1722,26 +1722,24 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </a>
       </div>
     </div>
-        
-    <!-- JUGA TRES (Blue) -->
-    <div class="res-card azul-jugatres">
-      <img src="/ImagesSV/logo-30-JUGA TRES.png"
+     <!-- terminacion2-->
+    <div class="res-card marino-terminacion2">
+      <img src="/ImagesSV/logo terminacion2.png"
            alt="Juga Tres"
            style="width:190px; height:auto; position:relative; top:20px;">
       <div class="numeros" style="position:relative; top:15px;">
-        <span class="bola-blanca" id="numNumero">-</span>
-        <span class="bola-blanca" id="numNumero">-</span>
-        <span class="bola-blanca" id="numNumero">-</span>
+        <span class="bola-blanca" id="fl-numero">--</span>
       </div>
       <div class="btn-container">
-        <button class="btn-jugar" onclick="window.location.href='index.php?pag=juga_tres'">
+        <button class="btn-jugar" onclick="window.location.href='index.php?pag=terminacion2'">
           Jugá aquí
         </button>
-        <a href="index.php?pag=juga_tres">
+        <a href="index.php?pag=terminacion2">
           <button class="btn-info">Conocé más</button>
         </a>
       </div>
     </div>
+    
   </div>
   <button class="res-next" type="button" aria-label="Resultados siguientes">&#10095;</button>
 </div>
