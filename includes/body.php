@@ -290,16 +290,6 @@ document.addEventListener("DOMContentLoaded", function() {
   display: none;
 }
 
-.resultados-carousel .res-card {
-  flex: 0 0 calc((100% - 40px) / 3) !important;
-  scroll-snap-align: start;
-}
-
-.res-cards::after {
-  content: "";
-  flex: 0 0 calc((100% - 40px) / 3);
-}
-
 .res-prev,
 .res-next {
   position: absolute;
@@ -808,14 +798,6 @@ document.addEventListener("DOMContentLoaded", function() {
   .resultados-carousel .res-cards {
     flex-direction: row !important;
     gap: 15px !important;
-  }
-
-  .resultados-carousel .res-card {
-    flex: 0 0 100% !important;
-  }
-
-  .res-cards::after {
-    display: none;
   }
 
   .res-prev,
@@ -1789,13 +1771,28 @@ document.addEventListener("DOMContentLoaded", function () {
     return window.innerWidth <= 768 ? 1 : 3;
   }
 
+  function updateViewportWidth() {
+    const card = cards.querySelector('.res-card');
+    if (!card) return;
+
+    const cardsPerPage = getCardsPerPage();
+    const visibleWidth = (cardsPerPage * getCardStep()) - (cardsPerPage > 1 ? getCardStep() - card.offsetWidth : 0);
+
+    cards.style.width = `${visibleWidth}px`;
+    cards.style.maxWidth = '100%';
+  }
+
   function getMaxPage() {
-    return Math.max(0, Math.ceil(cards.children.length / getCardsPerPage()) - 1);
+    return Math.max(0, Math.ceil(cards.querySelectorAll('.res-card').length / getCardsPerPage()) - 1);
   }
 
   function moveResults() {
+    updateViewportWidth();
+
     const cardsPerPage = getCardsPerPage();
-    const left = currentPage * cardsPerPage * getCardStep();
+    const maxScroll = Math.max(0, cards.scrollWidth - cards.clientWidth);
+    const requestedLeft = currentPage * cardsPerPage * getCardStep();
+    const left = currentPage >= getMaxPage() ? maxScroll : requestedLeft;
 
     cards.scrollTo({ left, behavior: 'smooth' });
     prev.style.display = currentPage === 0 ? 'none' : 'flex';
