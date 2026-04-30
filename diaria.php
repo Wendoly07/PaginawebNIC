@@ -44,7 +44,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
     /* ================= HEADER ================= */
     /* Contenedor superior de la cabecera de La Diaria */
 .top {
-  background: #aeca36;
+  background: #76b82a;
   display: flex;
   justify-content: center;
   padding: 25px 10px; /* MENOS ALTO */
@@ -89,7 +89,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
   height: 65px;
   line-height: 65px;
   display: inline-block;
-  background: #029247;
+  background: #13a538;
   border-radius: 50%;
   font-weight: bold;
   font-size: 24px; /* Un poco más grande */
@@ -114,13 +114,13 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
       display: flex;
       justify-content: center;
       gap: 18px;
-      background: #aeca36;
+      background: #76b82a;
       padding: 16px;
       flex-wrap: wrap;
     }
 
     .menu a {
-      background: linear-gradient(135deg, #029247, #05b36b);
+      background: linear-gradient(135deg, #13a538, #13ac05);
       color: white;
       text-decoration: none;
       padding: 10px 22px;
@@ -147,7 +147,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
     /* ================= RESULTADOS ================= */
     /* Contenedor principal de resultados y calendario */
     .resultados {
-      border: 1px solid #029247;
+      border: 1px solid #13a538;
       display: flex;
       max-width: 1100px;
       margin: 40px auto;
@@ -176,7 +176,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
 .izquierda h2 {
   font-size: 42px;     /* Más grande */
   font-weight: 900;    /* Muy bold */
-  color: #029247;
+  color: #13a538;
   margin: 0;
   line-height: 1.1;
 }
@@ -213,7 +213,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
 .calendario-real th {
   font-size: 12px;         /* MÁS PEQUEÑO */
   font-weight: 800;
-  color: #029247;
+  color: #13a538;
   padding: 6px 0;
   text-transform: uppercase;
 }
@@ -233,7 +233,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
 .calendario-real td.activo {
-  background: linear-gradient(135deg, #029247, #05b36b);
+  background: linear-gradient(135deg, #13a538, #13ac05);
   color: white;
   box-shadow: 0 4px 10px rgba(0,0,0,0.25);
 }
@@ -254,7 +254,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
   box-shadow: inset 0 2px 5px rgba(0,0,0,0.15);
   cursor: pointer;
   font-weight: 700;
-  color: #029247;
+  color: #13a538;
   transition: 0.3s;
 }
 
@@ -277,7 +277,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
 .derecha h3 {
   font-size: 20px;        /* Más grande */
   font-weight: 900;      /* ULTRA BOLD */
-  color: #029247;
+  color: #13a538;
   margin-bottom: 12px;
   text-align: center;    /* Bien centrado */
   letter-spacing: 0.5px;
@@ -289,7 +289,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
   height: 52px;
   line-height: 52px;
   display: inline-block;
-  background: #029247;
+  background: #13a538;
   border-radius: 50%;
   font-weight: 900;
   font-size: 20px;
@@ -307,7 +307,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
       border-radius: 15px;
       overflow: hidden;
       background: white; /*  FONDO BLANCO */
-      border: 2px solid #029247; /* BORDE VISIBLE */
+      border: 2px solid #13a538; /* BORDE VISIBLE */
     }
 
     .accordion-header {
@@ -318,7 +318,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
       font-size: 24px;
       cursor: pointer;
       position: relative;
-      background: #029247;
+      background: #13a538;
     }
 
     .accordion-header .arrow {
@@ -337,7 +337,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
 /* ================= SUB-ACORDEONES MEJORADOS ================= */
 /* Encabezado de cada sub-acordeón dentro del contenido expandible */
 .sub-accordion-header {
-  background: #029247; /* Verde más intenso */
+  background: #13a538; /* Verde más intenso */
   color: white;
   padding: 14px 20px;
   margin-bottom: 10px;
@@ -411,7 +411,7 @@ body {
   text-align: center; /* Centrado para resaltar */
   font-size: 22px;
   font-weight: 700;
-  color: #029247; /* Verde destacado */
+  color: #13a538; /* Verde destacado */
   margin-bottom: 12px;
   line-height: 1.4;
 }
@@ -431,7 +431,7 @@ body {
   text-align: center;
   font-size: 20px;
   font-weight: 700;
-  color: #029247;
+  color: #13a538;
   margin-bottom: 15px;
 }
 
@@ -457,7 +457,7 @@ body {
 
 /* ================= SUB-ACORDEONES ================= */
 .sub-accordion-header {
-  background: #029247; /* Verde principal */
+  background: #13a538; /* Verde principal */
   color: white;
   padding: 14px 20px;
   margin-bottom: 10px;
@@ -485,7 +485,7 @@ body {
   height: 32px;
   border-radius: 50%;
   background: #c6e3b3; /* Verde más suave y elegante */
-  color: #029247;      /* Flecha verde oscuro */
+  color: #13a538;      /* Flecha verde oscuro */
   font-size: 18px;
   flex-shrink: 0;
   transition: transform 0.3s;
@@ -526,7 +526,7 @@ body {
     }
 
     .calendario-real td.activo {
-    background: linear-gradient(135deg, #029247, #05b36b); /* Fondo verde */
+    background: linear-gradient(135deg, #13a538, #13ac05); /* Fondo verde */
     color: white;
     border-radius: 50%; /* Hace el fondo circular */
     font-weight: bold;
