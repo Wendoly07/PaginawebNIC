@@ -263,74 +263,72 @@ document.addEventListener("DOMContentLoaded", function() {
   color: #0070c0;
 }
 
-/* Carrusel */
 .resultados-carousel {
-  display: flex;
-  overflow: hidden;
-  gap: 20px;
-  padding: 0 50px 10px;
   position: relative;
-  box-sizing: border-box;
+  overflow: hidden;
+  padding: 0 60px;
 }
 
 .res-cards {
   display: flex;
   gap: 20px;
-  transition: transform 0.45s ease;
+  transition: transform 0.4s ease;
   will-change: transform;
 }
 
+/* Tarjetas */
+.res-card {
+  flex: 0 0 260px;
+  border-radius: 16px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* EFECTO NETFLIX */
+.res-card {
+  transform: scale(0.9);
+  opacity: 0.6;
+}
+
+.res-card.active {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* Flechas */
 .res-prev,
 .res-next {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 48px;
-  height: 48px;
-  border: none;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  background: rgba(255, 126, 0, 0.95);
-  color: white;
+  background: rgba(0,0,0,0.7);
+  color: #fff;
+  border: none;
+  font-size: 24px;
   cursor: pointer;
-  font-size: 26px;
-  z-index: 20;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.28);
-  transition: background 0.3s ease, transform 0.3s ease;
+  z-index: 10;
 }
 
-.res-prev {
-  left: 0;
-}
-
-.res-next {
-  right: 0;
-}
+.res-prev { left: 10px; }
+.res-next { right: 10px; }
 
 .res-prev:hover,
 .res-next:hover {
-  background: #ff5500;
-  transform: translateY(-50%) scale(1.1);
+  background: rgba(0,0,0,0.9);
 }
 
-/* Tarjetas */
-.res-card {
-  background-color: white;
-  border-radius: 16px;
-  box-shadow: 0px 6px 15px rgba(0,0,0,0.15);
-  flex: 0 0 250px;
-  padding: 15px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
-}
+/* MOBILE */
+@media (max-width: 768px) {
+  .resultados-carousel {
+    padding: 0 20px;
+  }
 
-.res-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0px 12px 25px rgba(0,0,0,0.25);
+  .res-card {
+    flex: 0 0 80%;
+  }
 }
-
 /* Imagen dentro de la tarjeta */
 .res-card img {
   width: 100%;
@@ -781,20 +779,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
 @media (max-width: 768px) {
   .resultados-carousel {
-    padding: 0 42px 10px !important;
-    overflow: hidden !important;
+    padding-bottom: 10px !important;
   }
 
   .resultados-carousel .res-cards {
     flex-direction: row !important;
     gap: 15px !important;
-  }
-
-  .resultados-carousel .res-prev,
-  .resultados-carousel .res-next {
-    width: 42px;
-    height: 42px;
-    font-size: 22px;
   }
 }
 
@@ -1611,7 +1601,6 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <!-- Carrusel -->
 <div class="resultados-carousel">
-  <button class="res-prev" type="button" aria-label="Resultado anterior">&#10094;</button>
   <div class="res-cards">
 
      <!-- terminacion2-->
@@ -1732,65 +1721,7 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
       </div>
     </div>
   </div>
-  <button class="res-next" type="button" aria-label="Resultado siguiente">&#10095;</button>
 </div>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const resultadosBox = document.querySelector('.resultados-box');
-  if (!resultadosBox) return;
-
-  const carouselViewport = resultadosBox.querySelector('.resultados-carousel');
-  const carousel = resultadosBox.querySelector('.res-cards');
-  const next = resultadosBox.querySelector('.res-next');
-  const prev = resultadosBox.querySelector('.res-prev');
-
-  if (!carouselViewport || !carousel || !next || !prev) return;
-
-  let currentTranslate = 0;
-
-  function getStep() {
-    const card = carousel.querySelector('.res-card');
-    if (!card) return carouselViewport.offsetWidth;
-
-    const styles = window.getComputedStyle(carousel);
-    const gap = parseFloat(styles.columnGap || styles.gap) || 0;
-
-    return card.offsetWidth + gap;
-  }
-
-  function getMaxTranslate() {
-    return Math.max(0, carousel.scrollWidth - carouselViewport.offsetWidth);
-  }
-
-  function moveCarousel() {
-    const max = getMaxTranslate();
-
-    if (currentTranslate < 0) currentTranslate = 0;
-    if (currentTranslate > max) currentTranslate = max;
-
-    carousel.style.transform = `translateX(-${currentTranslate}px)`;
-    prev.style.display = currentTranslate <= 0 ? 'none' : 'flex';
-    next.style.display = currentTranslate >= max ? 'none' : 'flex';
-  }
-
-  next.addEventListener('click', () => {
-    currentTranslate += getStep();
-    moveCarousel();
-  });
-
-  prev.addEventListener('click', () => {
-    currentTranslate -= getStep();
-    moveCarousel();
-  });
-
-  window.addEventListener('resize', () => {
-    currentTranslate = 0;
-    moveCarousel();
-  });
-
-  moveCarousel();
-});
-</script>
 <br>
 <br>
  <p class="proximo" style="font-size: 28px; font-weight: 900; text-align: center; font-stretch: expanded;">
@@ -2077,103 +2008,68 @@ $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 </div>
 
-<script>
+
 // Script para el carrusel de noticias
 
-document.addEventListener("DOMContentLoaded", function() {
-    // Espera a que el DOM esté cargado
-
-  const noticiasBox = document.querySelector('.noticias-box');
-  // Selecciona el contenedor de noticias
-
-  const carousel = noticiasBox.querySelector('.carousel');
-  // Selecciona el carrusel dentro del contenedor de noticias
-
-  const next = noticiasBox.querySelector('.next');
-  // Selecciona el botón siguiente
-
-  const prev = noticiasBox.querySelector('.prev');
-  // Selecciona el botón anterior
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const carousel = document.querySelector(".res-cards");
+  const cards = document.querySelectorAll(".res-card");
+  const next = document.querySelector(".res-next");
+  const prev = document.querySelector(".res-prev");
 
   let index = 0;
-  // Índice actual del carrusel
 
-  function getVisibleCards() {
-    // Función para determinar cuántas tarjetas son visibles según el ancho de pantalla
+  function updateCarousel() {
+    const cardWidth = cards[0].offsetWidth + 20;
+    const centerOffset = (carousel.parentElement.offsetWidth / 2) - (cardWidth / 2);
 
-    return window.innerWidth <= 768 ? 1 : 3;
-    // Si la pantalla es móvil, muestra 1 tarjeta; de lo contrario, 3
+    carousel.style.transform = `translateX(${centerOffset - (index * cardWidth)}px)`;
 
+    cards.forEach(c => c.classList.remove("active"));
+    if (cards[index]) cards[index].classList.add("active");
   }
 
-  function moveCarousel() {
-    // Función para mover el carrusel
-
-    const card = document.querySelector('.card');
-    // Selecciona la primera tarjeta para calcular el ancho
-
-    if (!card) return;
-    // Si no hay tarjetas, sale de la función
-
-    const gap = 20;
-    // Espacio entre tarjetas
-
-    const cardWidth = card.offsetWidth + gap;
-    // Calcula el ancho total de una tarjeta incluyendo el gap
-
-    carousel.style.transform = `translateX(${-index * cardWidth}px)`;
-    // Mueve el carrusel horizontalmente
-
-  }
-
-  next.addEventListener('click', () => {
-    // Agrega evento click al botón siguiente
-
-    const visibleCards = getVisibleCards();
-    // Obtiene el número de tarjetas visibles
-
-    const maxIndex = carousel.children.length - visibleCards;
-    // Calcula el índice máximo posible
-
-    if (index < maxIndex) {
-      // Si no está en el último índice
-
+  next.addEventListener("click", () => {
+    if (index < cards.length - 1) {
       index++;
-      // Incrementa el índice
-
-      moveCarousel();
-      // Mueve el carrusel
-
+      updateCarousel();
     }
   });
 
-  prev.addEventListener('click', () => {
-    // Agrega evento click al botón anterior
-
+  prev.addEventListener("click", () => {
     if (index > 0) {
-      // Si no está en el primer índice
-
       index--;
-      // Decrementa el índice
-
-      moveCarousel();
-      // Mueve el carrusel
-
+      updateCarousel();
     }
   });
 
-  window.addEventListener('resize', () => {
-    // Agrega evento resize a la ventana
+  // 👉 Swipe (móvil)
+  let startX = 0;
 
-    index = 0;
-    // Resetea el índice
-
-    moveCarousel();
-    // Mueve el carrusel a la posición inicial
-
+  carousel.addEventListener("touchstart", e => {
+    startX = e.touches[0].clientX;
   });
 
+  carousel.addEventListener("touchend", e => {
+    let endX = e.changedTouches[0].clientX;
+    let diff = startX - endX;
+
+    if (diff > 50 && index < cards.length - 1) {
+      index++;
+    } else if (diff < -50 && index > 0) {
+      index--;
+    }
+
+    updateCarousel();
+  });
+
+  // Inicial
+  updateCarousel();
+
+  window.addEventListener("resize", updateCarousel);
 });
+</script>
 </script>
 
   <!-- Espacio en blanco -->
