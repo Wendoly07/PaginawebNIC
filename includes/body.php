@@ -1682,7 +1682,7 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
   <!-- JUGA TRES (Blue) -->
     <div class="res-card azul-jugatres">
-      <img src="/ImagesSV/logo-30-JUGA TRES.png"
+      <img src="/ImagesSV/LOGOJUGATRES.png"
            alt="Juga Tres"
            style="width:190px; height:auto; position:relative; top:20px;">
       <div class="numeros" style="position:relative; top:15px;">
