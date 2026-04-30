@@ -100,7 +100,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
 .etiqueta-hola {
-  background: yellow;
+  background:#ffcb00;
   color: green;
   padding: 6px 14px;
   border-radius: 20px;
@@ -184,7 +184,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
 .label-fecha {
   font-size: 18px;     /* Más grande */
   font-weight: 700;
-  background: yellow;  /* Mantener color que ya tenías */
+  background: #ffcb00; /* Mantener color que ya tenías */
   color: green;
   padding: 8px 16px;
   border-radius: 20px;

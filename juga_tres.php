@@ -193,7 +193,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
     .label-fecha {
       font-size: 18px;
       font-weight: 700;
-      background: yellow;
+      background: #ffcb00;
       color: #0075bf;
       padding: 8px 16px;
       border-radius: 20px;
