@@ -112,7 +112,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
     .etiqueta-hola {
-      background: yellow;
+      background: #ffcb00;
       color: #0075bf;
       padding: 6px 14px;
       border-radius: 20px;
