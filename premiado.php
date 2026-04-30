@@ -346,7 +346,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     .accordion-header:hover {
-      background: #56004e;
+      background: #6e2479;
 
       }
     .accordion-header .arrow-circle {
