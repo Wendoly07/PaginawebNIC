@@ -265,15 +265,61 @@ document.addEventListener("DOMContentLoaded", function() {
 
 /* Carrusel */
 .resultados-carousel {
+  position: relative;
   display: flex;
-  overflow-x: auto;
+  align-items: center;
+  overflow: visible;
   gap: 20px;
-  padding-bottom: 10px;
+  padding: 0 56px 10px;
+  box-sizing: border-box;
 }
 
 .res-cards {
   display: flex;
   gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.res-cards::-webkit-scrollbar {
+  display: none;
+}
+
+.res-prev,
+.res-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  border: none;
+  border-radius: 50%;
+  background: #ff7e00;
+  color: white;
+  cursor: pointer;
+  font-size: 26px;
+  font-weight: bold;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.28);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.res-prev {
+  left: 0;
+}
+
+.res-next {
+  right: 0;
+}
+
+.res-prev:hover,
+.res-next:hover {
+  background: #ff5500;
+  transform: translateY(-50%) scale(1.08);
 }
 
 /* Tarjetas */
@@ -742,12 +788,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
 @media (max-width: 768px) {
   .resultados-carousel {
-    padding-bottom: 10px !important;
+    padding: 0 48px 10px !important;
   }
 
   .resultados-carousel .res-cards {
     flex-direction: row !important;
     gap: 15px !important;
+  }
+
+  .res-prev,
+  .res-next {
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
   }
 }
 
@@ -1564,6 +1617,7 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <!-- Carrusel -->
 <div class="resultados-carousel">
+  <button class="res-prev" type="button" aria-label="Resultados anteriores">&#10094;</button>
   <div class="res-cards">
 
      <!-- terminacion2-->
@@ -1684,7 +1738,37 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
       </div>
     </div>
   </div>
+  <button class="res-next" type="button" aria-label="Resultados siguientes">&#10095;</button>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const resultadosBox = document.querySelector('.resultados-box');
+  if (!resultadosBox) return;
+
+  const cards = resultadosBox.querySelector('.res-cards');
+  const prev = resultadosBox.querySelector('.res-prev');
+  const next = resultadosBox.querySelector('.res-next');
+
+  if (!cards || !prev || !next) return;
+
+  function getScrollStep() {
+    const card = cards.querySelector('.res-card');
+    if (!card) return cards.clientWidth;
+
+    const styles = window.getComputedStyle(cards);
+    const gap = parseFloat(styles.columnGap || styles.gap) || 0;
+    return card.offsetWidth + gap;
+  }
+
+  prev.addEventListener('click', function () {
+    cards.scrollBy({ left: -getScrollStep(), behavior: 'smooth' });
+  });
+
+  next.addEventListener('click', function () {
+    cards.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
+  });
+});
+</script>
 <br>
 <br>
  <p class="proximo" style="font-size: 28px; font-weight: 900; text-align: center; font-stretch: expanded;">
