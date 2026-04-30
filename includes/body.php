@@ -263,72 +263,35 @@ document.addEventListener("DOMContentLoaded", function() {
   color: #0070c0;
 }
 
+/* Carrusel */
 .resultados-carousel {
-  position: relative;
-  overflow: hidden;
-  padding: 0 60px;
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding-bottom: 10px;
 }
 
 .res-cards {
   display: flex;
   gap: 20px;
-  transition: transform 0.4s ease;
-  will-change: transform;
 }
 
 /* Tarjetas */
 .res-card {
-  flex: 0 0 260px;
+  background-color: white;
   border-radius: 16px;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  box-shadow: 0px 6px 15px rgba(0,0,0,0.15);
+  flex: 0 0 250px;
+  padding: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
 }
 
-/* EFECTO NETFLIX */
-.res-card {
-  transform: scale(0.9);
-  opacity: 0.6;
+.res-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 12px 25px rgba(0,0,0,0.25);
 }
 
-.res-card.active {
-  transform: scale(1);
-  opacity: 1;
-}
-
-/* Flechas */
-.res-prev,
-.res-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: rgba(0,0,0,0.7);
-  color: #fff;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  z-index: 10;
-}
-
-.res-prev { left: 10px; }
-.res-next { right: 10px; }
-
-.res-prev:hover,
-.res-next:hover {
-  background: rgba(0,0,0,0.9);
-}
-
-/* MOBILE */
-@media (max-width: 768px) {
-  .resultados-carousel {
-    padding: 0 20px;
-  }
-
-  .res-card {
-    flex: 0 0 80%;
-  }
-}
 /* Imagen dentro de la tarjeta */
 .res-card img {
   width: 100%;
@@ -1959,10 +1922,8 @@ $superpremio = $stmt->fetch(PDO::FETCH_ASSOC);
   </div>
 </a>
 
-
-
-
 <?php
+
 $stmt = $conn->prepare("
     SELECT * FROM paginaweb_nic_sobre_inicio 
     WHERE seccion='noticias_home' 
@@ -2008,68 +1969,103 @@ $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 </div>
 
-
+<script>
 // Script para el carrusel de noticias
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const carousel = document.querySelector(".res-cards");
-  const cards = document.querySelectorAll(".res-card");
-  const next = document.querySelector(".res-next");
-  const prev = document.querySelector(".res-prev");
+document.addEventListener("DOMContentLoaded", function() {
+    // Espera a que el DOM esté cargado
+
+  const noticiasBox = document.querySelector('.noticias-box');
+  // Selecciona el contenedor de noticias
+
+  const carousel = noticiasBox.querySelector('.carousel');
+  // Selecciona el carrusel dentro del contenedor de noticias
+
+  const next = noticiasBox.querySelector('.next');
+  // Selecciona el botón siguiente
+
+  const prev = noticiasBox.querySelector('.prev');
+  // Selecciona el botón anterior
 
   let index = 0;
+  // Índice actual del carrusel
 
-  function updateCarousel() {
-    const cardWidth = cards[0].offsetWidth + 20;
-    const centerOffset = (carousel.parentElement.offsetWidth / 2) - (cardWidth / 2);
+  function getVisibleCards() {
+    // Función para determinar cuántas tarjetas son visibles según el ancho de pantalla
 
-    carousel.style.transform = `translateX(${centerOffset - (index * cardWidth)}px)`;
+    return window.innerWidth <= 768 ? 1 : 3;
+    // Si la pantalla es móvil, muestra 1 tarjeta; de lo contrario, 3
 
-    cards.forEach(c => c.classList.remove("active"));
-    if (cards[index]) cards[index].classList.add("active");
   }
 
-  next.addEventListener("click", () => {
-    if (index < cards.length - 1) {
+  function moveCarousel() {
+    // Función para mover el carrusel
+
+    const card = document.querySelector('.card');
+    // Selecciona la primera tarjeta para calcular el ancho
+
+    if (!card) return;
+    // Si no hay tarjetas, sale de la función
+
+    const gap = 20;
+    // Espacio entre tarjetas
+
+    const cardWidth = card.offsetWidth + gap;
+    // Calcula el ancho total de una tarjeta incluyendo el gap
+
+    carousel.style.transform = `translateX(${-index * cardWidth}px)`;
+    // Mueve el carrusel horizontalmente
+
+  }
+
+  next.addEventListener('click', () => {
+    // Agrega evento click al botón siguiente
+
+    const visibleCards = getVisibleCards();
+    // Obtiene el número de tarjetas visibles
+
+    const maxIndex = carousel.children.length - visibleCards;
+    // Calcula el índice máximo posible
+
+    if (index < maxIndex) {
+      // Si no está en el último índice
+
       index++;
-      updateCarousel();
+      // Incrementa el índice
+
+      moveCarousel();
+      // Mueve el carrusel
+
     }
   });
 
-  prev.addEventListener("click", () => {
+  prev.addEventListener('click', () => {
+    // Agrega evento click al botón anterior
+
     if (index > 0) {
+      // Si no está en el primer índice
+
       index--;
-      updateCarousel();
+      // Decrementa el índice
+
+      moveCarousel();
+      // Mueve el carrusel
+
     }
   });
 
-  // 👉 Swipe (móvil)
-  let startX = 0;
+  window.addEventListener('resize', () => {
+    // Agrega evento resize a la ventana
 
-  carousel.addEventListener("touchstart", e => {
-    startX = e.touches[0].clientX;
+    index = 0;
+    // Resetea el índice
+
+    moveCarousel();
+    // Mueve el carrusel a la posición inicial
+
   });
 
-  carousel.addEventListener("touchend", e => {
-    let endX = e.changedTouches[0].clientX;
-    let diff = startX - endX;
-
-    if (diff > 50 && index < cards.length - 1) {
-      index++;
-    } else if (diff < -50 && index > 0) {
-      index--;
-    }
-
-    updateCarousel();
-  });
-
-  // Inicial
-  updateCarousel();
-
-  window.addEventListener("resize", updateCarousel);
 });
-</script>
 </script>
 
   <!-- Espacio en blanco -->
