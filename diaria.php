@@ -14,8 +14,8 @@ try {
 }
 
 // ================= OBTENER DATOS =================
-// Consulta la configuración de la página desde la tabla paginaweb_sv_diaria
-$stmt = $conn->query("SELECT * FROM paginaweb_sv_diaria WHERE id = 1");
+// Consulta la configuración de la página desde la tabla paginaweb_nic_diaria
+$stmt = $conn->query("SELECT * FROM paginaweb_nic_diaria WHERE id = 1");
 $config = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>

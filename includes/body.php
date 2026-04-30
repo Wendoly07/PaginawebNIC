@@ -1341,7 +1341,7 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 /* Lot Dates Card */
 .res-card.rojo-fechas {
-  background-color: #e31f26;
+  background-color: #e30613;
   border-radius: 15px;
   padding: 15px;
   text-align: center;
@@ -1380,7 +1380,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 .res-card.rojo-fechas .btn-jugar {
   background-color: white;
-  color: #e31f26;
+  color: #e30613;
   font-weight: bold;
 }
 
