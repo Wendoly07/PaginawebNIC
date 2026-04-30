@@ -1418,7 +1418,7 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 
 .res-card.marino-terminacion2 {
-  background-color: #015c91;
+  background-color: #006a9a;
   border-radius: 15px;
   padding: 15px;
   text-align: center;
@@ -1429,7 +1429,7 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 .res-card.marino-terminacion2 .btn-jugar {
   background-color: white;
-  color: #015c91;
+  color: #006a9a;
   font-weight: bold;
 }
 
