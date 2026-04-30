@@ -283,10 +283,21 @@ document.addEventListener("DOMContentLoaded", function() {
   overflow-x: auto;
   scroll-behavior: smooth;
   scrollbar-width: none;
+  scroll-snap-type: x mandatory;
 }
 
 .res-cards::-webkit-scrollbar {
   display: none;
+}
+
+.resultados-carousel .res-card {
+  flex: 0 0 calc((100% - 40px) / 3) !important;
+  scroll-snap-align: start;
+}
+
+.res-cards::after {
+  content: "";
+  flex: 0 0 calc((100% - 40px) / 3);
 }
 
 .res-prev,
@@ -797,6 +808,14 @@ document.addEventListener("DOMContentLoaded", function() {
   .resultados-carousel .res-cards {
     flex-direction: row !important;
     gap: 15px !important;
+  }
+
+  .resultados-carousel .res-card {
+    flex: 0 0 100% !important;
+  }
+
+  .res-cards::after {
+    display: none;
   }
 
   .res-prev,
@@ -1640,6 +1659,7 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </a>
       </div>
     </div>
+   
     <!-- Diaria (Verde) -->
     <div class="res-card verde">
       <img src="<?= $juegos[1]['imagen_url'] ?>" 
@@ -1754,7 +1774,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (!cards || !prev || !next) return;
 
-  function getScrollStep() {
+  let currentPage = 0;
+
+  function getCardStep() {
     const card = cards.querySelector('.res-card');
     if (!card) return cards.clientWidth;
 
@@ -1763,13 +1785,39 @@ document.addEventListener("DOMContentLoaded", function () {
     return card.offsetWidth + gap;
   }
 
+  function getCardsPerPage() {
+    return window.innerWidth <= 768 ? 1 : 3;
+  }
+
+  function getMaxPage() {
+    return Math.max(0, Math.ceil(cards.children.length / getCardsPerPage()) - 1);
+  }
+
+  function moveResults() {
+    const cardsPerPage = getCardsPerPage();
+    const left = currentPage * cardsPerPage * getCardStep();
+
+    cards.scrollTo({ left, behavior: 'smooth' });
+    prev.style.display = currentPage === 0 ? 'none' : 'flex';
+    next.style.display = currentPage >= getMaxPage() ? 'none' : 'flex';
+  }
+
   prev.addEventListener('click', function () {
-    cards.scrollBy({ left: -getScrollStep(), behavior: 'smooth' });
+    currentPage = Math.max(0, currentPage - 1);
+    moveResults();
   });
 
   next.addEventListener('click', function () {
-    cards.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
+    currentPage = Math.min(getMaxPage(), currentPage + 1);
+    moveResults();
   });
+
+  window.addEventListener('resize', function () {
+    currentPage = 0;
+    moveResults();
+  });
+
+  moveResults();
 });
 </script>
 <br>
