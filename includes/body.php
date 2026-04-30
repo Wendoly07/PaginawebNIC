@@ -1393,7 +1393,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 /* Lot jugatres Card */
 .res-card.azul-jugatres {
-  background-color: #2AB5EF;
+  background-color: #00abe4;
   border-radius: 15px;
   padding: 15px;
   text-align: center;
@@ -1440,7 +1440,7 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 .res-card.azul-jugatres .btn-jugar {
   background-color: white;
-  color: #2AB5EF;
+  color: #00abe4;
   font-weight: bold;
 }
 
