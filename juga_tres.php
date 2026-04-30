@@ -455,7 +455,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
   <!-- HEADER IMAGEN DEL LOGO -->
   <div class="top">
     <div class="top-content"> 
-      <img src="/ImagesSV/logo-30-JUGA TRES.png" alt="Logo Juga Tres">
+      <img src="/ImagesSV/LOGOJUGATRES.png" alt="Logo Juga Tres">
 
       <div class="ganador-box">
         <div class="ganador">ÚLTIMA FECHA GANADORA</div>
