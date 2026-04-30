@@ -268,8 +268,9 @@ document.addEventListener("DOMContentLoaded", function() {
   display: flex;
   overflow: hidden;
   gap: 20px;
-  padding-bottom: 10px;
+  padding: 0 50px 10px;
   position: relative;
+  box-sizing: border-box;
 }
 
 .res-cards {
@@ -301,11 +302,11 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 
 .res-prev {
-  left: 10px;
+  left: 0;
 }
 
 .res-next {
-  right: 10px;
+  right: 0;
 }
 
 .res-prev:hover,
@@ -780,7 +781,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 @media (max-width: 768px) {
   .resultados-carousel {
-    padding-bottom: 10px !important;
+    padding: 0 42px 10px !important;
     overflow: hidden !important;
   }
 
