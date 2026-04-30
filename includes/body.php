@@ -266,14 +266,52 @@ document.addEventListener("DOMContentLoaded", function() {
 /* Carrusel */
 .resultados-carousel {
   display: flex;
-  overflow-x: auto;
+  overflow: hidden;
   gap: 20px;
   padding-bottom: 10px;
+  position: relative;
 }
 
 .res-cards {
   display: flex;
   gap: 20px;
+  transition: transform 0.45s ease;
+  will-change: transform;
+}
+
+.res-prev,
+.res-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 126, 0, 0.95);
+  color: white;
+  cursor: pointer;
+  font-size: 26px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.28);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.res-prev {
+  left: 10px;
+}
+
+.res-next {
+  right: 10px;
+}
+
+.res-prev:hover,
+.res-next:hover {
+  background: #ff5500;
+  transform: translateY(-50%) scale(1.1);
 }
 
 /* Tarjetas */
@@ -743,11 +781,19 @@ document.addEventListener("DOMContentLoaded", function() {
 @media (max-width: 768px) {
   .resultados-carousel {
     padding-bottom: 10px !important;
+    overflow: hidden !important;
   }
 
   .resultados-carousel .res-cards {
     flex-direction: row !important;
     gap: 15px !important;
+  }
+
+  .resultados-carousel .res-prev,
+  .resultados-carousel .res-next {
+    width: 42px;
+    height: 42px;
+    font-size: 22px;
   }
 }
 
@@ -1564,6 +1610,7 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <!-- Carrusel -->
 <div class="resultados-carousel">
+  <button class="res-prev" type="button" aria-label="Resultado anterior">&#10094;</button>
   <div class="res-cards">
 
      <!-- terminacion2-->
@@ -1684,7 +1731,65 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
       </div>
     </div>
   </div>
+  <button class="res-next" type="button" aria-label="Resultado siguiente">&#10095;</button>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const resultadosBox = document.querySelector('.resultados-box');
+  if (!resultadosBox) return;
+
+  const carouselViewport = resultadosBox.querySelector('.resultados-carousel');
+  const carousel = resultadosBox.querySelector('.res-cards');
+  const next = resultadosBox.querySelector('.res-next');
+  const prev = resultadosBox.querySelector('.res-prev');
+
+  if (!carouselViewport || !carousel || !next || !prev) return;
+
+  let currentTranslate = 0;
+
+  function getStep() {
+    const card = carousel.querySelector('.res-card');
+    if (!card) return carouselViewport.offsetWidth;
+
+    const styles = window.getComputedStyle(carousel);
+    const gap = parseFloat(styles.columnGap || styles.gap) || 0;
+
+    return card.offsetWidth + gap;
+  }
+
+  function getMaxTranslate() {
+    return Math.max(0, carousel.scrollWidth - carouselViewport.offsetWidth);
+  }
+
+  function moveCarousel() {
+    const max = getMaxTranslate();
+
+    if (currentTranslate < 0) currentTranslate = 0;
+    if (currentTranslate > max) currentTranslate = max;
+
+    carousel.style.transform = `translateX(-${currentTranslate}px)`;
+    prev.style.display = currentTranslate <= 0 ? 'none' : 'flex';
+    next.style.display = currentTranslate >= max ? 'none' : 'flex';
+  }
+
+  next.addEventListener('click', () => {
+    currentTranslate += getStep();
+    moveCarousel();
+  });
+
+  prev.addEventListener('click', () => {
+    currentTranslate -= getStep();
+    moveCarousel();
+  });
+
+  window.addEventListener('resize', () => {
+    currentTranslate = 0;
+    moveCarousel();
+  });
+
+  moveCarousel();
+});
+</script>
 <br>
 <br>
  <p class="proximo" style="font-size: 28px; font-weight: 900; text-align: center; font-stretch: expanded;">
