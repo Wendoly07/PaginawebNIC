@@ -276,7 +276,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
 .res-cards {
   display: flex;
+  justify-content: flex-start !important;
   gap: 20px;
+  width: 100%;
+  min-width: 0;
   overflow-x: auto;
   scroll-behavior: smooth;
   scrollbar-width: none;
