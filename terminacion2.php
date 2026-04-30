@@ -36,7 +36,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
 
     /* ================= HEADER ================= */
     .top {
-      background: #015c91;
+      background: #006a9a;
       display: flex;
       justify-content: center;
       padding: 25px 10px;
@@ -113,7 +113,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
 
     .etiqueta-hola {
       background: yellow;
-      color: #015c91;
+      color: #006a9a;
       padding: 6px 14px;
       border-radius: 20px;
       font-weight: 900;
@@ -125,14 +125,14 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
       display: flex;
       justify-content: center;
       gap: 18px;
-      background: #015c91;
+      background: #006a9a;
       padding: 16px;
       flex-wrap: wrap;
     }
 
     .menu a { /* juega aquí y conocé más botones */
       background: linear-gradient(135deg, #ffffff, #c5eefe);
-      color: #015c91;
+      color: #006a9a;
       text-decoration: none;
       padding: 10px 22px;
       border-radius: 30px;
@@ -157,7 +157,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
 
     /* ================= RESULTADOS ================= */
     .resultados {
-      border: 1px solid #015c91;
+      border: 1px solid #006a9a;
       display: flex;
       max-width: 1100px;
       margin: 40px auto;
@@ -185,7 +185,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
     .izquierda h2 {
       font-size: 42px;
       font-weight: 900;
-      color: #015c91;
+      color: #006a9a;
       margin: 0;
       line-height: 1.1;
     }
@@ -194,7 +194,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
       font-size: 18px;
       font-weight: 700;
       background: yellow;
-      color: #015c91;
+      color: #006a9a;
       padding: 8px 16px;
       border-radius: 20px;
       display: inline-block;
@@ -241,7 +241,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     .calendario-real td.activo {
-      background: linear-gradient(135deg, #015c91, #01699d);
+      background: linear-gradient(135deg, #006a9a, #007baf);
       color: white;
       border-radius: 50%;
       font-weight: bold;
@@ -263,7 +263,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
       box-shadow: inset 0 2px 5px rgba(0,0,0,0.15);
       cursor: pointer;
       font-weight: 700;
-      color: #01699d;
+      color: #006a9a;
       transition: 0.3s;
     }
 
@@ -287,7 +287,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
     .derecha h3 {
       font-size: 18px;
       font-weight: 900;
-      color: #015c91;
+      color: #006a9a;
       margin-bottom: 8px;
       text-align: center;
     }
@@ -316,7 +316,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
       border-radius: 12px;
       overflow: hidden;
       background: white;
-      border: 2px solid #015c91;
+      border: 2px solid #006a9a;
     }
 
     .accordion-header {
@@ -328,12 +328,12 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
       font-weight: 800;
       font-size: 20px;
       cursor: pointer;
-      background: #015c91;
+      background: #006a9a;
       transition: background 0.3s;
     }
 
     .accordion-header:hover {
-      background: #01699d;
+      background: #007baf;
     }
 
     .accordion-header .arrow-circle {
