@@ -80,7 +80,7 @@ try {
     $lotocentros = $stmtLoto->fetchAll(PDO::FETCH_ASSOC);
 
     // Consulta para obtener la URL del mapa desde la configuración
-    $sqlMapa = "SELECT mapa_url FROM paginaweb_sv_config WHERE id = 1 AND secciones = 'mapa_contactanos'" ;
+    $sqlMapa = "SELECT mapa_url FROM paginaweb_nic_config WHERE id = 1 AND secciones = 'mapa_contactanos'" ;
     $stmtMapa = $conn->query($sqlMapa);
     $mapa = $stmtMapa->fetch(PDO::FETCH_ASSOC);
 
