@@ -144,10 +144,13 @@ try {
 }
 
 .map-section img {
-  width: 55%;
-  max-width: 650px;
+  width: auto;
+  max-width: min(55%, 650px);
+  max-height: 55vh;
+  height: auto;
   display: block;
   margin: auto;
+  object-fit: contain;
 }
 
 /* ACORDEÓN */
@@ -353,7 +356,8 @@ try {
   }
 
   .map-section img {
-    width: 90%;
+    max-width: 90%;
+    max-height: 45vh;
   }
 }
 </style>
