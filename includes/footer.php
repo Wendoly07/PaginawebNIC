@@ -133,9 +133,24 @@
             Diaria
           </a>
         </p>
-        <p>
+                <p>
           <a href="index.php?pag=fechas_lotos" style="color: inherit; text-decoration: none;">
             Fechas Lotos
+          </a>
+        </p>
+                <p>
+          <a href="index.php?pag=premiado" style="color: inherit; text-decoration: none;">
+            Premiado
+          </a>
+        </p>
+                <p>
+          <a href="index.php?pag=juga_tres" style="color: inherit; text-decoration: none;">
+            Jugá Tres
+          </a>
+        </p>
+        <p>
+          <a href="index.php?pag=terminacion2" style="color: inherit; text-decoration: none;">
+            Terminación 2
           </a>
         </p>
 

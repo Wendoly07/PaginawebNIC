@@ -1,4 +1,5 @@
 <?php
+$config = [];
 // ================= CONEXIÓN SQL SERVER =================
 // Establece la conexión con la base de datos SQL Server en Azure
 try {
@@ -8,15 +9,17 @@ try {
         "LotAdmin1.",
         [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
     );
+
+    $stmt = $conn->query("SELECT * FROM paginaweb_nic_diaria WHERE id = 1");
+    $config = $stmt->fetch(PDO::FETCH_ASSOC) ?: [];
 } catch (PDOException $e) {
     // Si la conexión falla, detiene la ejecución y muestra el error
-    die("Error de conexión: " . $e->getMessage());
+    $config = [];
 }
 
 // ================= OBTENER DATOS =================
 // Consulta la configuración de la página desde la tabla paginaweb_nic_diaria
-$stmt = $conn->query("SELECT * FROM paginaweb_nic_diaria WHERE id = 1");
-$config = $stmt->fetch(PDO::FETCH_ASSOC);
+$logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO DIARIA.svg';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -675,7 +678,7 @@ body {
   <!-- Área superior con logo y último número ganador -->
   <div class="top">
     <div class="top-content">
-      <img src="<?= !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO DIARIA.svg' ?>" alt="Logo Diaria">
+      <img src="<?= htmlspecialchars($logoUrl) ?>" alt="Logo Diaria">
 
       <div class="ganador-box">
         <div class="ganador">ÚLTIMO NÚMERO GANADOR</div>
@@ -1100,3 +1103,4 @@ let x = setInterval(function () {
 </script>
 </body>
 </html>
+

@@ -1,4 +1,5 @@
 <?php
+$config = [];
 try {
     $conn = new PDO(
         "sqlsrv:Server=srvdbcacdev.database.windows.net;Database=dblotocacdev",
@@ -6,12 +7,14 @@ try {
         "LotAdmin1.",
         [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
     );
+
+    $stmt = $conn->query("SELECT * from paginaweb_nic_terminacion2 WHERE id = 1");
+    $config = $stmt->fetch(PDO::FETCH_ASSOC) ?: [];
 } catch (PDOException $e) {
-    die("Error de conexión: " . $e->getMessage());
+    $config = [];
 }
 
-$stmt = $conn->query("SELECT * from paginaweb_nic_terminacion2 WHERE id = 1");
-$config = $stmt->fetch(PDO::FETCH_ASSOC);
+$logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/logo terminacion2.png';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -455,7 +458,7 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
   <!-- HEADER IMAGEN DEL LOGO -->
   <div class="top">
     <div class="top-content"> 
-      <img src="/ImagesSV/logo terminacion2.png" alt="Logo Terminacion2">
+      <img src="<?= htmlspecialchars($logoUrl) ?>" alt="Logo Terminacion2">
 
       <div class="ganador-box">
         <div class="ganador">ÚLTIMA FECHA GANADORA</div>
@@ -718,3 +721,4 @@ $config = $stmt->fetch(PDO::FETCH_ASSOC);
 
 </body>
 </html>
+

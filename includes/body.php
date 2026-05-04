@@ -1496,6 +1496,11 @@ document.addEventListener("DOMContentLoaded", function() {
   padding: 10px;
 }
 
+.card-content h4 a {
+  color: inherit;
+  text-decoration: none;
+}
+
 .card-content p {
   display: block !important;
   font-size: 14px;
@@ -1596,27 +1601,32 @@ if ($rss && isset($rss->entry[0])) {
     </h2>
     <br>
     <?php
-// =================== Conexión ===================
-try {
-    $conn = new PDO(
-        "sqlsrv:Server=srvdbcacdev.database.windows.net;Database=dblotocacdev",
-        "LotoAdmin",
-        "LotAdmin1.",
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-    );
-} catch(PDOException $e){
-    die("Error de conexión: " . $e->getMessage());
-}
+$logoFechasLotos = '/ImagesSV/LOGO FECHAS LOTOS.png.png';
+$logoDiaria = '/ImagesSV/LOGO DIARIA.svg';
+$logoJugaTres = '/ImagesSV/LOGOJUGATRES.png';
+$logoPremiado = '/ImagesSV/Premiado2.png';
+$logoTerminacion2 = '/ImagesSV/logo terminacion2.png';
 
-// =================== Traer juegos ===================
-$stmt = $conn->prepare("
-    SELECT * 
-    FROM paginaweb_nic_sobre_inicio
-    WHERE seccion='juegos_home'
-    ORDER BY orden ASC
-");
-$stmt->execute();
-$juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+try {
+    $stmt = $conn->prepare("
+        SELECT
+            (SELECT logo FROM paginaweb_nic_fechas_loto WHERE id = 1) AS fechas_lotos,
+            (SELECT logo FROM paginaweb_nic_diaria WHERE id = 1) AS diaria,
+            (SELECT logo FROM paginaweb_nic_juga_tres WHERE id = 1) AS juga_tres,
+            (SELECT logo FROM paginaweb_nic_premiado WHERE id = 1) AS premiado,
+            (SELECT logo FROM paginaweb_nic_terminacion2 WHERE id = 1) AS terminacion2
+    ");
+    $stmt->execute();
+    $logos = $stmt->fetch(PDO::FETCH_ASSOC) ?: [];
+
+    $logoFechasLotos = !empty($logos['fechas_lotos']) ? $logos['fechas_lotos'] : $logoFechasLotos;
+    $logoDiaria = !empty($logos['diaria']) ? $logos['diaria'] : $logoDiaria;
+    $logoJugaTres = !empty($logos['juga_tres']) ? $logos['juga_tres'] : $logoJugaTres;
+    $logoPremiado = !empty($logos['premiado']) ? $logos['premiado'] : $logoPremiado;
+    $logoTerminacion2 = !empty($logos['terminacion2']) ? $logos['terminacion2'] : $logoTerminacion2;
+} catch (Throwable $e) {
+    // Mantener logos locales si falla la consulta de logos.
+}
 ?>
 
 <!-- Carrusel -->
@@ -1625,8 +1635,8 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <div class="res-cards">
         <!-- Diaria (Verde) -->
     <div class="res-card verde">
-      <img src="<?= $juegos[1]['imagen_url'] ?>" 
-           alt="<?= htmlspecialchars($juegos[1]['nombre']) ?>" 
+      <img src="<?= htmlspecialchars($logoDiaria) ?>"
+           alt="Logo Diaria"
            style="width:190px; height:auto; position: relative; top:20px;">
 
       <div class="numeros" style="position:relative; top:15px;">
@@ -1662,7 +1672,7 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
         <!-- Lotus Dates (Red) -->
     <div class="res-card rojo-fechas">
-      <img src="/ImagesSV/LOGO FECHAS LOTOS.png.png"
+      <img src="<?= htmlspecialchars($logoFechasLotos) ?>"
            alt="Fechas Lotos"
            style="width:190px; height:auto; position:relative; top:20px;">
 
@@ -1682,7 +1692,7 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
   <!-- JUGA TRES (Blue) -->
     <div class="res-card azul-jugatres">
-      <img src="/ImagesSV/LOGOJUGATRES.png"
+      <img src="<?= htmlspecialchars($logoJugaTres) ?>"
            alt="Juga Tres"
            style="width:190px; height:auto; position:relative; top:20px;">
       <div class="numeros" style="position:relative; top:15px;">
@@ -1701,8 +1711,8 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
        <!-- Premiados 2 -->
     <div class="res-card morado-premiado">
-      <img src="/ImagesSV/Premiado2.png"
-           alt="Fechas Lotos"
+      <img src="<?= htmlspecialchars($logoPremiado) ?>"
+           alt="Logo Premiado2"
            style="width:190px; height:auto; position:relative; top:20px;">
 
       <div class="numeros" style="position:relative; top:15px;">
@@ -1724,8 +1734,8 @@ $juegos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
      <!-- terminacion2-->
     <div class="res-card marino-terminacion2">
-      <img src="/ImagesSV/logo terminacion2.png"
-           alt="Juga Tres"
+      <img src="<?= htmlspecialchars($logoTerminacion2) ?>"
+           alt="Logo Terminacion2"
            style="width:190px; height:auto; position:relative; top:20px;">
       <div class="numeros" style="position:relative; top:15px;">
         <span class="bola-blanca" id="fl-numero">--</span>
@@ -2055,9 +2065,9 @@ $superpremio = $stmt->fetch(PDO::FETCH_ASSOC);
 <?php
 
 $stmt = $conn->prepare("
-    SELECT * FROM paginaweb_nic_sobre_inicio 
-    WHERE seccion='noticias_home' 
-    ORDER BY orden ASC
+    SELECT TOP 8 *
+    FROM paginaweb_nic_noticias
+    ORDER BY es_principal DESC, id DESC
 ");
 $stmt->execute();
 $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -2079,13 +2089,18 @@ $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
       <?php foreach($noticias as $n): ?>
         <div class="card">
-          <img src="<?= htmlspecialchars($n['imagen_url']); ?>" alt="Noticia">
+          <a href="index.php?pag=noticia_detalle&id=<?= urlencode($n['id']) ?>">
+            <img src="<?= htmlspecialchars($n['imagen_url']); ?>" alt="<?= htmlspecialchars($n['titulo']); ?>">
+          </a>
 
           <div class="card-content">
-            <h4><?= htmlspecialchars($n['titulo']); ?></h4>
+            <h4>
+              <a href="index.php?pag=noticia_detalle&id=<?= urlencode($n['id']) ?>">
+                <?= htmlspecialchars($n['titulo']); ?>
+              </a>
+            </h4>
 
-            <!--  IMPORTANTE -->
-            <p><?= nl2br(htmlspecialchars($n['texto'] ?? '')); ?></p>
+            <p><?= nl2br(htmlspecialchars($n['descripcion'] ?? '')); ?></p>
 
           </div>
         </div>
@@ -2465,3 +2480,4 @@ let x = setInterval(function() {
 
 
 </body>
+
