@@ -144,7 +144,8 @@ try {
 }
 
 .map-section img {
-  width: 80%;
+  width: 55%;
+  max-width: 650px;
   display: block;
   margin: auto;
 }
@@ -349,6 +350,10 @@ try {
 @media (max-width: 767px) {
   .map-section {
     padding-top: 70px; /* Ajusta este valor */
+  }
+
+  .map-section img {
+    width: 90%;
   }
 }
 </style>
