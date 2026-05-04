@@ -35,6 +35,10 @@ switch ($pag) {
         // Página de noticias
         include 'noticias.php';
         break;
+    case 'noticia_detalle':
+        // Página de detalle de una noticia
+        include 'noticia_detalle.php';
+        break;
     case 'apostemos':
         // Página de apuestas deportivas
         include 'apostemos.php';

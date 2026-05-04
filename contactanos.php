@@ -143,9 +143,10 @@ try {
   font-size: 28px;
 }
 
+/* tamaño del mapa */
 .map-section img {
-  width: 65%;
-  max-width: 780px;
+  width: 45%;
+  max-width: 550px;
   margin: auto;
   display: block;
   margin: auto;

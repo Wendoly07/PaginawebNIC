@@ -286,7 +286,7 @@ body{ font-family:'HelveticaRounded', sans-serif; background:#f4f4f4; }
     <h2><?= htmlspecialchars($principal['titulo']) ?></h2>
     <p class="descripcion"><?= nl2br(htmlspecialchars($principal['descripcion'])) ?></p>
 
-<a href="#" class="btn-leer-principal">Leer más</a>
+<a href="index.php?pag=noticia_detalle&id=<?= urlencode($principal['id']) ?>" class="btn-leer-principal">Leer más</a>
   </div>
 </section>
 
@@ -300,7 +300,7 @@ body{ font-family:'HelveticaRounded', sans-serif; background:#f4f4f4; }
       <p class="fecha"><?= htmlspecialchars($n['fecha']) ?></p>
       <h3><?= htmlspecialchars($n['titulo']) ?></h3>
       <p class="contenido"><?= htmlspecialchars($n['descripcion']) ?></p>
-      <a href="#" class="btn-leer">Leer más</a>
+      <a href="index.php?pag=noticia_detalle&id=<?= urlencode($n['id']) ?>" class="btn-leer">Leer más</a>
     </article>
   <?php endforeach; ?>
   </div>
@@ -309,34 +309,6 @@ body{ font-family:'HelveticaRounded', sans-serif; background:#f4f4f4; }
 </div>
 <br>
 <br>
-
-<script>
-// SCRIPT DE INTERACCIÓN
-// Controla los botones de "Leer más" para expandir o contraer el texto de cada noticia.
-document.querySelectorAll('.card-noticia .btn-leer').forEach(btn=>{
-  btn.addEventListener('click', e=>{
-    e.preventDefault();
-    const card=btn.closest('.card-noticia');
-    const texto=card.querySelector('.contenido');
-    texto.classList.toggle('expandido');
-    btn.textContent=texto.classList.contains('expandido')?'Leer menos':'Leer más';
-  });
-});
-
-const btnPrincipal = document.querySelector('.btn-leer-principal');
-
-if(btnPrincipal){
-  btnPrincipal.addEventListener('click', e=>{
-    e.preventDefault();
-    const texto = document.querySelector('.noticia-principal-contenido .descripcion');
-    texto.classList.toggle('expandido');
-
-    btnPrincipal.textContent = texto.classList.contains('expandido')
-      ? 'Leer menos'
-      : 'Leer más';
-  });
-}
-</script>
 
 </body>
 </html>
