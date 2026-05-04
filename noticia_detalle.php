@@ -149,12 +149,7 @@ body{
       <?= nl2br(htmlspecialchars($noticia['descripcion'])) ?>
     </div>
     <a class="btn-volver" href="index.php?pag=noticias">Volver a noticias</a>
-  </section>
-  <!-- TITULO -->
-<!-- Encabezado principal de la página de noticias. -->
-<section class="titulo-noticias">
-  <h1>NOTICIAS RECIENTES</h1>
-</section>
+  </section>>
 </main>
 
 </body>

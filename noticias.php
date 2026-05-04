@@ -252,12 +252,10 @@ body{ font-family:'HelveticaRounded', sans-serif; background:#f4f4f4; }
 
 .acciones-noticia{
   display:flex;
-  flex-wrap:wrap;
-  justify-content:space-between;
-  align-items:center;
+  flex-direction:column;
+  align-items:flex-start;
   gap:8px;
   margin-top:14px;
-  width:100%;
 }
 
 .card-noticia .acciones-noticia{
