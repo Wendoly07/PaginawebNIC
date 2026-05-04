@@ -58,10 +58,31 @@ body{
   color:#333;
 }
 
+.container-general{
+  width:90%;
+  max-width:1200px;
+  margin:auto;
+}
+
+.titulo-noticias{
+  background:#a6d1f8;
+  padding:80px 40px 45px;
+  border-radius:0 0 14px 14px;
+  text-align:center;
+  margin:0 -2cm 50px;
+}
+
+.titulo-noticias h1{
+  color:#fff;
+  font-size:45px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+
 .detalle-container{
   width:90%;
   max-width:1000px;
-  margin:80px auto 60px;
+  margin:0 auto 60px;
   background:#fff;
   border-radius:16px;
   box-shadow:0 6px 18px rgba(0,0,0,0.12);
@@ -116,9 +137,17 @@ body{
 }
 
 @media(max-width:600px){
+  .titulo-noticias{
+    padding:65px 20px 35px;
+    margin:0 -12px 35px;
+  }
+
+  .titulo-noticias h1{
+    font-size:30px;
+  }
+
   .detalle-container{
     width:94%;
-    margin-top:45px;
   }
 
   .detalle-contenido{
@@ -137,6 +166,12 @@ body{
 </head>
 <body>
 
+<div class="container-general">
+  <section class="titulo-noticias">
+    <h1>NOTICIAS RECIENTES</h1>
+  </section>
+</div>
+
 <main class="detalle-container">
   <?php if (!empty($noticia['imagen_url'])): ?>
     <img class="detalle-imagen" src="<?= htmlspecialchars($noticia['imagen_url']) ?>" alt="<?= htmlspecialchars($noticia['titulo']) ?>">
@@ -149,7 +184,7 @@ body{
       <?= nl2br(htmlspecialchars($noticia['descripcion'])) ?>
     </div>
     <a class="btn-volver" href="index.php?pag=noticias">Volver a noticias</a>
-  </section>>
+  </section>
 </main>
 
 </body>

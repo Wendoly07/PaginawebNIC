@@ -262,6 +262,13 @@ body{ font-family:'HelveticaRounded', sans-serif; background:#f4f4f4; }
   margin:16px 12px 14px;
 }
 
+.noticia-principal-contenido .acciones-noticia{
+  flex-direction:row;
+  justify-content:space-between;
+  align-items:center;
+  width:100%;
+}
+
 .btn-noticia-completa{
   display:inline-block;
   padding:7px 16px;
