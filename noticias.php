@@ -129,13 +129,13 @@ body{ font-family:'HelveticaRounded', sans-serif; background:#f4f4f4; }
   padding:6px 14px;
   font-size:13px;
   font-weight:700;
-  background:#1a73e8;
+  background:#ff6600;
   color:#fff;
   border-radius:18px;
   text-decoration:none;
   transition:background .2s ease;
 }
-.btn-leer:hover{ background:#1558b0; }
+.btn-leer:hover{ background:#cc5200; }
 
 /* ===================== GRID NOTICIAS SECUNDARIAS ===================== */
 .grid-noticias-wrapper{
@@ -197,20 +197,20 @@ body{ font-family:'HelveticaRounded', sans-serif; background:#f4f4f4; }
   transition:max-height .3s ease;
 }
 .card-noticia .contenido.expandido{
-  -webkit-line-clamp:unset;
-  line-clamp: unset;
-  max-height:1000px;
+  -webkit-line-clamp:7;
+  line-clamp: 7;
+  max-height: calc(1.5em * 7);
 }
 .card-noticia .btn-leer{
   align-self:flex-start;
-  margin:16px 12px 14px;
+  margin:0;
   padding:5px 12px;
   font-size:12px;
   border-radius:14px;
   transition:all .2s ease;
 }
 .card-noticia .btn-leer:hover{
-  background:#1558b0;
+  background:#cc5200;
   transform: translateX(3px);
 }
 
@@ -226,14 +226,14 @@ body{ font-family:'HelveticaRounded', sans-serif; background:#f4f4f4; }
 }
 
 .noticia-principal-contenido .descripcion.expandido{
-  -webkit-line-clamp:unset;
-  line-clamp: unset;
-  max-height:1000px;
+  -webkit-line-clamp:7;
+  line-clamp: 7;
+  max-height: calc(1.6em * 7);
 }
 
 .btn-leer-principal{
   display:inline-block;
-  margin-top:12px;
+  margin-top:0;
   padding:7px 16px;
   font-size:13px;
   font-weight:700;
@@ -248,6 +248,42 @@ body{ font-family:'HelveticaRounded', sans-serif; background:#f4f4f4; }
 
 .btn-leer-principal:hover{
   background:#cc5200;
+}
+
+.acciones-noticia{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+  margin-top:14px;
+  width:100%;
+}
+
+.card-noticia .acciones-noticia{
+  margin:16px 12px 14px;
+}
+
+.btn-noticia-completa{
+  display:inline-block;
+  padding:7px 16px;
+  font-size:13px;
+  font-weight:700;
+  background:#1a73e8;
+  color:#fff;
+  border-radius:18px;
+  text-decoration:none;
+  transition:all .2s ease;
+}
+
+.card-noticia .btn-noticia-completa{
+  padding:5px 12px;
+  font-size:12px;
+  border-radius:14px;
+}
+
+.btn-noticia-completa:hover{
+  background:#1558b0;
 }
 
 /* RESPONSIVE */
@@ -286,7 +322,10 @@ body{ font-family:'HelveticaRounded', sans-serif; background:#f4f4f4; }
     <h2><?= htmlspecialchars($principal['titulo']) ?></h2>
     <p class="descripcion"><?= nl2br(htmlspecialchars($principal['descripcion'])) ?></p>
 
-<a href="index.php?pag=noticia_detalle&id=<?= urlencode($principal['id']) ?>" class="btn-leer-principal">Leer más</a>
+<div class="acciones-noticia">
+  <a href="#" class="btn-leer-principal">Leer más</a>
+  <a href="index.php?pag=noticia_detalle&id=<?= urlencode($principal['id']) ?>" class="btn-noticia-completa">Noticia completa</a>
+</div>
   </div>
 </section>
 
@@ -300,7 +339,10 @@ body{ font-family:'HelveticaRounded', sans-serif; background:#f4f4f4; }
       <p class="fecha"><?= htmlspecialchars($n['fecha']) ?></p>
       <h3><?= htmlspecialchars($n['titulo']) ?></h3>
       <p class="contenido"><?= htmlspecialchars($n['descripcion']) ?></p>
-      <a href="index.php?pag=noticia_detalle&id=<?= urlencode($n['id']) ?>" class="btn-leer">Leer más</a>
+      <div class="acciones-noticia">
+        <a href="#" class="btn-leer">Leer más</a>
+        <a href="index.php?pag=noticia_detalle&id=<?= urlencode($n['id']) ?>" class="btn-noticia-completa">Noticia completa</a>
+      </div>
     </article>
   <?php endforeach; ?>
   </div>
@@ -309,6 +351,34 @@ body{ font-family:'HelveticaRounded', sans-serif; background:#f4f4f4; }
 </div>
 <br>
 <br>
+
+<script>
+// SCRIPT DE INTERACCIÓN
+// Controla los botones de "Leer más" para expandir o contraer el texto de cada noticia.
+document.querySelectorAll('.card-noticia .btn-leer').forEach(btn=>{
+  btn.addEventListener('click', e=>{
+    e.preventDefault();
+    const card=btn.closest('.card-noticia');
+    const texto=card.querySelector('.contenido');
+    texto.classList.toggle('expandido');
+    btn.textContent=texto.classList.contains('expandido')?'Leer menos':'Leer más';
+  });
+});
+
+const btnPrincipal = document.querySelector('.btn-leer-principal');
+
+if(btnPrincipal){
+  btnPrincipal.addEventListener('click', e=>{
+    e.preventDefault();
+    const texto = document.querySelector('.noticia-principal-contenido .descripcion');
+    texto.classList.toggle('expandido');
+
+    btnPrincipal.textContent = texto.classList.contains('expandido')
+      ? 'Leer menos'
+      : 'Leer más';
+  });
+}
+</script>
 
 </body>
 </html>
