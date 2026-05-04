@@ -144,8 +144,9 @@ try {
 }
 
 .map-section img {
-  width: 55%;
-  max-width: 650px;
+  width: 65%;
+  max-width: 780px;
+  margin: auto;
   display: block;
   margin: auto;
 }
