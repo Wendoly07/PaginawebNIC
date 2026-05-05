@@ -219,23 +219,23 @@
   <!-- Iconos de redes sociales -->
   <div class="social-icons">
   <!-- Enlaces a perfiles sociales que se abren en nueva pestaña -->
-  <a href="https://www.tiktok.com/@lotoelsalvador" target="_blank">
+  <a href="https://www.tiktok.com/@lotonicaragua" target="_blank">
     <img src="/ImagesSV/tik-tok.svg" alt="TikTok">
   </a>
-  <a href="https://www.instagram.com/Lotoelsalvador/" target="_blank">
+  <a href="https://www.instagram.com/loto.nicaragua/" target="_blank">
     <img src="/ImagesSV/instagram.svg" alt="Instagram">
   </a>
-  <a href="https://www.facebook.com/LotoElSalvador/" target="_blank">
+  <a href="https://www.facebook.com/loto.nicaragua.of/" target="_blank">
     <img src="/ImagesSV/facebook.svg" alt="Facebook">
   </a>
  <!-- Enlace a Twitter comentado (no se muestra) -->
  <!-- <a href="https://x.com/LotoElSalvador" target="_blank">
     <img src="/ImagesSV/Twitter.svg" alt="Twitter">
   </a>   -->
-  <a href="https://www.youtube.com/results?search_query=loto+el+salvador" target="_blank">
+  <a href="https://www.youtube.com/user/LotoNicaragua" target="_blank">
     <img src="/ImagesSV/Youtube.svg" alt="Youtube">
   </a>
-  <a href="https://sv.linkedin.com/company/lotoeselsalvador" target="_blank">
+  <a href="https://www.linkedin.com/company/loto-nicaragua" target="_blank">
     <img src="/ImagesSV/linkedin.svg" alt="LinkedIn">
   </a>
 </div>

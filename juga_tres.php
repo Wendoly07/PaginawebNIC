@@ -20,7 +20,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGOJUGATRES.p
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Juga Tres</title>
+  <title>Jugá Tres</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>

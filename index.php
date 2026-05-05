@@ -72,7 +72,7 @@ switch ($pag) {
         include 'fechas_lotos.php';
         break;
     case 'juga_tres':
-        // Página de Juga Tres
+        // Página de Jugá Tres
         include 'juga_tres.php';
         break;
     case 'premiado':
