@@ -1543,9 +1543,9 @@ $banners = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- HERO ORIGINAL (NO SE TOCA) -->
     <div class="hero" style="position: relative;">
       <div class="texto-hero">
-        <h1>SINTONIZÁ EL PRÓXIMO SORTEO EN VIVO A LAS</h1>
+        <h1>SINTONIZÁ EL PRÓXIMO SORTEO EN VIVO</h1>
 <div class="horarios">
-  12:00 AM, 3:00 PM,<br>
+  12:00 PM, 3:00 PM,<br>
   6:00 PM y 9:00 PM
 </div>
         <a href="https://www.youtube.com/@LotoNicaragua" class="boton">

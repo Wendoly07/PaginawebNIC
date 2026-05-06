@@ -213,7 +213,7 @@
      <!-- Logo ESR comentado (no se muestra) -->
      <!-- <img src="/ImagesSV/Logo ESR.png" alt="Logo ESR" class="footer-extra-logo"> -->
     <!-- Logo de restricción de edad +18 -->
-    <img src="/ImagesSV/18 años png.png" alt="Logo Loto 21" class="footer-extra-logo">
+    <img src="/ImagesSV/18Loto-01.png" alt="Prohibida la venta a menores de 18 años" class="footer-extra-logo">
   </div>
 
   <!-- Iconos de redes sociales -->
