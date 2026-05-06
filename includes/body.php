@@ -1572,7 +1572,7 @@ $banners = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
   <?php
-$CHANNEL_ID = "UCm2CdYYApcaticw4xAMTHcw";
+$CHANNEL_ID = "UCwnJv1k2PKCpJeJWrtSaQPg";
 $rss_url = "https://www.youtube.com/feeds/videos.xml?channel_id=$CHANNEL_ID";
 
 $videoDate = "Cargando...";
@@ -1827,7 +1827,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 <br>
 <br>
- <p class="proximo" style="font-size: 28px; font-weight: 900; text-align: center; font-stretch: expanded;">
+ <p id="countdown-container" class="proximo" style="font-size: 28px; font-weight: 900; text-align: center; font-stretch: expanded;">
   <span style="color: #003399;">PRÓXIMO SORTEO EN VIVO:</span> 
   <span style="color: white;">
     <span id="hours">0</span>H :
@@ -1836,7 +1836,7 @@ document.addEventListener("DOMContentLoaded", function () {
   </span>
 </p>
 
-<!-- Opcional: mostrar fecha -->
+<!-- Fecha mostrada por el contador regresivo -->
 <div id="diaSorteo" style="color: white; font-size: 16px; text-align: center; margin-top: 10px;"></div>
 
 </div>
@@ -1935,8 +1935,15 @@ async function cargarJackpot() {
 cargarJackpot();
 </script>
 
-  <?php
-$CHANNEL_ID = "UCm2CdYYApcaticw4xAMTHcw"; // ID de tu canal
+<br>
+<br>
+<br>
+<br>
+
+<!-- SECCIÓN YOUTUBE -->
+<?php
+$CHANNEL_ID = "UCwnJv1k2PKCpJeJWrtSaQPg"; // Canal de LOTO Nicaragua
+$youtubeStreamsUrl = "https://www.youtube.com/@LotoNicaragua/streams";
 $rss_url = "https://www.youtube.com/feeds/videos.xml?channel_id=$CHANNEL_ID";
 
 // Cargar el RSS
@@ -1954,29 +1961,6 @@ if ($rss && isset($rss->entry[0])) {
 }
 ?>
 
-<br>
-<br>
-<br>
-<br>
-
-<!-- SECCIÓN YOUTUBE -->
-<?php
-$CHANNEL_ID = "UCm2CdYYApcaticw4xAMTHcw"; // ID de tu canal
-$rss_url = "https://www.youtube.com/feeds/videos.xml?channel_id=$CHANNEL_ID";
-
-// Cargar el RSS
-$rss = simplexml_load_file($rss_url);
-
-// Datos por defecto
-$videoId = "1qsx5zpIp7w";
-$videoTitle = "Sorteo LOTO 11:00 a.m 25 de Julio del 2025";
-
-if ($rss && isset($rss->entry[0])) {
-    $videoId = (string)$rss->entry[0]->children('yt', true)->videoId;
-    $videoTitle = (string)$rss->entry[0]->title;
-}
-?>
-
 <!-- SECCIÓN YOUTUBE -->
 <div class="youtube">
   <div class="youtube-inner">
@@ -1985,14 +1969,14 @@ if ($rss && isset($rss->entry[0])) {
       <!-- Video que sale a la par del mesaje visualiza nuestros sorteos -->
       <div class="youtube-video">
         <iframe width="100%" height="315"
-          src="https://www.youtube.com/embed/<?php echo $videoId; ?>"   
+          src="https://www.youtube.com/embed/<?php echo htmlspecialchars($videoId, ENT_QUOTES, 'UTF-8'); ?>"
           title="YouTube video player"
           frameborder="0"
           allowfullscreen>
         </iframe>
 
         <!-- SOLO EL TÍTULO -->
-        <p class="video-subtext"><?php echo $videoTitle; ?></p>
+        <p class="video-subtext"><?php echo htmlspecialchars($videoTitle, ENT_QUOTES, 'UTF-8'); ?></p>
       </div>
 
       <?php
@@ -2022,7 +2006,7 @@ if ($rss && isset($rss->entry[0])) {
           </div>
 
           <div class="boton-container">
-            <a href="<?= $youtube['link_url'] ?? '#' ?>" target="_blank">
+            <a href="<?= htmlspecialchars($youtube['link_url'] ?? $youtubeStreamsUrl, ENT_QUOTES, 'UTF-8') ?>" target="_blank" rel="noopener">
               <button class="youtube-boton">Ver más sorteos</button>
             </a>
           </div>
@@ -2348,37 +2332,21 @@ const second = 1000,
 var hoy = new Date();
 // Fecha actual
 
-var dia = hoy.getDate();
-// Día del mes actual
+var horariosSorteo = [12, 15, 18, 21];
+// Horarios de sorteo: 12 PM, 3 PM, 6 PM y 9 PM
 
-var hora = hoy.getHours();
-// Hora actual
+var proximoSorteo = horariosSorteo
+    .map(function(horaSorteo) {
+        return new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate(), horaSorteo, 0, 0);
+    })
+    .find(function(fechaSorteo) {
+        return fechaSorteo > hoy;
+    });
+// Busca el siguiente sorteo del día
 
-var HoraSorteo = "";
-// Variable para la hora del próximo sorteo
-
-// Hora próximo Sorteo en SV
-if(hora < 11){
-    // Si es antes de las 11 AM
-
-    HoraSorteo = "11";
-    // Próximo sorteo a las 11 AM
-
-} else if(hora >= 11 && hora < 21){
-    // Si es entre 11 AM y 9 PM
-
-    HoraSorteo = "21";
-    // Próximo sorteo a las 9 PM
-
-} else if(hora >= 21){
-    // Si es después de las 9 PM
-
-    HoraSorteo = "11";
-    // Próximo sorteo mañana a las 11 AM
-
-    dia += 1;
-    // Incrementa el día
-
+if(!proximoSorteo){
+    proximoSorteo = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate() + 1, horariosSorteo[0], 0, 0);
+    // Si ya pasó el sorteo de las 9 PM, pasa al sorteo de mañana a las 12 PM
 }
 
 Number.prototype.padStart = function (n,str){
@@ -2389,10 +2357,10 @@ Number.prototype.padStart = function (n,str){
 
 }
 
-var fechaCompleta = diasSemana[hoy.getDay()] + " " + hoy.getDate() + " de " + mesesEnletras[hoy.getMonth()];
+var fechaCompleta = diasSemana[proximoSorteo.getDay()] + " " + proximoSorteo.getDate() + " de " + mesesEnletras[proximoSorteo.getMonth()];
 // Construye la fecha completa en texto
 
-let countDown = new Date(hoy.getFullYear(), hoy.getMonth(), dia, HoraSorteo).getTime();
+let countDown = proximoSorteo.getTime();
 // Calcula el timestamp del próximo sorteo
 
 let x = setInterval(function() {

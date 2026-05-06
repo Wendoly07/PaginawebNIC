@@ -107,7 +107,7 @@ body{
 }
 
 .detalle-contenido h1{
-  color:#ff6600;
+  color:#ef7d00;
   font-size:36px;
   line-height:1.2;
   margin-bottom:22px;
@@ -124,7 +124,7 @@ body{
   display:inline-block;
   margin-top:28px;
   padding:9px 18px;
-  background:#1a73e8;
+  background:#ef7d00;
   color:#fff;
   border-radius:18px;
   text-decoration:none;

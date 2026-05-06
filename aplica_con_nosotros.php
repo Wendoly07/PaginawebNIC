@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         );
 
         // Insertar los datos del formulario en la base de datos
-        $sql = "INSERT INTO aplica_con_nostros_sv
+        $sql = "INSERT INTO aplica_con_nostros_nic
         (nombre, genero, edad, identidad, telefono, email, direccion, departamento, estudios, titulo, ingles, posicion, experiencia, transporte, juegos, salario, cv)
         VALUES
         (:nombre, :genero, :edad, :identidad, :telefono, :email, :direccion, :departamento, :estudios, :titulo, :ingles, :posicion, :experiencia, :transporte, :juegos, :salario, :cv)";
@@ -618,21 +618,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <!-- Select para departamento -->
     <select name="departamento" required>
       <option value="">Seleccione…</option>
-      <!-- Opciones de departamentos de El Salvador -->
-      <option value="Ahuachapán">Ahuachapán</option>
-      <option value="Santa Ana">Santa Ana</option>
-      <option value="Sonsonate">Sonsonate</option>
-      <option value="Chalatenango">Chalatenango</option>
-      <option value="La Libertad">La Libertad</option>
-      <option value="San Salvador">San Salvador</option>
-      <option value="Cuscatlán">Cuscatlán</option>
-      <option value="La Paz">La Paz</option>
-      <option value="Cabañas">Cabañas</option>
-      <option value="San Vicente">San Vicente</option>
-      <option value="Usulután">Usulután</option>
-      <option value="San Miguel">San Miguel</option>
-      <option value="Morazán">Morazán</option>
-      <option value="La Unión">La Unión</option>
+      <!-- Opciones de departamentos de Nicaragua -->
+      <option value="Chinandega">Chinandega</option>
+      <option value="León">León</option>
+      <option value="Managua">Managua</option>
+      <option value="Masaya">Masaya</option>
+      <option value="Granada">Granada</option>
+      <option value="Rivas">Rivas</option>
+      <option value="Carazo">Carazo</option>
+      <option value="Matagalpa">Matagalpa</option>
+      <option value="Jinotega">Jinotega</option>
+      <option value="Boaco">Boaco</option>
+      <option value="Chontales">Chontales</option>
+      <option value="Estelí">Estelí</option>
+      <option value="Nueva Segovia">Nueva Segovia</option>
+      <option value="Madriz">Madriz</option>
+      <option value="Río San Juan">Río San Juan</option>
     </select>
     <br><br>
 
