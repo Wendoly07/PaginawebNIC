@@ -54,7 +54,9 @@ $gameName = 13; // DIARIA
 $sql = "
 SELECT
     DATEPART(HOUR, draw_time) AS hora_sorteo,
-    par1
+    par1,
+    par2,
+    par3
 FROM numeros_ganadores_sorteos_prod
 WHERE game_name = :game_name
 AND UPPER(LTRIM(RTRIM(pais))) = 'NICARAGUA'
@@ -104,25 +106,29 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     if ($hora == 12) {
         // Si la hora es 12
 
-        $resultados['12:00'] = str_pad($row['par1'], 2, '0', STR_PAD_LEFT);
+        $numero = str_pad($row['par1'], 2, '0', STR_PAD_LEFT);
+        $resultados['12:00'] = [$numero[0], $numero[1], (string) $row['par2'], (string) $row['par3']];
         // Asigna el valor de par1 formateado con ceros a la izquierda a la clave '12:00' del array resultados
 
     } elseif ($hora == 15) {
         // Si la hora es 15
 
-        $resultados['15:00'] = str_pad($row['par1'], 2, '0', STR_PAD_LEFT);
+        $numero = str_pad($row['par1'], 2, '0', STR_PAD_LEFT);
+        $resultados['15:00'] = [$numero[0], $numero[1], (string) $row['par2'], (string) $row['par3']];
         // Asigna el valor de par1 formateado con ceros a la izquierda a la clave '15:00' del array resultados
 
     } elseif ($hora == 18) {
         // Si la hora es 18
 
-        $resultados['18:00'] = str_pad($row['par1'], 2, '0', STR_PAD_LEFT);
+        $numero = str_pad($row['par1'], 2, '0', STR_PAD_LEFT);
+        $resultados['18:00'] = [$numero[0], $numero[1], (string) $row['par2'], (string) $row['par3']];
         // Asigna el valor de par1 formateado con ceros a la izquierda a la clave '18:00' del array resultados
 
     } elseif ($hora == 21) {
         // Si la hora es 21
 
-        $resultados['21:00'] = str_pad($row['par1'], 2, '0', STR_PAD_LEFT);
+        $numero = str_pad($row['par1'], 2, '0', STR_PAD_LEFT);
+        $resultados['21:00'] = [$numero[0], $numero[1], (string) $row['par2'], (string) $row['par3']];
         // Asigna el valor de par1 formateado con ceros a la izquierda a la clave '21:00' del array resultados
 
     }

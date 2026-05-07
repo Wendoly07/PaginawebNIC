@@ -149,17 +149,19 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO FECHAS LO
     }
 
     .menu a:first-child {
-      margin-right: 70px;
+      margin-right: 0;
     }
 
     .menu a:last-child {
-      margin-left: 70px;
+      margin-left: 0;
     }
 
     /* ================= RESULTADOS ================= */
     .resultados {
       border: 1px solid #e30613;
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr 320px 1fr;
+      align-items: center;
       max-width: 1100px;
       margin: 40px auto;
       background: white;
@@ -170,8 +172,14 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO FECHAS LO
     }
 
     .resultados .col {
-      flex: 1;
       text-align: center;
+    }
+
+    .calendario {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
     .izquierda {
@@ -251,6 +259,8 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO FECHAS LO
 
     /* ================= FILTROS ================= */
     .filtros {
+      display: flex;
+      justify-content: center;
       gap: 6px;
       margin-bottom: 10px;
     }
@@ -294,9 +304,9 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO FECHAS LO
     }
 
     .derecha .num-numero {
-      width: 48px;
-      height: 48px;
-      line-height: 48px;
+      width: 54px;
+      height: 54px;
+      line-height: 54px;
       display: inline-block;
       background: #fff;
       border-radius: 50%;
@@ -310,14 +320,14 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO FECHAS LO
     }
 
     .derecha .num-mes {
-      width: 48px;
-      height: 48px;
-      line-height: 48px;
+      width: 54px;
+      height: 54px;
+      line-height: 54px;
       display: inline-block;
       background: #f5e200;
       border-radius: 50%;
       font-weight: 900;
-      font-size: 14px;
+      font-size: 13px;
       color: #333;
       margin: 0 4px;
       border: 2px solid #ddd;
@@ -427,10 +437,10 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO FECHAS LO
 
       .num-numero,
       .num-mes {
-        width: 48px;
-        height: 48px;
-        line-height: 48px;
-        font-size: 16px;
+        width: 54px;
+        height: 54px;
+        line-height: 54px;
+        font-size: 15px;
       }
 
       .etiqueta-hola {
@@ -446,7 +456,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO FECHAS LO
       }
 
       .resultados {
-        flex-direction: column;
+        grid-template-columns: 1fr;
         padding: 20px 15px;
       }
 
@@ -494,7 +504,6 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO FECHAS LO
   <!-- MENÚ -->
   <div class="menu">
     <a href="https://juega.loto.com.ni/websales/" target="_blank">JUGÁ AQUÍ</a>
-    <a href="/ImagesSV/documentos/Reglamento Fechas Lotos.pdf" download>CONOCÉ MÁS</a>
   </div>
 
   <!-- RESULTADOS -->

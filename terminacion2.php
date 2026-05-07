@@ -151,17 +151,19 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/logo terminaci
     }
 
     .menu a:first-child {
-      margin-right: 70px;
+      margin-right: 0;
     }
 
     .menu a:last-child {
-      margin-left: 70px;
+      margin-left: 0;
     }
 
     /* ================= RESULTADOS ================= */
     .resultados {
       border: 1px solid #006a9a;
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr 320px 1fr;
+      align-items: center;
       max-width: 1100px;
       margin: 40px auto;
       background: white;
@@ -172,8 +174,14 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/logo terminaci
     }
 
     .resultados .col {
-      flex: 1;
       text-align: center;
+    }
+
+    .calendario {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
     .izquierda {
@@ -253,6 +261,8 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/logo terminaci
 
     /* ================= FILTROS ================= */
     .filtros {
+      display: flex;
+      justify-content: center;
       gap: 6px;
       margin-bottom: 10px;
     }
@@ -433,7 +443,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/logo terminaci
       }
 
       .resultados {
-        flex-direction: column;
+        grid-template-columns: 1fr;
         padding: 20px 15px;
       }
 
@@ -480,7 +490,6 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/logo terminaci
   <!-- MENÚ -->
   <div class="menu">
     <a href="https://juega.loto.com.ni/websales/">JUGÁ AQUÍ</a>
-    <a href="/ImagesSV/documentos/Reglamento Terminacion2.pdf" download>CONOCÉ MÁS</a>
   </div>
 
   <!-- RESULTADOS -->

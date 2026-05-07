@@ -85,6 +85,10 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO DIARIA.sv
 
 .nums {
   margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
 }
 
 .num {
@@ -92,14 +96,40 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO DIARIA.sv
   height: 65px;
   line-height: 65px;
   display: inline-block;
-  background: #13a538;
+  background: #ffdf00;
   border-radius: 50%;
   font-weight: bold;
   font-size: 24px; /* Un poco más grande */
-  color: white;
+  color: #111;
   margin: 0 4px;
   border: 2px solid white;
   text-align: center;
+}
+
+.num.naranja {
+  background: #f59a55;
+}
+
+.diaria-bola-grupo {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  vertical-align: bottom;
+}
+
+.diaria-bola-grupo.sin-label::before {
+  content: "";
+  height: 12px;
+}
+
+.diaria-bola-label {
+  height: 12px;
+  line-height: 12px;
+  font-size: 11px;
+  font-weight: 900;
+  color: #000;
+  text-transform: uppercase;
 }
 
 .etiqueta-hola {
@@ -151,7 +181,9 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO DIARIA.sv
     /* Contenedor principal de resultados y calendario */
     .resultados {
       border: 1px solid #13a538;
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr 320px 1fr;
+      align-items: center;
       max-width: 1100px;
       margin: 40px auto;
       background: white;
@@ -162,9 +194,15 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO DIARIA.sv
     }
 
     .resultados .col {
-      flex: 1;
       text-align: center;
     }
+
+.calendario {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
      /* COLUMNA IZQUIERDA - MÁS IMPONENTE Y CENTRADO */
 .izquierda {
@@ -244,6 +282,8 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO DIARIA.sv
 /* ================= FILTROS PREMIUM COMPACTOS ================= */
 /* Contenedor de filtros para elegir mes y año */
 .filtros {
+  display: flex;
+  justify-content: center;
   gap: 6px;
   margin-bottom: 10px;
 }
@@ -287,19 +327,23 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO DIARIA.sv
 }
 
 /* NÚMEROS DEL SORTEO */
-.derecha .num {
+.derecha .num-numero {
   width: 52px;
   height: 52px;
   line-height: 52px;
   display: inline-block;
-  background: #13a538;
+  background: #ffdf00;
   border-radius: 50%;
   font-weight: 900;
   font-size: 20px;
-  color: white;
-  margin: 0 6px;
+  color: #111;
+  margin: 0 2px;
   border: 2px solid white;
   text-align: center;
+}
+
+.derecha .num-numero.naranja {
+  background: #f59a55;
 }
 
     /* ================= ACCORDION ================= */
@@ -603,7 +647,7 @@ body {
 
   /* RESULTADOS */
   .resultados {
-    flex-direction: column;
+    grid-template-columns: 1fr;
     padding: 20px 15px;
   }
 
@@ -684,8 +728,20 @@ body {
         <div class="ganador">ÚLTIMO NÚMERO GANADOR</div>
 
         <div class="nums">
-  <span class="num" id="num1">0</span>
-  <span class="num" id="num2">0</span>
+  <span class="diaria-bola-grupo sin-label">
+    <span class="num" id="num1">0</span>
+  </span>
+  <span class="diaria-bola-grupo sin-label">
+    <span class="num" id="num2">0</span>
+  </span>
+  <span class="diaria-bola-grupo">
+    <span class="diaria-bola-label">MULTI-X</span>
+    <span class="num naranja" id="num3">0</span>
+  </span>
+  <span class="diaria-bola-grupo">
+    <span class="diaria-bola-label">MAS 1</span>
+    <span class="num naranja" id="num4">0</span>
+  </span>
 </div>
 
         <div class="etiqueta-hola">
@@ -755,26 +811,34 @@ body {
       <div class="col derecha">
       <div class="sorteo">
         <h3>SORTEO 12:00 P.M.</h3>
-<span class="num-numero" id="num12_1">--</span>
-<span class="num-numero" id="num12_2">--</span>
+<span class="diaria-bola-grupo sin-label"><span class="num-numero" id="num12_1">--</span></span>
+<span class="diaria-bola-grupo sin-label"><span class="num-numero" id="num12_2">--</span></span>
+<span class="diaria-bola-grupo"><span class="diaria-bola-label">MULTI-X</span><span class="num-numero naranja" id="num12_3">--</span></span>
+<span class="diaria-bola-grupo"><span class="diaria-bola-label">MAS 1</span><span class="num-numero naranja" id="num12_4">--</span></span>
       </div>
 
       <div class="sorteo">
         <h3>SORTEO 3:00 P.M.</h3>
-<span class="num-numero" id="num15_1">--</span>
-<span class="num-numero" id="num15_2">--</span>
+<span class="diaria-bola-grupo sin-label"><span class="num-numero" id="num15_1">--</span></span>
+<span class="diaria-bola-grupo sin-label"><span class="num-numero" id="num15_2">--</span></span>
+<span class="diaria-bola-grupo"><span class="diaria-bola-label">MULTI-X</span><span class="num-numero naranja" id="num15_3">--</span></span>
+<span class="diaria-bola-grupo"><span class="diaria-bola-label">MAS 1</span><span class="num-numero naranja" id="num15_4">--</span></span>
       </div>
 
       <div class="sorteo">
         <h3>SORTEO 6:00 P.M.</h3>
-<span class="num-numero" id="num18_1">--</span>
-<span class="num-numero" id="num18_2">--</span>
+<span class="diaria-bola-grupo sin-label"><span class="num-numero" id="num18_1">--</span></span>
+<span class="diaria-bola-grupo sin-label"><span class="num-numero" id="num18_2">--</span></span>
+<span class="diaria-bola-grupo"><span class="diaria-bola-label">MULTI-X</span><span class="num-numero naranja" id="num18_3">--</span></span>
+<span class="diaria-bola-grupo"><span class="diaria-bola-label">MAS 1</span><span class="num-numero naranja" id="num18_4">--</span></span>
       </div>
 
       <div class="sorteo">
         <h3>SORTEO 9:00 P.M.</h3>
-<span class="num-numero" id="num21_1">--</span>
-<span class="num-numero" id="num21_2">--</span>
+<span class="diaria-bola-grupo sin-label"><span class="num-numero" id="num21_1">--</span></span>
+<span class="diaria-bola-grupo sin-label"><span class="num-numero" id="num21_2">--</span></span>
+<span class="diaria-bola-grupo"><span class="diaria-bola-label">MULTI-X</span><span class="num-numero naranja" id="num21_3">--</span></span>
+<span class="diaria-bola-grupo"><span class="diaria-bola-label">MAS 1</span><span class="num-numero naranja" id="num21_4">--</span></span>
       </div>
     </div>
   </div>
@@ -913,6 +977,8 @@ let x = setInterval(function () {
         // Actualiza los valores del header con el último número ganador
         document.getElementById("num1").innerText = d.digito1;
         document.getElementById("num2").innerText = d.digito2;
+        document.getElementById("num3").innerText = d.multi_x || '0';
+        document.getElementById("num4").innerText = d.mas_1 || '0';
 
       } else {
         console.error(d.error);
@@ -1029,22 +1095,24 @@ let x = setInterval(function () {
         if (data.error) {
           throw new Error(data.error);
         }
-        document.getElementById('num12_1').innerText = data['12:00'] ? data['12:00'].charAt(0) : '0';
-        document.getElementById('num12_2').innerText = data['12:00'] ? data['12:00'].charAt(1) : '0';
-        document.getElementById('num15_1').innerText = data['15:00'] ? data['15:00'].charAt(0) : '0';
-        document.getElementById('num15_2').innerText = data['15:00'] ? data['15:00'].charAt(1) : '0';
-        document.getElementById('num18_1').innerText = data['18:00'] ? data['18:00'].charAt(0) : '0';
-        document.getElementById('num18_2').innerText = data['18:00'] ? data['18:00'].charAt(1) : '0';
-        document.getElementById('num21_1').innerText = data['21:00'] ? data['21:00'].charAt(0) : '0';
-        document.getElementById('num21_2').innerText = data['21:00'] ? data['21:00'].charAt(1) : '0';
+        pintarResultadoDiaria('num12', data['12:00']);
+        pintarResultadoDiaria('num15', data['15:00']);
+        pintarResultadoDiaria('num18', data['18:00']);
+        pintarResultadoDiaria('num21', data['21:00']);
       })
       .catch(err => {
         console.error('Error al obtener resultados:', err);
         ['num12', 'num15', 'num18', 'num21'].forEach(prefix => {
-          document.getElementById(`${prefix}_1`).innerText = '0';
-          document.getElementById(`${prefix}_2`).innerText = '0';
+          pintarResultadoDiaria(prefix, null);
         });
       });
+  }
+
+  function pintarResultadoDiaria(prefix, resultado) {
+    for (let i = 1; i <= 4; i++) {
+      const elem = document.getElementById(`${prefix}_${i}`);
+      if (elem) elem.innerText = resultado?.[i - 1] ?? '0';
+    }
   }
 
   document.addEventListener('DOMContentLoaded', function () {

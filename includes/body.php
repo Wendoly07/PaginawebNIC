@@ -397,29 +397,6 @@ document.addEventListener("DOMContentLoaded", function() {
   color: #000;
 }
 
-.diaria-numeros {
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 10px;
-}
-
-.diaria-resultado-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-}
-
-.diaria-label {
-  min-height: 14px;
-  font-size: 11px;
-  line-height: 1;
-  font-weight: 900;
-  color: #000;
-  text-transform: uppercase;
-}
-
 .bola-diaria {
   display: inline-block;
   width: 40px;
@@ -438,6 +415,131 @@ document.addEventListener("DOMContentLoaded", function() {
 
 .bola-diaria.naranja {
   background-color: #f59a55;
+}
+
+.diaria-bola-grupo {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.diaria-bola-grupo.sin-label::before {
+  content: "";
+  height: 12px;
+}
+
+.diaria-bola-label {
+  height: 12px;
+  line-height: 12px;
+  font-size: 11px;
+  font-weight: 900;
+  color: #000;
+  text-transform: uppercase;
+}
+
+.res-card.verde .diaria-numeros {
+  align-items: flex-end;
+  flex-wrap: nowrap;
+  gap: 4px;
+  margin-bottom: 15px;
+}
+
+.res-card.verde .diaria-bola-grupo {
+  flex: 0 0 auto;
+}
+
+.res-card.verde .bola-diaria {
+  width: 35px;
+  height: 35px;
+  min-width: 35px;
+  line-height: 35px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  font-size: 17px;
+}
+
+.res-card.verde .diaria-bola-label {
+  font-size: 9px;
+  height: 11px;
+  line-height: 11px;
+  white-space: nowrap;
+}
+
+.res-card.verde .diaria-card-numeros {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 4px;
+  margin: 12px 0 15px;
+  flex-wrap: nowrap;
+}
+
+.res-card.verde .diaria-card-grupo {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 3px;
+  padding: 0;
+  margin: 0;
+  width: auto;
+  height: auto;
+  min-width: 0;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.res-card.verde .diaria-card-label {
+  display: block;
+  height: 11px;
+  line-height: 11px;
+  font-size: 8px;
+  font-weight: 900;
+  color: #000;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.res-card.verde .diaria-card-label.vacio {
+  visibility: hidden;
+}
+
+.res-card.verde .diaria-card-bola {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 19px;
+  color: #111;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  box-shadow: none;
+}
+
+.res-card.verde .diaria-card-bola.amarilla {
+  background: #ffdf00;
+}
+
+.res-card.verde .diaria-card-bola.naranja {
+  background: #f59a55;
+}
+
+.res-card.verde .diaria-card-numeros span.diaria-card-bola {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 19px;
 }
 
 /* Mantener botones tal como los tenías antes */
@@ -755,11 +857,20 @@ document.addEventListener("DOMContentLoaded", function() {
     gap: 5px !important;
   }
 
-  .bola-verde, .bola-amarilla {
+  .bola-verde, .bola-amarilla, .res-card.verde .bola-diaria {
     width: 35px !important;
     height: 35px !important;
     line-height: 35px !important;
     font-size: 16px !important;
+  }
+
+  .res-card.verde .diaria-numeros {
+    gap: 4px !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .res-card.verde .diaria-bola-label {
+    font-size: 8px;
   }
 
   /* Botones apilados y centrados */
@@ -1701,22 +1812,22 @@ try {
            alt="Logo Diaria"
            style="width:190px; height:auto; position: relative; top:20px;">
 
-      <div class="numeros diaria-numeros" style="position:relative; top:15px;">
-        <div class="diaria-resultado-item">
-          <span class="diaria-label"></span>
-          <span class="bola-diaria amarilla" id="par1">0</span>
+      <div class="diaria-card-numeros">
+        <div class="diaria-card-grupo">
+          <span class="diaria-card-label vacio">MULTI-X</span>
+          <span class="diaria-card-bola amarilla" id="par1">0</span>
         </div>
-        <div class="diaria-resultado-item">
-          <span class="diaria-label"></span>
-          <span class="bola-diaria amarilla" id="par2">0</span>
+        <div class="diaria-card-grupo">
+          <span class="diaria-card-label vacio">MAS 1</span>
+          <span class="diaria-card-bola amarilla" id="par2">0</span>
         </div>
-        <div class="diaria-resultado-item">
-          <span class="diaria-label">MULTI-X</span>
-          <span class="bola-diaria naranja" id="par3">0</span>
+        <div class="diaria-card-grupo con-label">
+          <span class="diaria-card-label">MULTI-X</span>
+          <span class="diaria-card-bola naranja" id="par3">0</span>
         </div>
-        <div class="diaria-resultado-item">
-          <span class="diaria-label">MAS 1</span>
-          <span class="bola-diaria naranja" id="par4">0</span>
+        <div class="diaria-card-grupo con-label">
+          <span class="diaria-card-label">MAS 1</span>
+          <span class="diaria-card-bola naranja" id="par4">0</span>
         </div>
       </div>
 
