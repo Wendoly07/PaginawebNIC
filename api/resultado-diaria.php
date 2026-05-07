@@ -19,10 +19,11 @@ try {
     // Configura PDO para lanzar excepciones en caso de errores
     // Consulta último resultado de Diaria
     $stmt = $conn->query("SELECT TOP 1 *
-                          FROM loto_sorteos_sv
-                          WHERE juego = 1
+                          FROM numeros_ganadores_sorteos_prod
+                          WHERE game_name = 13
+                          AND UPPER(LTRIM(RTRIM(pais))) IN ('NICARAGUA', 'NI', 'NIC')
                           ORDER BY id DESC");
-    // Ejecuta una consulta directa para seleccionar el primer registro (el más reciente) de la tabla loto_sorteos_sv donde juego es 1, ordenado por id descendente
+    // Ejecuta una consulta directa para seleccionar el primer registro mas reciente de la tabla numeros_ganadores_sorteos_prod donde game_name es 13 y el pais es Nicaragua
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     // Obtiene el resultado de la consulta como un array asociativo
     if (!$row) {

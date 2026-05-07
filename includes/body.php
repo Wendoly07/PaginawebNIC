@@ -1647,12 +1647,12 @@ try {
       <script>
       async function cargarResultados() {
           try {
-              const response = await fetch('https://paginawebsvcac.azurewebsites.net/api/resultados-diaria.php');
+              const response = await fetch('/api/resultado-diaria.php');
               if (!response.ok) throw new Error('Error en la respuesta de la API');
               const data = await response.json();
 
-              document.getElementById('par1').innerText = data.par1 || '0';
-              document.getElementById('par2').innerText = data.par2 || '0';
+              document.getElementById('par1').innerText = data.digito1 || '0';
+              document.getElementById('par2').innerText = data.digito2 || '0';
           } catch (error) {
               console.error('No se pudieron cargar los resultados:', error);
           }
@@ -1661,11 +1661,11 @@ try {
       </script>
 
       <div class="btn-container">
-        <button class="btn-jugar" onclick="window.location.href='https://loto.sv/index.php?pag=diaria'">
+        <button class="btn-jugar" onclick="window.location.href='index.php?pag=diaria'">
           Jugá aquí
         </button>
 
-        <a href="https://loto.sv/index.php?pag=diaria">
+        <a href="index.php?pag=diaria">
           <button class="btn-info">Conocé más</button>
         </a>
       </div>

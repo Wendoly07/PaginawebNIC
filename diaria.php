@@ -761,20 +761,20 @@ body {
 
       <div class="sorteo">
         <h3>SORTEO 3:00 P.M.</h3>
-<span class="num-numero" id="num12_1">--</span>
-<span class="num-numero" id="num12_2">--</span>
+<span class="num-numero" id="num15_1">--</span>
+<span class="num-numero" id="num15_2">--</span>
       </div>
 
       <div class="sorteo">
         <h3>SORTEO 6:00 P.M.</h3>
-<span class="num-numero" id="num12_1">--</span>
-<span class="num-numero" id="num12_2">--</span>
+<span class="num-numero" id="num18_1">--</span>
+<span class="num-numero" id="num18_2">--</span>
       </div>
 
       <div class="sorteo">
         <h3>SORTEO 9:00 P.M.</h3>
-<span class="num-numero" id="num12_1">--</span>
-<span class="num-numero" id="num12_2">--</span>
+<span class="num-numero" id="num21_1">--</span>
+<span class="num-numero" id="num21_2">--</span>
       </div>
     </div>
   </div>
@@ -860,14 +860,15 @@ let hoy = new Date();
 let dia = hoy.getDate();
 let horaActual = hoy.getHours();
 let HoraSorteo = "";
+const horariosSorteo = [12, 15, 18, 21];
 
-// Horarios de sorteo
-if (horaActual < 11) {
-  HoraSorteo = 11;
-} else if (horaActual >= 11 && horaActual < 21) {
-  HoraSorteo = 21;
-} else {
-  HoraSorteo = 11;
+// Horarios de sorteo: 12:00 P.M., 3:00 P.M., 6:00 P.M. y 9:00 P.M.
+HoraSorteo = horariosSorteo.find(function (horaSorteo) {
+  return horaActual < horaSorteo;
+});
+
+if (!HoraSorteo) {
+  HoraSorteo = horariosSorteo[0];
   dia += 1;
 }
 
@@ -912,12 +913,6 @@ let x = setInterval(function () {
         // Actualiza los valores del header con el último número ganador
         document.getElementById("num1").innerText = d.digito1;
         document.getElementById("num2").innerText = d.digito2;
-
-        // Actualiza los resultados de los sorteos en pantalla
-        document.getElementById("num11_1").innerText = d.digito1;
-        document.getElementById("num11_2").innerText = d.digito2;
-        document.getElementById("num21_1").innerText = d.digito1;
-        document.getElementById("num21_2").innerText = d.digito2;
 
       } else {
         console.error(d.error);
@@ -1018,11 +1013,15 @@ let x = setInterval(function () {
 
   // Función para obtener resultados desde la API remota según la fecha seleccionada
   function actualizarResultados(fecha) {
-    fetch(`https://paginawebsvcac.azurewebsites.net/api/resultados_calendario_diaria.php?fecha=${fecha}`)
+    fetch(`/api/resultados_calendario_diaria.php?fecha=${fecha}`)
       .then(res => res.json())
       .then(data => {
-        document.getElementById('num11_1').innerText = data['11:00'] ? data['11:00'].charAt(0) : '0';
-        document.getElementById('num11_2').innerText = data['11:00'] ? data['11:00'].charAt(1) : '0';
+        document.getElementById('num12_1').innerText = data['12:00'] ? data['12:00'].charAt(0) : '0';
+        document.getElementById('num12_2').innerText = data['12:00'] ? data['12:00'].charAt(1) : '0';
+        document.getElementById('num15_1').innerText = data['15:00'] ? data['15:00'].charAt(0) : '0';
+        document.getElementById('num15_2').innerText = data['15:00'] ? data['15:00'].charAt(1) : '0';
+        document.getElementById('num18_1').innerText = data['18:00'] ? data['18:00'].charAt(0) : '0';
+        document.getElementById('num18_2').innerText = data['18:00'] ? data['18:00'].charAt(1) : '0';
         document.getElementById('num21_1').innerText = data['21:00'] ? data['21:00'].charAt(0) : '0';
         document.getElementById('num21_2').innerText = data['21:00'] ? data['21:00'].charAt(1) : '0';
       })
