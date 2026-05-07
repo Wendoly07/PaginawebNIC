@@ -20,10 +20,10 @@ try {
     // Consulta último resultado de Diaria
     $stmt = $conn->query("SELECT TOP 1 *
                           FROM numeros_ganadores_sorteos_prod
-                          WHERE game_name = 13
-                          AND UPPER(LTRIM(RTRIM(pais))) IN ('NICARAGUA', 'NI', 'NIC')
+                          WHERE TRY_CONVERT(int, game_name) = 13
+                          AND UPPER(LTRIM(RTRIM(pais))) = 'NICARAGUA'
                           ORDER BY draw_date DESC, draw_time DESC, id DESC");
-    // Ejecuta una consulta directa para seleccionar el primer registro mas reciente de la tabla numeros_ganadores_sorteos_prod donde game_name es 13 y el pais es Nicaragua
+    // Ejecuta una consulta directa para seleccionar el primer registro (el mÃ¡s reciente) de la tabla loto_sorteos_sv donde juego es 1, ordenado por id descendente
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     // Obtiene el resultado de la consulta como un array asociativo
     if (!$row) {
@@ -47,13 +47,13 @@ try {
         "numero"  => $numero,
         // El número completo formateado
 
-        "sorteo"  => $row["draw_number"] ?? null,
+        "sorteo"  => $row["draw_number"],
         // El número del sorteo
 
-        "hora"    => $row["draw_time"] ?? null,
+        "hora"    => $row["draw_time"],
         // La hora del sorteo
 
-        "fecha"   => $row["draw_date"] ?? null
+        "fecha"   => $row["draw_date"]
         // La fecha del sorteo
 
     ]);
