@@ -56,11 +56,9 @@ $juego = 2;
 
 // Consulta: obtener resultado del día seleccionado
 $sql = "SELECT par1, par2, par3, par4, par5
-        FROM numeros_ganadores_sorteos_prod
-        WHERE juego = :juego
-          AND CONVERT(date, fecha) = :fecha
-          AND UPPER(LTRIM(RTRIM(pais))) IN ('NICARAGUA', 'NI', 'NIC')";
-// Define la consulta SQL para seleccionar par1 a par5 de la tabla numeros_ganadores_sorteos_prod donde juego es 2, el pais es Nicaragua y la fecha coincide con la proporcionada
+        FROM loto_sorteos_sv
+        WHERE juego = :juego AND CONVERT(date, fecha) = :fecha";
+// Define la consulta SQL para seleccionar par1 a par5 de la tabla loto_sorteos_sv donde juego es 2 y la fecha coincide con la proporcionada
 
 $stmt = $conn->prepare($sql);
 // Prepara la consulta SQL para ejecución

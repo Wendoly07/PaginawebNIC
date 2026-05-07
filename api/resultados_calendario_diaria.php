@@ -53,16 +53,18 @@ $gameName = 13; // DIARIA
 
 $sql = "
 SELECT
-    DATEPART(HOUR, hora) AS hora_sorteo,
+    CONVERT(varchar(30), draw_time, 108) AS hora_sorteo,
     par1
 FROM numeros_ganadores_sorteos_prod
 WHERE game_name = :game_name
-AND CONVERT(date, fecha) = :fecha
+AND CONVERT(date, draw_date) = :fecha
 AND UPPER(LTRIM(RTRIM(pais))) IN ('NICARAGUA', 'NI', 'NIC')
+ORDER BY draw_time ASC, id ASC
 ";
 // Define la consulta SQL para seleccionar la hora del sorteo y par1 de la tabla numeros_ganadores_sorteos_prod donde game_name es 13, el pais es Nicaragua y la fecha coincide
 
-$stmt = $conn->prepare($sql);
+try {
+    $stmt = $conn->prepare($sql);
 // Prepara la consulta SQL para ejecución
 
 $stmt->execute([
@@ -70,6 +72,16 @@ $stmt->execute([
     'fecha' => $fecha
 ]);
 // Ejecuta la consulta preparada, pasando los parametros game_name y fecha
+} catch (PDOException $e) {
+    echo json_encode([
+        'error' => $e->getMessage(),
+        '12:00' => null,
+        '15:00' => null,
+        '18:00' => null,
+        '21:00' => null
+    ]);
+    exit;
+}
 
 $resultados = [
     '12:00' => null,
@@ -79,40 +91,54 @@ $resultados = [
 ];
 // Inicializa un array asociativo con las horas de sorteo predeterminadas con valores null
 
+$resultadosSinHorario = [];
+
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     // Inicia un bucle while para recorrer cada fila del resultado de la consulta
 
-    $hora = $row['hora_sorteo'];
+    $hora = trim((string) $row['hora_sorteo']);
     // Asigna la hora del sorteo de la fila actual a la variable $hora
 
-    if ($hora == 12) {
+    $horaTimestamp = strtotime($hora);
+    $horaNumero = $horaTimestamp !== false ? (int) date('G', $horaTimestamp) : null;
+    $numero = str_pad($row['par1'], 2, '0', STR_PAD_LEFT);
+
+    if ($horaNumero === 12) {
         // Si la hora es 12
 
-        $resultados['12:00'] = str_pad($row['par1'], 2, '0', STR_PAD_LEFT);
+        $resultados['12:00'] = $numero;
         // Asigna el valor de par1 formateado con ceros a la izquierda a la clave '12:00' del array resultados
 
-    } elseif ($hora == 15) {
+    } elseif ($horaNumero === 15) {
         // Si la hora es 15
 
-        $resultados['15:00'] = str_pad($row['par1'], 2, '0', STR_PAD_LEFT);
+        $resultados['15:00'] = $numero;
         // Asigna el valor de par1 formateado con ceros a la izquierda a la clave '15:00' del array resultados
 
-    } elseif ($hora == 18) {
+    } elseif ($horaNumero === 18) {
         // Si la hora es 18
 
-        $resultados['18:00'] = str_pad($row['par1'], 2, '0', STR_PAD_LEFT);
+        $resultados['18:00'] = $numero;
         // Asigna el valor de par1 formateado con ceros a la izquierda a la clave '18:00' del array resultados
 
-    } elseif ($hora == 21) {
+    } elseif ($horaNumero === 21) {
         // Si la hora es 21
 
-        $resultados['21:00'] = str_pad($row['par1'], 2, '0', STR_PAD_LEFT);
+        $resultados['21:00'] = $numero;
         // Asigna el valor de par1 formateado con ceros a la izquierda a la clave '21:00' del array resultados
 
+    } else {
+        $resultadosSinHorario[] = $numero;
     }
     // Fin del bucle if-elseif
 }
 // Fin del bucle while
+
+foreach (['12:00', '15:00', '18:00', '21:00'] as $horaResultado) {
+    if ($resultados[$horaResultado] === null && count($resultadosSinHorario) > 0) {
+        $resultados[$horaResultado] = array_shift($resultadosSinHorario);
+    }
+}
 
 echo json_encode($resultados);
 // Codifica el array resultados como JSON y lo envía como respuesta

@@ -22,7 +22,7 @@ try {
                           FROM numeros_ganadores_sorteos_prod
                           WHERE game_name = 13
                           AND UPPER(LTRIM(RTRIM(pais))) IN ('NICARAGUA', 'NI', 'NIC')
-                          ORDER BY id DESC");
+                          ORDER BY draw_date DESC, draw_time DESC, id DESC");
     // Ejecuta una consulta directa para seleccionar el primer registro mas reciente de la tabla numeros_ganadores_sorteos_prod donde game_name es 13 y el pais es Nicaragua
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     // Obtiene el resultado de la consulta como un array asociativo
@@ -47,13 +47,13 @@ try {
         "numero"  => $numero,
         // El número completo formateado
 
-        "sorteo"  => $row["sorteo"],
+        "sorteo"  => $row["draw_number"] ?? null,
         // El número del sorteo
 
-        "hora"    => $row["hora"],
+        "hora"    => $row["draw_time"] ?? null,
         // La hora del sorteo
 
-        "fecha"   => $row["fecha"]
+        "fecha"   => $row["draw_date"] ?? null
         // La fecha del sorteo
 
     ]);

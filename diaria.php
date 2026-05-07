@@ -1014,18 +1014,37 @@ let x = setInterval(function () {
   // Función para obtener resultados desde la API remota según la fecha seleccionada
   function actualizarResultados(fecha) {
     fetch(`/api/resultados_calendario_diaria.php?fecha=${fecha}`)
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('num12_1').innerText = data['12:00'] ? data['12:00'].charAt(0) : '0';
-        document.getElementById('num12_2').innerText = data['12:00'] ? data['12:00'].charAt(1) : '0';
-        document.getElementById('num15_1').innerText = data['15:00'] ? data['15:00'].charAt(0) : '0';
-        document.getElementById('num15_2').innerText = data['15:00'] ? data['15:00'].charAt(1) : '0';
-        document.getElementById('num18_1').innerText = data['18:00'] ? data['18:00'].charAt(0) : '0';
-        document.getElementById('num18_2').innerText = data['18:00'] ? data['18:00'].charAt(1) : '0';
-        document.getElementById('num21_1').innerText = data['21:00'] ? data['21:00'].charAt(0) : '0';
-        document.getElementById('num21_2').innerText = data['21:00'] ? data['21:00'].charAt(1) : '0';
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`Error HTTP ${res.status}`);
+        }
+        return res.json();
       })
-      .catch(err => console.error('Error al obtener resultados:', err));
+      .then(data => {
+        if (data.error) {
+          throw new Error(data.error);
+        }
+
+        const horarios = {
+          '12:00': ['num12_1', 'num12_2'],
+          '15:00': ['num15_1', 'num15_2'],
+          '18:00': ['num18_1', 'num18_2'],
+          '21:00': ['num21_1', 'num21_2']
+        };
+
+        Object.entries(horarios).forEach(([hora, ids]) => {
+          const numero = data[hora] || '00';
+          document.getElementById(ids[0]).innerText = numero.charAt(0);
+          document.getElementById(ids[1]).innerText = numero.charAt(1);
+        });
+      })
+      .catch(err => {
+        console.error('Error al obtener resultados:', err);
+        ['num12', 'num15', 'num18', 'num21'].forEach(prefix => {
+          document.getElementById(`${prefix}_1`).innerText = '0';
+          document.getElementById(`${prefix}_2`).innerText = '0';
+        });
+      });
   }
 
   document.addEventListener('DOMContentLoaded', function () {
