@@ -56,21 +56,32 @@ SELECT
     DATEPART(HOUR, draw_time) AS hora_sorteo,
     par1
 FROM numeros_ganadores_sorteos_prod
-WHERE TRY_CONVERT(int, game_name) = :game_name
+WHERE game_name = :game_name
 AND UPPER(LTRIM(RTRIM(pais))) = 'NICARAGUA'
 AND CONVERT(date, draw_date) = :fecha
-ORDER BY draw_time ASC, id ASC
+ORDER BY draw_time ASC
 ";
 // Define la consulta SQL para seleccionar la hora del sorteo y par1 de la tabla numeros_ganadores_sorteos_prod donde game_name es 13, el pais es Nicaragua y la fecha coincide
 
-$stmt = $conn->prepare($sql);
-// Prepara la consulta SQL para ejecucion
+try {
+    $stmt = $conn->prepare($sql);
+    // Prepara la consulta SQL para ejecucion
 
-$stmt->execute([
-    'game_name' => $gameName,
-    'fecha' => $fecha
-]);
-// Ejecuta la consulta preparada, pasando los parametros game_name y fecha
+    $stmt->execute([
+        'game_name' => $gameName,
+        'fecha' => $fecha
+    ]);
+    // Ejecuta la consulta preparada, pasando los parametros game_name y fecha
+} catch (PDOException $e) {
+    echo json_encode([
+        'error' => $e->getMessage(),
+        '12:00' => null,
+        '15:00' => null,
+        '18:00' => null,
+        '21:00' => null
+    ]);
+    exit;
+}
 
 $resultados = [
     '12:00' => null,
@@ -80,11 +91,15 @@ $resultados = [
 ];
 // Inicializa un array asociativo con las horas de sorteo predeterminadas con valores null
 
+$filas = 0;
+
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     // Inicia un bucle while para recorrer cada fila del resultado de la consulta
 
     $hora = $row['hora_sorteo'];
     // Asigna la hora del sorteo de la fila actual a la variable $hora
+
+    $filas++;
 
     if ($hora == 12) {
         // Si la hora es 12
@@ -114,6 +129,14 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     // Fin del bucle if-elseif
 }
 // Fin del bucle while
+
+if (isset($_GET['debug'])) {
+    $resultados['_debug'] = [
+        'fecha' => $fecha,
+        'game_name' => $gameName,
+        'filas' => $filas
+    ];
+}
 
 echo json_encode($resultados);
 // Codifica el array resultados como JSON y lo envia como respuesta

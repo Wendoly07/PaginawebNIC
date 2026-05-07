@@ -270,7 +270,7 @@
 
       <div class="play-button">
         <!-- Botón para jugar en línea -->
-        <a href="https://juega.loto.sv/websales/?pk_campaign=WS_SITE_BOTON_WEBSALES" target="_blank">
+        <a href="https://juega.loto.com.ni/websales/" target="_blank">
           <!-- Enlace externo a la plataforma de juegos -->
           <img src="/ImagesSV/boton-jugar-en-linea.png" alt="Jugar en línea">
           <!-- Imagen del botón -->

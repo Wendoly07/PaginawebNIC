@@ -223,7 +223,7 @@ body { background:#fff; font-weight:600; }
 <!-- MENÚ -->
 <!-- Barra de navegación con enlaces a jugar. -->
 <div class="menu">
-    <a href="https://juega.loto.sv/websales/" target="_blank">JUGÁ AQUÍ</a>
+    <a href="https://juega.loto.com.ni/websales/" target="_blank">JUGÁ AQUÍ</a>
     
 </div>
 

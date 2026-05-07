@@ -79,7 +79,11 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Premiado2.png'
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 3px;
+    }
+
+    .nums .bola-blanca + .bola-amarilla {
+      margin-left: 14px;
     }
 
     .num-numero {
@@ -90,11 +94,21 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Premiado2.png'
       background: #fff;
       border-radius: 50%;
       font-weight: bold;
-      font-size: 24px;
+      font-size: 32px;
       color: #333;
       margin: 0 4px;
       border: 2px solid white;
       text-align: center;
+    }
+
+    .bola-blanca {
+      background: #fff !important;
+      color: #333 !important;
+    }
+
+    .bola-amarilla {
+      background: #f5e200 !important;
+      color: #111 !important;
     }
 
     .num-mes {
@@ -105,7 +119,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Premiado2.png'
       background: #f5e200;
       border-radius: 50%;
       font-weight: bold;
-      font-size: 18px;
+      font-size: 22px;
       color: #333;
       margin: 0 4px;
       border: 2px solid white;
@@ -478,10 +492,10 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Premiado2.png'
 
         <div class="nums">
 <div class="nums">
-  <span class="num-numero" id="num1">-</span>
-  <span class="num-numero" id="num2">-</span>
-  <span class="num-numero" id="num3">-</span>
-  <span class="num-numero" id="num4">-</span>
+  <span class="num-numero bola-blanca" id="ultimo1">-</span>
+  <span class="num-numero bola-blanca" id="ultimo2">-</span>
+  <span class="num-numero bola-amarilla" id="ultimo3">-</span>
+  <span class="num-numero bola-amarilla" id="ultimo4">-</span>
 </div>
         </div>
 
@@ -497,7 +511,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Premiado2.png'
 
   <!-- MENÚ -->
   <div class="menu">
-    <a href="https://juega.loto.sv/websales/">JUGÁ AQUÍ</a>
+    <a href="https://juega.loto.com.ni/websales/">JUGÁ AQUÍ</a>
     <a href="/ImagesSV/documentos/Reglamento Premiado2.pdf" download>CONOCÉ MÁS</a>
   </div>
 
@@ -551,40 +565,40 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Premiado2.png'
       <div class="sorteo">
         <h3>SORTEO 12:00 P.M.</h3>
 <div class="nums">
-  <span class="num-numero" id="num1">-</span>
-  <span class="num-numero" id="num2">-</span>
-  <span class="num-numero" id="num3">-</span>
-  <span class="num-numero" id="num4">-</span>
+  <span class="num-numero bola-blanca" id="num12_1">-</span>
+  <span class="num-numero bola-blanca" id="num12_2">-</span>
+  <span class="num-numero bola-amarilla" id="num12_3">-</span>
+  <span class="num-numero bola-amarilla" id="num12_4">-</span>
 </div>
       </div>
 
       <div class="sorteo">
         <h3>SORTEO 3:00 P.M.</h3>
 <div class="nums">
-  <span class="num-numero" id="num1">-</span>
-  <span class="num-numero" id="num2">-</span>
-  <span class="num-numero" id="num3">-</span>
-  <span class="num-numero" id="num4">-</span>
+  <span class="num-numero bola-blanca" id="num15_1">-</span>
+  <span class="num-numero bola-blanca" id="num15_2">-</span>
+  <span class="num-numero bola-amarilla" id="num15_3">-</span>
+  <span class="num-numero bola-amarilla" id="num15_4">-</span>
 </div>
       </div>
 
       <div class="sorteo">
         <h3>SORTEO 6:00 P.M.</h3>
 <div class="nums">
-  <span class="num-numero" id="num1">-</span>
-  <span class="num-numero" id="num2">-</span>
-  <span class="num-numero" id="num3">-</span>
-  <span class="num-numero" id="num4">-</span>
+  <span class="num-numero bola-blanca" id="num18_1">-</span>
+  <span class="num-numero bola-blanca" id="num18_2">-</span>
+  <span class="num-numero bola-amarilla" id="num18_3">-</span>
+  <span class="num-numero bola-amarilla" id="num18_4">-</span>
 </div>
       </div>
 
       <div class="sorteo">
         <h3>SORTEO 9:00 P.M.</h3>
 <div class="nums">
-  <span class="num-numero" id="num1">-</span>
-  <span class="num-numero" id="num2">-</span>
-  <span class="num-numero" id="num3">-</span>
-  <span class="num-numero" id="num4">-</span>
+  <span class="num-numero bola-blanca" id="num21_1">-</span>
+  <span class="num-numero bola-blanca" id="num21_2">-</span>
+  <span class="num-numero bola-amarilla" id="num21_3">-</span>
+  <span class="num-numero bola-amarilla" id="num21_4">-</span>
 </div>
       </div>
     </div>
@@ -636,6 +650,44 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Premiado2.png'
       content.style.display = isOpen ? 'none' : 'block';
       header.classList.toggle('open', !isOpen);
     }
+  </script>
+
+  <!-- CONTADOR -->
+  <script>
+    function pintarPremiado(prefix, valores) {
+      const nums = Array.isArray(valores) ? valores : ['-', '-', '-', '-'];
+      for (let i = 1; i <= 4; i++) {
+        const elem = document.getElementById(`${prefix}_${i}`);
+        if (elem) elem.innerText = nums[i - 1] || '-';
+      }
+    }
+
+    function actualizarResultadosPremiado(fecha) {
+      fetch(`/api/resultados_calendario_premiado.php?fecha=${fecha}`)
+        .then(res => {
+          if (!res.ok) throw new Error(`Error HTTP ${res.status}`);
+          return res.json();
+        })
+        .then(data => {
+          if (data.error) throw new Error(data.error);
+          pintarPremiado('num12', data['12:00']);
+          pintarPremiado('num15', data['15:00']);
+          pintarPremiado('num18', data['18:00']);
+          pintarPremiado('num21', data['21:00']);
+        })
+        .catch(err => console.error('Error al obtener resultados Premia2:', err));
+    }
+
+    fetch('/api/resultado-premiado.php')
+      .then(res => res.json())
+      .then(data => {
+        if (data.error) throw new Error(data.error);
+        document.getElementById('ultimo1').innerText = data.par1 || '-';
+        document.getElementById('ultimo2').innerText = data.par2 || '-';
+        document.getElementById('ultimo3').innerText = data.par3 || '-';
+        document.getElementById('ultimo4').innerText = data.par4 || '-';
+      })
+      .catch(err => console.error('Error al obtener ultimo resultado Premia2:', err));
   </script>
 
   <!-- CONTADOR -->
@@ -727,7 +779,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Premiado2.png'
           celda.addEventListener('click', function () {
             calendario.querySelectorAll('td.activo').forEach(a => a.classList.remove('activo'));
             celda.classList.add('activo');
-            // actualizarResultados(`${ano}-${pad2(mes)}-${pad2(dia)}`);
+            actualizarResultadosPremiado(`${ano}-${pad2(mes)}-${pad2(dia)}`);
           });
 
           fila.appendChild(celda);
@@ -753,6 +805,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Premiado2.png'
       anoSelect.value = hoy.getFullYear();
       mesSelect.value = pad2(hoy.getMonth() + 1);
       renderizarCalendario(hoy.getMonth() + 1, hoy.getFullYear());
+      actualizarResultadosPremiado(`${hoy.getFullYear()}-${pad2(hoy.getMonth() + 1)}-${pad2(hoy.getDate())}`);
     });
   </script>
 

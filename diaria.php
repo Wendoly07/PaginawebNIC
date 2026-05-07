@@ -701,7 +701,7 @@ body {
   <!-- MENÚ -->
   <!-- Botones principales de acción: jugar y descargar tabla de señales -->
   <div class="menu">
-    <a href="https://juega.loto.sv/websales/" target="_blank">JUGÁ AQUÍ</a>
+    <a href="https://juega.loto.com.ni/websales/" target="_blank">JUGÁ AQUÍ</a>
     <a href="/ImagesSV/documentos/Diaria Tabla de señales.pdf" download>
   SEÑALES QUE TE HACEN GANAR
 </a>
@@ -957,6 +957,11 @@ let x = setInterval(function () {
       for (let dia = 1; dia <= cantidadDias; dia++) {
         const celda = document.createElement('td');
         celda.textContent = dia;
+        celda.addEventListener('click', function () {
+          calendario.querySelectorAll('td.activo').forEach(a => a.classList.remove('activo'));
+          celda.classList.add('activo');
+          actualizarResultados(`${ano}-${pad2(mes)}-${pad2(dia)}`);
+        });
 
         // Resaltar el día actual con un círculo verde
         if (dia === diaHoy && mesHoy === mes && anoHoy === ano) {
@@ -1014,8 +1019,16 @@ let x = setInterval(function () {
   // Función para obtener resultados desde la API remota según la fecha seleccionada
   function actualizarResultados(fecha) {
     fetch(`/api/resultados_calendario_diaria.php?fecha=${fecha}`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`Error HTTP ${res.status}`);
+        }
+        return res.json();
+      })
       .then(data => {
+        if (data.error) {
+          throw new Error(data.error);
+        }
         document.getElementById('num12_1').innerText = data['12:00'] ? data['12:00'].charAt(0) : '0';
         document.getElementById('num12_2').innerText = data['12:00'] ? data['12:00'].charAt(1) : '0';
         document.getElementById('num15_1').innerText = data['15:00'] ? data['15:00'].charAt(0) : '0';
@@ -1025,7 +1038,13 @@ let x = setInterval(function () {
         document.getElementById('num21_1').innerText = data['21:00'] ? data['21:00'].charAt(0) : '0';
         document.getElementById('num21_2').innerText = data['21:00'] ? data['21:00'].charAt(1) : '0';
       })
-      .catch(err => console.error('Error al obtener resultados:', err));
+      .catch(err => {
+        console.error('Error al obtener resultados:', err);
+        ['num12', 'num15', 'num18', 'num21'].forEach(prefix => {
+          document.getElementById(`${prefix}_1`).innerText = '0';
+          document.getElementById(`${prefix}_2`).innerText = '0';
+        });
+      });
   }
 
   document.addEventListener('DOMContentLoaded', function () {

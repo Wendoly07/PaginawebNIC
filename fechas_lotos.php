@@ -493,7 +493,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO FECHAS LO
 
   <!-- MENÚ -->
   <div class="menu">
-    <a href="https://juega.loto.sv/websales/" target="_blank">JUGÁ AQUÍ</a>
+    <a href="https://juega.loto.com.ni/websales/" target="_blank">JUGÁ AQUÍ</a>
     <a href="/ImagesSV/documentos/Reglamento Fechas Lotos.pdf" download>CONOCÉ MÁS</a>
   </div>
 
@@ -618,6 +618,41 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO FECHAS LO
     }
   </script>
 
+  <script>
+    function pintarFechasLotos(prefix, resultado) {
+      const numeroElem = document.getElementById(`${prefix}_num`);
+      const mesElem = document.getElementById(`${prefix}_mes`);
+
+      if (numeroElem) numeroElem.innerText = resultado?.numero || '--';
+      if (mesElem) mesElem.innerText = resultado?.mes || '---';
+    }
+
+    function actualizarResultadosFechasLotos(fecha) {
+      fetch(`/api/resultados_calendario_fechas_lotos.php?fecha=${fecha}`)
+        .then(res => {
+          if (!res.ok) throw new Error(`Error HTTP ${res.status}`);
+          return res.json();
+        })
+        .then(data => {
+          if (data.error) throw new Error(data.error);
+          pintarFechasLotos('num12', data['12:00']);
+          pintarFechasLotos('num15', data['15:00']);
+          pintarFechasLotos('num18', data['18:00']);
+          pintarFechasLotos('num21', data['21:00']);
+        })
+        .catch(err => console.error('Error al obtener resultados Fechas Lotos:', err));
+    }
+
+    fetch('/api/resultado-fechas-lotos.php')
+      .then(res => res.json())
+      .then(data => {
+        if (data.error) throw new Error(data.error);
+        document.getElementById('numNumero').innerText = data.numero || '--';
+        document.getElementById('numMes').innerText = data.mes || '---';
+      })
+      .catch(err => console.error('Error al obtener ultimo resultado Fechas Lotos:', err));
+  </script>
+
   <!-- CONTADOR -->
   <script>
     const second = 1000,
@@ -707,7 +742,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO FECHAS LO
           celda.addEventListener('click', function () {
             calendario.querySelectorAll('td.activo').forEach(a => a.classList.remove('activo'));
             celda.classList.add('activo');
-            // actualizarResultados(`${ano}-${pad2(mes)}-${pad2(dia)}`);
+            actualizarResultadosFechasLotos(`${ano}-${pad2(mes)}-${pad2(dia)}`);
           });
 
           fila.appendChild(celda);
@@ -733,6 +768,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO FECHAS LO
       anoSelect.value = hoy.getFullYear();
       mesSelect.value = pad2(hoy.getMonth() + 1);
       renderizarCalendario(hoy.getMonth() + 1, hoy.getFullYear());
+      actualizarResultadosFechasLotos(`${hoy.getFullYear()}-${pad2(hoy.getMonth() + 1)}-${pad2(hoy.getDate())}`);
     });
   </script>
 

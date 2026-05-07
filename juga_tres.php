@@ -464,9 +464,9 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGOJUGATRES.p
         <div class="ganador">ÚLTIMA FECHA GANADORA</div>
 
         <div class="nums">
-<span class="num-numero" id="numNumero">--</span>
-<span class="num-numero" id="numNumero">--</span>
-<span class="num-numero" id="numNumero">--</span>
+          <span class="num-numero" id="ultimo1">--</span>
+          <span class="num-numero" id="ultimo2">--</span>
+          <span class="num-numero" id="ultimo3">--</span>
         </div>
 
         <div class="etiqueta-hola">
@@ -481,7 +481,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGOJUGATRES.p
 
   <!-- MENÚ -->
   <div class="menu">
-    <a href="https://juega.loto.sv/websales/">JUGÁ AQUÍ</a>
+    <a href="https://juega.loto.com.ni/websales/">JUGÁ AQUÍ</a>
     <a href="/ImagesSV/documentos/Reglamento Juga Tres.pdf" download>CONOCÉ MÁS</a>
   </div>
 
@@ -534,31 +534,31 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGOJUGATRES.p
     <div class="col derecha">
       <div class="sorteo">
         <h3>SORTEO 12:00 P.M.</h3>
-<span class="num-numero" id="num12_1">--</span>
-<span class="num-numero" id="num12_2">--</span>
-<span class="num-numero" id="num12_3">--</span>
+        <span class="num-numero" id="num12_1">--</span>
+        <span class="num-numero" id="num12_2">--</span>
+        <span class="num-numero" id="num12_3">--</span>
 
       </div>
 
       <div class="sorteo">
         <h3>SORTEO 3:00 P.M.</h3>
-<span class="num-numero" id="num12_1">--</span>
-<span class="num-numero" id="num12_2">--</span>
-<span class="num-numero" id="num12_3">--</span>
+        <span class="num-numero" id="num15_1">--</span>
+        <span class="num-numero" id="num15_2">--</span>
+        <span class="num-numero" id="num15_3">--</span>
       </div>
 
       <div class="sorteo">
         <h3>SORTEO 6:00 P.M.</h3>
-<span class="num-numero" id="num12_1">--</span>
-<span class="num-numero" id="num12_2">--</span>
-<span class="num-numero" id="num12_3">--</span>
+        <span class="num-numero" id="num18_1">--</span>
+        <span class="num-numero" id="num18_2">--</span>
+        <span class="num-numero" id="num18_3">--</span>
       </div>
 
       <div class="sorteo">
         <h3>SORTEO 9:00 P.M.</h3>
-<span class="num-numero" id="num12_1">--</span>
-<span class="num-numero" id="num12_2">--</span>
-<span class="num-numero" id="num12_3">--</span>
+        <span class="num-numero" id="num21_1">--</span>
+        <span class="num-numero" id="num21_2">--</span>
+        <span class="num-numero" id="num21_3">--</span>
       </div>
     </div>
 
@@ -609,6 +609,41 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGOJUGATRES.p
       content.style.display = isOpen ? 'none' : 'block';
       header.classList.toggle('open', !isOpen);
     }
+  </script>
+
+  <script>
+    function pintarJugaTres(prefix, resultado) {
+      for (let i = 1; i <= 3; i++) {
+        const elem = document.getElementById(`${prefix}_${i}`);
+        if (elem) elem.innerText = resultado?.[i - 1] ?? '--';
+      }
+    }
+
+    function actualizarResultadosJugaTres(fecha) {
+      fetch(`/api/resultados_calendario_juga_tres.php?fecha=${fecha}`)
+        .then(res => {
+          if (!res.ok) throw new Error(`Error HTTP ${res.status}`);
+          return res.json();
+        })
+        .then(data => {
+          if (data.error) throw new Error(data.error);
+          pintarJugaTres('num12', data['12:00']);
+          pintarJugaTres('num15', data['15:00']);
+          pintarJugaTres('num18', data['18:00']);
+          pintarJugaTres('num21', data['21:00']);
+        })
+        .catch(err => console.error('Error al obtener resultados Juga Tres:', err));
+    }
+
+    fetch('/api/resultado-juga-tres.php')
+      .then(res => res.json())
+      .then(data => {
+        if (data.error) throw new Error(data.error);
+        document.getElementById('ultimo1').innerText = data.par1 ?? '--';
+        document.getElementById('ultimo2').innerText = data.par2 ?? '--';
+        document.getElementById('ultimo3').innerText = data.par3 ?? '--';
+      })
+      .catch(err => console.error('Error al obtener ultimo resultado Juga Tres:', err));
   </script>
 
   <!-- CONTADOR -->
@@ -700,7 +735,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGOJUGATRES.p
           celda.addEventListener('click', function () {
             calendario.querySelectorAll('td.activo').forEach(a => a.classList.remove('activo'));
             celda.classList.add('activo');
-            // actualizarResultados(`${ano}-${pad2(mes)}-${pad2(dia)}`);
+            actualizarResultadosJugaTres(`${ano}-${pad2(mes)}-${pad2(dia)}`);
           });
 
           fila.appendChild(celda);
@@ -726,6 +761,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGOJUGATRES.p
       anoSelect.value = hoy.getFullYear();
       mesSelect.value = pad2(hoy.getMonth() + 1);
       renderizarCalendario(hoy.getMonth() + 1, hoy.getFullYear());
+      actualizarResultadosJugaTres(`${hoy.getFullYear()}-${pad2(hoy.getMonth() + 1)}-${pad2(hoy.getDate())}`);
     });
   </script>
 

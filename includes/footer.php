@@ -115,7 +115,7 @@
   <!-- Sección izquierda del footer - Logo principal -->
   <div class="footer-left">
    <!-- Logo de LOTO en blanco -->
-   <img src="/ImagesSV/LOGO LOTO JDL WHITE.svg" alt="Logo" class="footer-logo"
+   <img src="/ImagesSV/logo-02-LOTO.png" alt="Logo" class="footer-logo"
      style="transform: scale(2.5) translateX(40px); margin-top: 25px;">
      <!-- Logo escalado y posicionado para desktop -->
   </div>

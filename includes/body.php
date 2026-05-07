@@ -38,6 +38,8 @@ fetch('/api/resultado-diaria.php')
       // Actualiza el elemento con ID 'par1' con el primer dígito
 
       document.getElementById('par2').innerText = data.digito2;
+      if (document.getElementById('par3')) document.getElementById('par3').innerText = data.multi_x || '0';
+      if (document.getElementById('par4')) document.getElementById('par4').innerText = data.mas_1 || '0';
       // Actualiza el elemento con ID 'par2' con el segundo dígito
 
     } else {
@@ -342,6 +344,23 @@ document.addEventListener("DOMContentLoaded", function() {
   box-shadow: 0px 12px 25px rgba(0,0,0,0.25);
 }
 
+.res-card.verde {
+  background-color: #76b82a;
+  color: white;
+}
+
+.res-card.verde .btn-jugar {
+  background-color: white;
+  color: #76b82a;
+  font-weight: bold;
+}
+
+.res-card.verde .btn-info {
+  background-color: rgba(255,255,255,0.2);
+  color: white;
+  border: 1px solid white;
+}
+
 /* Imagen dentro de la tarjeta */
 .res-card img {
   width: 100%;
@@ -376,6 +395,49 @@ document.addEventListener("DOMContentLoaded", function() {
 .bola-amarilla {
   background-color: #ffc107;
   color: #000;
+}
+
+.diaria-numeros {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 10px;
+}
+
+.diaria-resultado-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.diaria-label {
+  min-height: 14px;
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 900;
+  color: #000;
+  text-transform: uppercase;
+}
+
+.bola-diaria {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 50%;
+  font-weight: 900;
+  font-size: 20px;
+  color: #000;
+}
+
+.bola-diaria.amarilla {
+  background-color: #ffdf00;
+}
+
+.bola-diaria.naranja {
+  background-color: #f59a55;
 }
 
 /* Mantener botones tal como los tenías antes */
@@ -1639,20 +1701,36 @@ try {
            alt="Logo Diaria"
            style="width:190px; height:auto; position: relative; top:20px;">
 
-      <div class="numeros" style="position:relative; top:15px;">
-        <span class="bola-verde" id="par1">0</span>
-        <span class="bola-verde" id="par2">0</span>
+      <div class="numeros diaria-numeros" style="position:relative; top:15px;">
+        <div class="diaria-resultado-item">
+          <span class="diaria-label"></span>
+          <span class="bola-diaria amarilla" id="par1">0</span>
+        </div>
+        <div class="diaria-resultado-item">
+          <span class="diaria-label"></span>
+          <span class="bola-diaria amarilla" id="par2">0</span>
+        </div>
+        <div class="diaria-resultado-item">
+          <span class="diaria-label">MULTI-X</span>
+          <span class="bola-diaria naranja" id="par3">0</span>
+        </div>
+        <div class="diaria-resultado-item">
+          <span class="diaria-label">MAS 1</span>
+          <span class="bola-diaria naranja" id="par4">0</span>
+        </div>
       </div>
 
       <script>
       async function cargarResultados() {
           try {
-              const response = await fetch('https://paginawebsvcac.azurewebsites.net/api/resultados-diaria.php');
+              const response = await fetch('/api/resultado-diaria.php');
               if (!response.ok) throw new Error('Error en la respuesta de la API');
               const data = await response.json();
 
-              document.getElementById('par1').innerText = data.par1 || '0';
-              document.getElementById('par2').innerText = data.par2 || '0';
+              document.getElementById('par1').innerText = data.digito1 || '0';
+              document.getElementById('par2').innerText = data.digito2 || '0';
+              document.getElementById('par3').innerText = data.multi_x || '0';
+              document.getElementById('par4').innerText = data.mas_1 || '0';
           } catch (error) {
               console.error('No se pudieron cargar los resultados:', error);
           }
@@ -1661,11 +1739,11 @@ try {
       </script>
 
       <div class="btn-container">
-        <button class="btn-jugar" onclick="window.location.href='https://loto.sv/index.php?pag=diaria'">
+        <button class="btn-jugar" onclick="window.location.href='index.php?pag=diaria'">
           Jugá aquí
         </button>
 
-        <a href="https://loto.sv/index.php?pag=diaria">
+        <a href="index.php?pag=diaria">
           <button class="btn-info">Conocé más</button>
         </a>
       </div>

@@ -87,7 +87,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/logo terminaci
       height: 65px;
       line-height: 65px;
       display: inline-block;
-      background: #fff;
+      background: #ffcb00;
       border-radius: 50%;
       font-weight: bold;
       font-size: 24px;
@@ -102,7 +102,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/logo terminaci
     height: 48px;
     line-height: 48px;
     display: inline-block;
-    background: #fff;
+    background: #ffcb00;
     border-radius: 50%;
     font-weight: 900;
     font-size: 18px;
@@ -464,7 +464,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/logo terminaci
         <div class="ganador">ÚLTIMA FECHA GANADORA</div>
 
         <div class="nums">
-<span class="num-numero" id="numNumero">--</span>
+          <span class="num-numero" id="numNumero">--</span>
         </div>
 
         <div class="etiqueta-hola">
@@ -479,7 +479,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/logo terminaci
 
   <!-- MENÚ -->
   <div class="menu">
-    <a href="https://juega.loto.sv/websales/">JUGÁ AQUÍ</a>
+    <a href="https://juega.loto.com.ni/websales/">JUGÁ AQUÍ</a>
     <a href="/ImagesSV/documentos/Reglamento Terminacion2.pdf" download>CONOCÉ MÁS</a>
   </div>
 
@@ -531,24 +531,8 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/logo terminaci
 
     <div class="col derecha">
       <div class="sorteo">
-        <h3>SORTEO 12:00 P.M.</h3>
-        <span class="num-numero" id="num12_num">--</span>
-
-      </div>
-
-      <div class="sorteo">
-        <h3>SORTEO 3:00 P.M.</h3>
-        <span class="num-numero" id="num15_num">--</span>
-      </div>
-
-      <div class="sorteo">
         <h3>SORTEO 6:00 P.M.</h3>
         <span class="num-numero" id="num18_num">--</span>
-      </div>
-
-      <div class="sorteo">
-        <h3>SORTEO 9:00 P.M.</h3>
-        <span class="num-numero" id="num21_num">--</span>
       </div>
     </div>
 
@@ -601,6 +585,34 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/logo terminaci
     }
   </script>
 
+  <script>
+    function pintarTerminacion2(id, resultado) {
+      const elem = document.getElementById(id);
+      if (elem) elem.innerText = resultado ?? '--';
+    }
+
+    function actualizarResultadosTerminacion2(fecha) {
+      fetch(`/api/resultados_calendario_terminacion2.php?fecha=${fecha}`)
+        .then(res => {
+          if (!res.ok) throw new Error(`Error HTTP ${res.status}`);
+          return res.json();
+        })
+        .then(data => {
+          if (data.error) throw new Error(data.error);
+          pintarTerminacion2('num18_num', data['18:00']);
+        })
+        .catch(err => console.error('Error al obtener resultados Terminacion 2:', err));
+    }
+
+    fetch('/api/resultado-terminacion2.php')
+      .then(res => res.json())
+      .then(data => {
+        if (data.error) throw new Error(data.error);
+        document.getElementById('numNumero').innerText = data.numero ?? '--';
+      })
+      .catch(err => console.error('Error al obtener ultimo resultado Terminacion 2:', err));
+  </script>
+
   <!-- CONTADOR -->
   <script>
     const second = 1000,
@@ -613,16 +625,10 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/logo terminaci
     let horaActual = hoy.getHours();
     let HoraSorteo = "";
 
-    if (horaActual < 12) {
-      HoraSorteo = 12;
-    } else if (horaActual < 15) {
-      HoraSorteo = 15;
-    } else if (horaActual < 18) {
+    if (horaActual < 18) {
       HoraSorteo = 18;
-    } else if (horaActual < 21) {
-      HoraSorteo = 21;
     } else {
-      HoraSorteo = 12;
+      HoraSorteo = 18;
       dia += 1;
     }
 
@@ -690,7 +696,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/logo terminaci
           celda.addEventListener('click', function () {
             calendario.querySelectorAll('td.activo').forEach(a => a.classList.remove('activo'));
             celda.classList.add('activo');
-            // actualizarResultados(`${ano}-${pad2(mes)}-${pad2(dia)}`);
+            actualizarResultadosTerminacion2(`${ano}-${pad2(mes)}-${pad2(dia)}`);
           });
 
           fila.appendChild(celda);
@@ -716,6 +722,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/logo terminaci
       anoSelect.value = hoy.getFullYear();
       mesSelect.value = pad2(hoy.getMonth() + 1);
       renderizarCalendario(hoy.getMonth() + 1, hoy.getFullYear());
+      actualizarResultadosTerminacion2(`${hoy.getFullYear()}-${pad2(hoy.getMonth() + 1)}-${pad2(hoy.getDate())}`);
     });
   </script>
 
