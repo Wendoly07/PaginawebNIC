@@ -36,7 +36,7 @@
   }
 
   .footer-logo {
-    width: 110px;
+    width: 190px;
   }
 
   /* COLUMNAS */
@@ -128,9 +128,7 @@
   <!-- Sección izquierda del footer - Logo principal -->
   <div class="footer-left">
    <!-- Logo de LOTO -->
-   <img src="/ImagesSV/logo-02-LOTO.png" alt="Logo" class="footer-logo">
-   <!-- Logo de Juegos de Lotería -->
-   <img src="/ImagesSV/LOGO LOTO JDL WHITE.svg" alt="Juegos de Lotería" class="footer-juegos-logo">
+   <img src="/ImagesSV/LOGO JUEGOS DE LOTERIA FOOTER.svg" alt="Logo" class="footer-logo">
   </div>
 
   <!-- Sección derecha del footer - Contenido -->
