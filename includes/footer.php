@@ -18,7 +18,10 @@
     /* Sección del logo ocupa todo el ancho en móviles */
     width: 100%;
     display: flex;
+    flex-direction: row;
     justify-content: center;
+    align-items: center;
+    gap: 12px;
     /* Centra el logo horizontalmente */
     margin-bottom: 20px;
     /* Espacio inferior antes de las columnas */
@@ -26,10 +29,14 @@
 
   .footer-left img {
     /* Escala el logo para que sea visible en móviles */
-    transform: scale(2) !important;
+    transform: none !important;
     /* Mantiene tamaño grande pero controlado */
-    margin-top: 25px !important;
+    margin-top: 0 !important;
     /* Margen superior para posicionamiento */
+  }
+
+  .footer-logo {
+    width: 110px;
   }
 
   /* COLUMNAS */
@@ -101,6 +108,12 @@
     /* Mantiene proporción */
   }
 
+  .footer-juegos-logo {
+    max-width: 170px;
+    width: 100%;
+    height: auto;
+  }
+
   .footer-logos {
     /* Asegura centrado de logos */
     display: flex;
@@ -114,10 +127,10 @@
 <div class="footer">
   <!-- Sección izquierda del footer - Logo principal -->
   <div class="footer-left">
-   <!-- Logo de LOTO en blanco -->
-   <img src="/ImagesSV/logo-02-LOTO.png" alt="Logo" class="footer-logo"
-     style="transform: scale(2.5) translateX(40px); margin-top: 25px;">
-     <!-- Logo escalado y posicionado para desktop -->
+   <!-- Logo de LOTO -->
+   <img src="/ImagesSV/logo-02-LOTO.png" alt="Logo" class="footer-logo">
+   <!-- Logo de Juegos de Lotería -->
+   <img src="/ImagesSV/LOGO LOTO JDL WHITE.svg" alt="Juegos de Lotería" class="footer-juegos-logo">
   </div>
 
   <!-- Sección derecha del footer - Contenido -->

@@ -18,8 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
         );
 
-        // Consulta SQL para insertar datos del formulario en la tabla contactanos_sv
-        $sql = "INSERT INTO contactanos_sv (nombre, correo, asunto, mensaje)
+        // Consulta SQL para insertar datos del formulario en la tabla contactanos_nic
+        $sql = "INSERT INTO contactanos_nic   (nombre, correo, asunto, mensaje)
                 VALUES (:nombre, :correo, :asunto, :mensaje)";
 
         // Preparar y ejecutar la consulta con parámetros para evitar inyección SQL
@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         // ===== LLAMAR LOGIC APP =====
         // URL del Logic App de Azure para procesar el formulario
-        $logicAppUrl = "https://prod-16.canadacentral.logic.azure.com:443/workflows/dcb005e10f144cdbb81f91672f4127b9/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=T3Nx2FS1LQdRDKtocoeWf4HAnHsPCf7S_vgrfqyWASY";
+        $logicAppUrl = "https://prod-13.canadacentral.logic.azure.com:443/workflows/a79388f1bb064ceb80716647783c62f1/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=-7XKYAdI814tz-BuPFkRP-A0NuOlJDsg7BvfpHSX6-c";
 
         // Datos a enviar al Logic App
         $data = [

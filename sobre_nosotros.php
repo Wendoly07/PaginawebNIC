@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         );
 
         // Preparar la consulta SQL para insertar las respuestas del test.
-        $sql = "INSERT INTO Test_responsable 
+        $sql = "INSERT INTO Test_responsable_nic
                 (JugoParaDeudas, ImpulsoVolverAJugar, PidioPrestamo, Remordimientos, QuedarseSinDinero, RecuperarPerdidas, TristezaPorJuego)
                 VALUES 
                 (:JugoParaDeudas, :ImpulsoVolverAJugar, :PidioPrestamo, :Remordimientos, :QuedarseSinDinero, :RecuperarPerdidas, :TristezaPorJuego)";
@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         ]);
 
         // Enviar los datos del test a una Logic App externa para procesamiento adicional.
-        $logicAppUrl = "https://prod-29.canadacentral.logic.azure.com:443/workflows/08ef2beb8f3b40f4afd2820e4db42d68/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=dIwHyCaQqyiNPy1taKz3Jt3VHBlb3k12yz49asN1zmc";
+        $logicAppUrl = "https://prod-20.canadacentral.logic.azure.com:443/workflows/cbe78e5274b94aa0b57547273c62f7a9/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=Jx6GkYU4v1Hk3CkZKlyHchIabAVj9uPlFArENcxZtaw";
 
         $data = [
             "JugoParaDeudas" => $JugoParaDeudas,
