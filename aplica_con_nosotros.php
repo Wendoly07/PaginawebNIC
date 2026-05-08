@@ -34,6 +34,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try {
         // Intenta procesar el envío del formulario
 
+        $cvRuta = 'sin_cv';
+        if (!empty($_FILES['cv']['tmp_name'])) {
+            $uploadDir = __DIR__ . "/ImagesSV/uploads/cv/";
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0775, true);
+            }
+
+            $extension = strtolower(pathinfo($_FILES['cv']['name'], PATHINFO_EXTENSION));
+            $nombreArchivo = uniqid("cv_", true) . "." . $extension;
+            $rutaDestino = $uploadDir . $nombreArchivo;
+
+            if (move_uploaded_file($_FILES['cv']['tmp_name'], $rutaDestino)) {
+                $cvRuta = "ImagesSV/uploads/cv/" . $nombreArchivo;
+            }
+        }
+
         // Conexión a SQL Server (se vuelve a conectar por seguridad)
         $conn = new PDO(
             "sqlsrv:Server=srvdbcacdev.database.windows.net;Database=dblotocacdev",
@@ -43,10 +59,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         );
 
         // Insertar los datos del formulario en la base de datos
-        $sql = "INSERT INTO aplica_con_nostros_nic
-        (nombre, genero, edad, identidad, telefono, email, direccion, departamento, estudios, titulo, ingles, posicion, experiencia, transporte, juegos, salario, cv)
+        $sql = "INSERT INTO aplica_con_nostros_NI
+        (nombre, genero, identidad, telefono, email, direccion, departamento, estudios, titulo, posicion, transporte, cv)
         VALUES
-        (:nombre, :genero, :edad, :identidad, :telefono, :email, :direccion, :departamento, :estudios, :titulo, :ingles, :posicion, :experiencia, :transporte, :juegos, :salario, :cv)";
+        (:nombre, :genero, :identidad, :telefono, :email, :direccion, :departamento, :estudios, :titulo, :posicion, :transporte, :cv)";
         // SQL para insertar los datos del candidato en la tabla
 
         $stmt = $conn->prepare($sql);
@@ -56,7 +72,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // Ejecuta la consulta con los valores del formulario
             ':nombre' => $_POST['nombre'],
             ':genero' => $_POST['genero'],
-            ':edad' => $_POST['edad'],
             ':identidad' => $_POST['identidad'],
             ':telefono' => $_POST['telefono'],
             ':email' => $_POST['email'],
@@ -64,24 +79,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             ':departamento' => $_POST['departamento'],
             ':estudios' => $_POST['estudios'],
             ':titulo' => $_POST['titulo'],
-            ':ingles' => $_POST['ingles'],
             ':posicion' => $_POST['posicion'],
-            ':experiencia' => $_POST['experiencia'],
             ':transporte' => $_POST['transporte'],
-            ':juegos' => $_POST['juegos'],
-            ':salario' => $_POST['salario'],
-            ':cv' => 'sin_cv' // Valor por defecto ya que no se maneja CV en este formulario
+            ':cv' => $cvRuta
         ]);
 
         // LLAMADA A LOGIC APP CORRECTA PARA PROCESAR LA APLICACIÓN
-        $logicAppUrl = "https://prod-23.canadacentral.logic.azure.com:443/workflows/f6f527d5cddc437bb4c3314a76cb6feb/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=Umo2mZGViHzrmZZPNRcpezHcWJ1mKiG9Ml0pPwxDWS4";
+        $logicAppUrl = "https://prod-02.canadacentral.logic.azure.com:443/workflows/63ed12b6990e4bdb95937eed1f5eb337/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=5BJV_uDgvZO-oK9paCIVoXfQFiK56dU085ScnCIGwio";
         // URL del Logic App de Azure que procesa las aplicaciones
 
         $data = [
             // Datos a enviar al Logic App (sin el campo cv)
             "nombre" => $_POST['nombre'],
             "genero" => $_POST['genero'],
-            "edad" => $_POST['edad'],
             "identidad" => $_POST['identidad'],
             "telefono" => $_POST['telefono'],
             "email" => $_POST['email'],
@@ -89,12 +99,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             "departamento" => $_POST['departamento'],
             "estudios" => $_POST['estudios'],
             "titulo" => $_POST['titulo'],
-            "ingles" => $_POST['ingles'],
             "posicion" => $_POST['posicion'],
-            "experiencia" => $_POST['experiencia'],
             "transporte" => $_POST['transporte'],
-            "juegos" => $_POST['juegos'],
-            "salario" => $_POST['salario']
+            "cv" => $cvRuta
         ];
 
         // Enviar datos al Logic App usando cURL
@@ -573,9 +580,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   </div>
   <?php endif; ?>
 
-  <form method="POST">
+  <form method="POST" enctype="multipart/form-data">
     <!-- Formulario de aplicación enviado por POST -->
-    <!-- Aquí va todo tu formulario tal como lo tenías, con los inputs y radios, sin CV -->
+    <!-- Formulario de aplicación con adjunto de CV -->
     <label class="required">Nombre completo:</label>
     <!-- Campo requerido para nombre -->
     <input type="text" name="nombre" required>
@@ -589,12 +596,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
     <br>
 
-    <label class="required">Edad:</label>
-    <!-- Campo numérico para edad -->
-    <input type="number" name="edad" required>
-    <br><br>
-
-    <label class="required">Número de identidad (DUI):</label>
+    <label class="required">Número de identidad:</label>
     <!-- Campo para número de identidad -->
     <input type="text" name="identidad" required>
     <br><br>
@@ -609,7 +611,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <input type="email" name="email" required>
     <br><br>
 
-    <label class="required">Dirección:</label>
+    <label class="required">Dirección domiciliar:</label>
     <!-- Campo para dirección -->
     <input type="text" name="direccion" required>
     <br><br>
@@ -642,10 +644,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <div class="radio-group">
       <label><input type="radio" name="estudios" value="Primaria" required> Primaria</label>
       <label><input type="radio" name="estudios" value="Secundaria"> Secundaria</label>
-      <label><input type="radio" name="estudios" value="Pasante universitario"> Pasante universitario</label>
       <label><input type="radio" name="estudios" value="Universidad completa"> Universidad completa</label>
-      <label><input type="radio" name="estudios" value="Pasante maestria"> Pasante maestría</label>
-      <label><input type="radio" name="estudios" value="Maestria completa"> Maestría completa</label>
     </div>
     <br>
 
@@ -654,33 +653,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <input type="text" name="titulo" required>
     <br><br>
 
-    <label class="required main-label">Manejo del idioma inglés:</label>
-    <!-- Grupo de radio buttons para nivel de inglés -->
-    <div class="radio-group">
-      <label><input type="radio" name="ingles" value="Basico" required> Básico</label>
-      <label><input type="radio" name="ingles" value="Intermedio"> Intermedio</label>
-      <label><input type="radio" name="ingles" value="Avanzado"> Avanzado</label>
-    </div>
-    <br>
-
     <label class="required">Posición a la que aplica:</label>
     <!-- Campo para posición deseada -->
     <input type="text" name="posicion" required>
     <br><br>
 
-    <label class="required main-label">Años en puestos similares:</label>
-    <!-- Grupo de radio buttons para experiencia -->
-    <div class="radio-group">
-      <label><input type="radio" name="experiencia" value="Sin experiencia" required> Sin experiencia</label>
-      <label><input type="radio" name="experiencia" value="0-6 meses"> 0 - 6 meses</label>
-      <label><input type="radio" name="experiencia" value="6 meses - 1 año"> 6 meses - 1 año</label>
-      <label><input type="radio" name="experiencia" value="1 - 3 años"> 1 - 3 años</label>
-      <label><input type="radio" name="experiencia" value="3 - 5 años"> 3 - 5 años</label>
-      <label><input type="radio" name="experiencia" value="Más de 5 años"> Más de 5 años</label>
-    </div>
-    <br>
-
-    <label class="required main-label">¿Tiene transporte propio?</label>
+    <label class="required main-label">¿Tiene vehículo propio?</label>
     <!-- Grupo de radio buttons para transporte -->
     <div class="radio-group">
       <label><input type="radio" name="transporte" value="Sí" required> Sí</label>
@@ -688,17 +666,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
     <br>
 
-    <label class="required main-label">¿Ha jugado nuestros juegos?</label>
-    <!-- Grupo de radio buttons para conocimiento de juegos -->
-    <div class="radio-group">
-      <label><input type="radio" name="juegos" value="Sí" required> Sí</label>
-      <label><input type="radio" name="juegos" value="No"> No</label>
-    </div>
-    <br>
-
-    <label class="required">¿Cuál es tu pretensión salarial?</label>
-    <!-- Campo para pretensión salarial -->
-    <input type="text" name="salario" required>
+    <label class="required">Adjuntar CV:</label>
+    <input type="file" name="cv" accept=".pdf,.doc,.docx" required>
     <br><br>
 
     <button type="submit" class="btn-submit">Enviar información</button>

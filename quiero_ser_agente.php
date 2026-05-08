@@ -66,10 +66,10 @@ if (!empty($_FILES['FotoNegocio']['tmp_name'])) {
             [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
         );
 
-        $sql = "INSERT INTO quiero_ser_agente_sv 
-                (Nombre, Apellidos, Identidad, Telefono, Correo, Negocio, Direccion, TipoNegocio, Departamento, Ciudad, Municipio, Barrio, FotoNegocio)
+        $sql = "INSERT INTO quiero_ser_agente_nic 
+                (Nombre, Apellidos, Identidad, Telefono, Correo, Negocio, Direccion, TipoNegocio, Departamento, Municipio, Barrio, FotoNegocio)
                 VALUES 
-                (:Nombre, :Apellidos, :Identidad, :Telefono, :Correo, :Negocio, :Direccion, :TipoNegocio, :Departamento, :Ciudad, :Municipio, :Barrio, :FotoNegocio)";
+                (:Nombre, :Apellidos, :Identidad, :Telefono, :Correo, :Negocio, :Direccion, :TipoNegocio, :Departamento, :Municipio, :Barrio, :FotoNegocio)";
 
         $stmt = $conn->prepare($sql);
         $stmt->execute([
@@ -82,14 +82,13 @@ if (!empty($_FILES['FotoNegocio']['tmp_name'])) {
             ':Direccion' => $Direccion,
             ':TipoNegocio' => $TipoNegocio,
             ':Departamento' => $Departamento,
-            ':Ciudad' => $Ciudad,
             ':Municipio' => $Municipio,
             ':Barrio' => $Barrio,
             ':FotoNegocio' => $FotoNegocio
         ]);
 
         //  Enviar los datos guardados a una Logic App externa para procesamiento adicional.
-        $logicAppUrl = "https://prod-21.canadacentral.logic.azure.com:443/workflows/35394d22c95147bd8fa955926a9b5ff2/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=d9Eo7PIHW2ELfGPfd-OHWzlQEy8KeKYY6uZOEJH5CGo";
+        $logicAppUrl = "https://prod-15.canadacentral.logic.azure.com:443/workflows/56f8cb7879aa4a04bfd61f011b851aef/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=qd72sU3g0HgAk_OYW7JxehacumNReS-nBJLSgpRB-jI";
 
         $data = [
             "Nombre" => $Nombre,
@@ -101,7 +100,6 @@ if (!empty($_FILES['FotoNegocio']['tmp_name'])) {
             "Direccion" => $Direccion,
             "TipoNegocio" => $TipoNegocio,
             "Departamento" => $Departamento,
-            "Ciudad" => $Ciudad,
             "Municipio" => $Municipio,
             "Barrio" => $Barrio,
             "FotoNegocio" => $FotoNegocio
@@ -132,22 +130,116 @@ if (!empty($_FILES['FotoNegocio']['tmp_name'])) {
 // Mostrar el estado del envío al usuario.
 echo $mensajeExito;
 
-// Arreglo de municipios por departamento para llenar el combo dinámicamente.
-$municipiosSV = [
-    "Ahuachapán" => ["Ahuachapán", "Apaneca", "Atiquizaya", "Concepción de Ataco", "El Refugio", "Guaymango", "Jujutla", "San Francisco Menéndez", "San Lorenzo", "San Pedro Puxtla", "Tacuba", "Turín"],
-    "Cabañas" => ["Cinquera", "Dolores", "Guacotecti", "Jutiapa", "Sensuntepeque", "Tejutepeque", "Victoria"],
-    "Chalatenango" => ["Agua Caliente", "Arcatao", "Azacualpa", "Chalatenango", "Comalapa", "Concepción Quezaltepeque", "Dulce Nombre de María", "El Carrizal", "El Paraíso", "La Laguna", "La Palma", "La Reina", "Las Flores", "Las Vueltas", "Nombre de Jesús", "Nueva Concepción", "Nueva Trinidad", "San Antonio de la Cruz", "San Antonio Los Ranchos", "San Fernando", "San Francisco Lempa", "San Francisco Morazán", "San Ignacio", "San Isidro Labrador", "San Luis del Carmen", "San Miguel de Mercedes", "San Rafael", "Santa Rita", "Tejutla"],
-    "Cuscatlán" => ["Candelaria", "Cojutepeque", "El Carmen", "El Rosario", "Monte San Juan", "Oratorio de Concepción", "San Bartolomé Perulapía", "San Cristóbal", "San José Guayabal", "San Pedro Perulapán", "San Rafael Cedros", "San Ramón", "Santa Cruz Analquito", "Santa Cruz Michapa", "Suchitoto", "Tenancingo"],
-    "La Libertad" => ["Antiguo Cuscatlán", "Chiltiupán", "Ciudad Arce", "Colón", "Comasagua", "Huizúcar", "Jayaque", "Jicalapa", "La Libertad", "Santa Tecla", "Nuevo Cuscatlán", "Quezaltepeque", "Sacacoyo", "San José Villanueva", "San Juan Opico", "Talnique", "Tamanique", "Teotepeque", "Tepecoyo", "Zaragoza"],
-    "La Paz" => ["Cuyultitán", "El Rosario", "Jerusalén", "Mercedes La Ceiba", "Olocuilta", "Paraíso de Osorio", "San Antonio Masahuat", "San Emigdio", "San Francisco Chinameca", "San Juan Nonualco", "San Juan Talpa", "San Juan Tepezontes", "San Luis Talpa", "San Luis La Herradura", "San Miguel Tepezontes", "San Pedro Masahuat", "San Pedro Nonualco", "San Rafael Obrajuelo", "Santa María Ostuma", "Santiago Nonualco", "Tapalhuaca"],
-    "La Unión" => ["Anamorós", "Bolívar", "Concepción de Oriente", "Conchagua", "El Carmen", "El Sauce", "Intipucá", "La Unión", "Lislique", "Meanguera del Golfo", "Nueva Esparta", "Pasaquina", "Polorós", "San Alejo", "San José", "Santa Rosa de Lima", "Yayantique", "Yucuaiquín"],
-    "Morazán" => ["Arambala", "Cacaopera", "Chilanga", "Corinto", "Delicias de Concepción", "El Divisadero", "El Rosario", "Gualococti", "Guatajiagua", "Joateca", "Jocoaitique", "Jocoro", "Lolotique", "Meanguera", "Osicala", "Perquín", "San Carlos", "San Fernando", "San Francisco Gotera", "San Isidro", "San Simón", "Sensembra", "Sociedad", "Torola", "Yamabal", "Yoloaiquín"],
-    "San Miguel" => ["Chinameca", "Chirilagua", "Ciudad Barrios", "Comacarán", "El Tránsito", "Lolotique", "Moncagua", "Nuevo Edén de San Juan", "Quelepa", "San Antonio", "San Gerardo", "San Jorge", "San Luis de la Reina", "San Miguel", "Sesori", "Uluazapa"],
-    "San Salvador" => ["Aguilares", "Apopa", "Ayutuxtepeque", "Cuscatancingo", "Delgado", "El Paisnal", "Guazapa", "Ilopango", "Mejicanos", "Nejapa", "Panchimalco", "Rosario de Mora", "San Marcos", "San Martín", "San Salvador", "Santiago Texacuangos", "Santo Tomás", "Soyapango", "Tonacatepeque"],
-    "San Vicente" => ["Apastepeque", "Guadalupe", "San Cayetano Istepeque", "San Esteban Catarina", "San Ildefonso", "San Lorenzo", "San Sebastián", "San Vicente", "Santa Clara", "Santo Domingo", "Tecoluca", "Tepetitán", "Verapaz"],
-    "Santa Ana" => ["Candelaria de la Frontera", "Chalchuapa", "Coatepeque", "El Congo", "El Porvenir", "Masahuat", "Metapán", "San Antonio Pajonal", "San Sebastián Salitrillo", "Santa Ana", "Santa Rosa Guachipilín", "Santiago de la Frontera", "Texistepeque"],
-    "Sonsonate" => ["Acajutla", "Armenia", "Caluco", "Cuisnahuat", "Izalco", "Juayúa", "Nahuizalco", "Nahulingo", "Salcoatitán", "San Antonio del Monte", "San Julián", "Santa Catarina Masahuat", "Santa Isabel Ishuatán", "Santo Domingo de Guzmán", "Sonsonate", "Sonzacate"],
-    "Usulután" => ["Alegría", "Berlín", "California", "Concepción Batres", "El Triunfo", "Ereguayquín", "Estanzuelas", "Jiquilisco", "Jucuapa", "Jucuarán", "Mercedes Umaña", "Nueva Granada", "Ozatlán", "Puerto El Triunfo", "San Agustín", "San Buenaventura", "San Dionisio", "San Francisco Javier", "Santa Elena", "Santa María", "Santiago de María", "Tecapán", "Usulután"]
+// Arreglo de municipios por departamento de Nicaragua
+$municipiosNI = [
+    "Boaco" => [
+        "Boaco", "Camoapa", "San José de los Remates",
+        "San Lorenzo", "Santa Lucía", "Teustepe"
+    ],
+
+    "Carazo" => [
+        "Diriamba", "Dolores", "El Rosario", "Jinotepe",
+        "La Conquista", "La Paz de Carazo", "San Marcos",
+        "Santa Teresa"
+    ],
+
+    "Chinandega" => [
+        "Chichigalpa", "Chinandega", "Cinco Pinos",
+        "Corinto", "El Realejo", "El Viejo", "Posoltega",
+        "Puerto Morazán", "San Francisco del Norte",
+        "San Pedro del Norte", "Santo Tomás del Norte",
+        "Somotillo", "Villanueva"
+    ],
+
+    "Chontales" => [
+        "Acoyapa", "Comalapa", "Cuapa", "El Coral",
+        "Juigalpa", "La Libertad", "San Francisco de Cuapa",
+        "San Pedro de Lóvago", "Santo Domingo",
+        "Santo Tomás", "Villa Sandino"
+    ],
+
+    "Estelí" => [
+        "Condega", "Estelí", "La Trinidad",
+        "Pueblo Nuevo", "San Juan de Limay",
+        "San Nicolás"
+    ],
+
+    "Granada" => [
+        "Diriá", "Diriomo", "Granada", "Nandaime"
+    ],
+
+    "Jinotega" => [
+        "El Cuá", "Jinotega", "La Concordia",
+        "San José de Bocay", "San Rafael del Norte",
+        "San Sebastián de Yalí", "Santa María de Pantasma",
+        "Wiwilí de Jinotega"
+    ],
+
+    "León" => [
+        "Achuapa", "El Jicaral", "El Sauce",
+        "La Paz Centro", "Larreynaga", "León",
+        "Nagarote", "Quezalguaque", "Santa Rosa del Peñón",
+        "Telica"
+    ],
+
+    "Madriz" => [
+        "Las Sabanas", "Palacagüina", "San José de Cusmapa",
+        "San Juan de Río Coco", "San Lucas",
+        "Somoto", "Telpaneca", "Totogalpa", "Yalagüina"
+    ],
+
+    "Managua" => [
+        "Ciudad Sandino", "El Crucero", "Managua",
+        "Mateare", "San Francisco Libre", "San Rafael del Sur",
+        "Ticuantepe", "Tipitapa", "Villa El Carmen"
+    ],
+
+    "Masaya" => [
+        "Catarina", "La Concepción", "Masatepe",
+        "Masaya", "Nandasmo", "Nindirí",
+        "Niquinohomo", "San Juan de Oriente",
+        "Tisma"
+    ],
+
+    "Matagalpa" => [
+        "Ciudad Darío", "El Tuma-La Dalia", "Esquipulas",
+        "Matagalpa", "Matiguás", "Muy Muy",
+        "Rancho Grande", "Río Blanco", "San Dionisio",
+        "San Isidro", "San Ramón", "Sébaco",
+        "Terrabona"
+    ],
+
+    "Nueva Segovia" => [
+        "Ciudad Antigua", "Dipilto", "El Jícaro",
+        "Jalapa", "Macuelizo", "Mozonte",
+        "Murra", "Ocotal", "Quilalí",
+        "San Fernando", "Santa María", "Wiwilí"
+    ],
+
+    "Río San Juan" => [
+        "El Almendro", "El Castillo", "Morrito",
+        "San Carlos", "San Juan del Norte",
+        "San Miguelito"
+    ],
+
+    "Rivas" => [
+        "Altagracia", "Belén", "Buenos Aires",
+        "Cárdenas", "Moyogalpa", "Potosí",
+        "Rivas", "San Jorge", "San Juan del Sur",
+        "Tola"
+    ],
+
+    "Atlántico Norte" => [
+        "Bonanza", "Mulukukú", "Prinzapolka",
+        "Puerto Cabezas", "Rosita", "Siuna", "Waslala", "Waspam"
+    ],
+
+    "Atlántico Sur" => [
+        "Bluefields", "Corn Island", "Desembocadura de Río Grande",
+        "El Ayote", "El Rama", "Kukra Hill",
+        "La Cruz de Río Grande", "Laguna de Perlas",
+        "Muelle de los Bueyes", "Nueva Guinea", "Paiwas"
+    ]
 ];
 ?>
 
@@ -541,7 +633,7 @@ $municipiosSV = [
       <div class="form-grid">
         <div class="form-group"><label>Nombre</label><input type="text" name="Nombre" placeholder="Nombre" required></div>
         <div class="form-group"><label>Apellidos</label><input type="text" name="Apellidos" placeholder="Apellidos" required></div>
-        <div class="form-group"><label>Número de Identidad</label><input type="text" name="Identidad" placeholder="Número de Identidad" ></div>
+        <div class="form-group"><label>Número de Cedula</label><input type="text" name="Identidad" placeholder="Número de Cedula" ></div>
         <div class="form-group"><label>Teléfono</label><input type="tel" name="Telefono" placeholder="Teléfono" required></div>
         <div class="form-group"><label>Correo Electrónico</label><input type="email" name="Correo" placeholder="Correo Electrónico" required></div>
       </div>
@@ -576,34 +668,34 @@ $municipiosSV = [
         <div class="form-group"><label>Departamento</label>
           <select name="Departamento" required>
   <option value="">Seleccione Departamento</option>
-  <option value="Ahuachapán">Ahuachapán</option>
-  <option value="Cabañas">Cabañas</option>
-  <option value="Chalatenango">Chalatenango</option>
-  <option value="Cuscatlán">Cuscatlán</option>
-  <option value="La Libertad">La Libertad</option>
-  <option value="La Paz">La Paz</option>
-  <option value="La Unión">La Unión</option>
-  <option value="Morazán">Morazán</option>
-  <option value="San Miguel">San Miguel</option>
-  <option value="San Salvador">San Salvador</option>
-  <option value="San Vicente">San Vicente</option>
-  <option value="Santa Ana">Santa Ana</option>
-  <option value="Sonsonate">Sonsonate</option>
-  <option value="Usulután">Usulután</option>
+  <option value="Boaco">Boaco</option>
+  <option value="Carazo">Carazo</option>
+  <option value="Chinandega">Chinandega</option>
+  <option value="Chontales">Chontales</option>
+  <option value="Estelí">Estelí</option>
+  <option value="Granada">Granada</option>
+  <option value="Jinotega">Jinotega</option>
+  <option value="León">León</option>
+  <option value="Madriz">Madriz</option>
+  <option value="Managua">Managua</option>
+  <option value="Masaya">Masaya</option>
+  <option value="Matagalpa">Matagalpa</option>
+  <option value="Nueva Segovia">Nueva Segovia</option>
+  <option value="Río San Juan">Río San Juan</option>
+  <option value="Rivas">Rivas</option>
+  <option value="Atlántico Norte">Atlántico Norte</option>
+  <option value="Atlántico Sur">Atlántico Sur</option>
 </select>
-
         </div>
-        <div class="form-group"><label>Ciudad</label><input type="text" name="Ciudad" placeholder="Ciudad" required></div>
-        <div class="form-group">
-    <label>Municipio</label>
-    <select name="Municipio" id="municipio" required>
-        <option value="">Seleccione Municipio</option>
-    </select>
-</div>
+        <div class="form-group"><label>Municipio</label>
+          <select name="Municipio" id="municipio" required>
+            <option value="">Seleccione Municipio</option>
+          </select>
+        </div>
         <div class="form-group"><label>Barrio / Colonia</label><input type="text" name="Barrio" placeholder="Barrio / Colonia" required></div>
       </div>
 
-      <button type="submit" class="btn-submit">Enviar mensaje</button>
+      <button type="submit" class="btn-submit">APLICAR</button>
     </form>
   </section>
 
@@ -628,7 +720,7 @@ $municipiosSV = [
 
 <script>
 // Datos de municipios para cargar de forma dinámica según el departamento seleccionado.
-const municipiosSV = <?php echo json_encode($municipiosSV); ?>;
+const municipiosNI = <?php echo json_encode($municipiosNI); ?>;
 
 const departamentoSelect = document.querySelector('select[name="Departamento"]');
 const municipioSelect = document.getElementById('municipio');
@@ -638,9 +730,9 @@ departamentoSelect.addEventListener('change', function() {
     const depto = this.value;
     // Reiniciar lista de municipios cada vez que cambia el departamento.
     municipioSelect.innerHTML = '<option value="">Seleccione Municipio</option>';
-    if (municipiosSV[depto]) {
+    if (municipiosNI[depto]) {
         // Agregar cada municipio como opción en el select.
-        municipiosSV[depto].forEach(mun => {
+        municipiosNI[depto].forEach(mun => {
             const option = document.createElement('option');
             option.value = mun;
             option.textContent = mun;

@@ -36,7 +36,7 @@
   }
 
   .footer-logo {
-    width: 190px;
+    width: 300px;
   }
 
   /* COLUMNAS */

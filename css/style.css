@@ -1141,24 +1141,23 @@ img {
   padding: 40px 20px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   gap: 20px;
 }
 
 .footer-left {
+  position: absolute;
+  left: 20px;
+  top: 35px;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
   gap: 12px;
-  flex: 0 0 320px;
-  /* pega arriba */
-  margin-top: -20px;
-  /* sube todo el bloque */
 }
 
 .footer-logo {
-  width: 220px;
+  width: 380px;
   height: auto;
 }
 
@@ -1170,10 +1169,11 @@ img {
 
 /* Bloque derecho con columnas centradas */
 .footer-right {
-  flex: 1;
+  flex: 0 1 760px;
   display: flex;
   justify-content: center;
   /* CENTRAR columnas */
+  margin: 30px auto 0;
 }
 
 .footer-columns {
@@ -1517,6 +1517,9 @@ img {
 }
 
 .footer-logos {
+  position: absolute;
+  right: 20px;
+  top: 40px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;

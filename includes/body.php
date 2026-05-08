@@ -1119,7 +1119,7 @@ document.addEventListener("DOMContentLoaded", function() {
 @media (max-width: 768px) {
 
   /* SOLO mover la imagen de la modelo un poco a la izquierda */
-  .hero img[src="/ImagesSV/modelo.png"] {
+  .hero img[src="/ImagesSV/conductora-roja.png"] {
     position: relative;
     left: -25px;   /*  ajustá: -15px, -20px, -30px según necesites */
   }
@@ -1717,7 +1717,7 @@ $banners = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </a>
       </div>
 
-      <img src="/ImagesSV/modelo.png" alt="Conductora">
+      <img src="/ImagesSV/conductora-roja.png" alt="Conductora">
 
       <img src="/ImagesSV/Esfera_3.png" class="esfera" style="position:absolute; width:5vw; top:20%; left:65%;">
       <img src="/ImagesSV/Esfera_9.png" class="esfera" style="position:absolute; width:5vw; top:70%; left:59%;">
