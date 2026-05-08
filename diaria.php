@@ -350,34 +350,55 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO DIARIA.sv
     /* Contenedor principal tipo acordeón para mostrar contenido desplegable */
     .accordion {
       max-width: 1100px;
-      margin: 30px auto;
-      border-radius: 15px;
+      margin: 8px auto;
+      border-radius: 12px;
       overflow: hidden;
-      background: white; /*  FONDO BLANCO */
-      border: 2px solid #13a538; /* BORDE VISIBLE */
+      background: white;
+      border: 2px solid #13a538;
     }
 
     .accordion-header {
-      padding: 18px;
-      text-align: center;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       color: white;
-      font-weight: bold;
-      font-size: 24px;
+      font-weight: 800;
+      font-size: 20px;
       cursor: pointer;
-      position: relative;
       background: #13a538;
+      transition: background 0.3s;
     }
 
-    .accordion-header .arrow {
-      position: absolute;
-      right: 20px;
-      font-size: 26px;
+    .accordion-header:hover {
+      background: #03b454;
+    }
+
+    .accordion-header .arrow-circle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      font-size: 16px;
+      flex-shrink: 0;
+      transition: transform 0.3s;
+    }
+
+    .accordion-header.open .arrow-circle {
+      transform: rotate(180deg);
     }
 
     .accordion-content {
       display: none;
-      padding: 20px;
+      padding: 20px 24px;
       background: white;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.7;
+      color: #333;
     }
 
     /* SUB-ACORDEONES */
@@ -845,57 +866,50 @@ body {
 
   <!-- ACCORDION -->
   <!-- Sección desplegable principal con información editable de la Diaria -->
-<div class="accordion">
-
-  <div class="accordion-header" onclick="toggle(this)">
-    <!-- SUBTÍTULO EDITABLE -->
-    <?= htmlspecialchars($config['titulo1']) ?>
-    <span class="arrow">▼</span>
-  </div>
-
-  <div class="accordion-content">
-
-  <div class="info-juego">
-    <!-- TEXTO PRINCIPAL EDITABLE -->
-    <p class="descripcion">
-      <?= nl2br(htmlspecialchars($config['contenido1'])) ?>
-    </p>
-
-    <!-- IMAGEN FIJA QUE NUNCA CAMBIA -->
-    <div class="linea-juego">
-    <div class="img-container">
-        <img src="/ImagesSV/Diaria.webp" class="img-diaria" alt="Imagen Diaria">
+  <!-- ACORDEONES -->
+  <div class="accordion">
+    <div class="accordion-header open" onclick="toggleAcordeon(this)">
+      <?= htmlspecialchars($config['titulo1'] ?? 'COMO JUGAR') ?>
+      <span class="arrow-circle">&#9660;</span>
     </div>
-    <div class="texto-principal">
-        <?= nl2br(htmlspecialchars($config['contenido_principal'])) ?>
+    <div class="accordion-content" style="display:block;">
+      <div class="info-juego">
+        <p class="descripcion">
+          <?= nl2br(htmlspecialchars($config['contenido1'] ?? '')) ?>
+        </p>
+
+        <div class="linea-juego">
+          <div class="img-container">
+            <img src="/ImagesSV/Diaria.webp" class="img-diaria" alt="Imagen Diaria">
+          </div>
+          <div class="texto-principal">
+            <?= nl2br(htmlspecialchars($config['contenido_principal'] ?? '')) ?>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
   </div>
 
-  
-  <!-- SUB-ACORDEONES DINÁMICOS -->
-  <!-- Cada sub-acordeón puede abrir una sección adicional con contenido editable -->
-  <div class="sub-accordion-header" onclick="toggle(this)">
-    <?= htmlspecialchars($config['titulo2']) ?>
-    <span>▼</span>
-  </div>
-  <div class="sub-accordion-content">
-    <?= nl2br(htmlspecialchars($config['contenido2'])) ?>
-  </div>
-
-  <div class="sub-accordion-header" onclick="toggle(this)">
-    <?= htmlspecialchars($config['titulo3']) ?>
-    <span>▼</span>
-  </div>
-  <div class="sub-accordion-content">
-    <?= nl2br(htmlspecialchars($config['contenido3'])) ?>
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcordeon(this)">
+      <?= htmlspecialchars($config['titulo2'] ?? 'CONOZCA LOS RESULTADOS') ?>
+      <span class="arrow-circle">&#9660;</span>
+    </div>
+    <div class="accordion-content">
+      <?= nl2br(htmlspecialchars($config['contenido2'] ?? '')) ?>
+    </div>
   </div>
 
-</div>
-</div>
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcordeon(this)">
+      <?= htmlspecialchars($config['titulo3'] ?? 'RECLAME SU PREMIO') ?>
+      <span class="arrow-circle">&#9660;</span>
+    </div>
+    <div class="accordion-content">
+      <?= nl2br(htmlspecialchars($config['contenido3'] ?? '')) ?>
+    </div>
+  </div>
 
-  <!-- BOTÓN -->
-  <!-- BOTÓN REGLAMENTO: enlace al documento PDF del reglamento oficial -->
 <div class="reglamento">
   <a href="/ImagesSV/documentos/Reglamento La Diaria El Salvador.pdf" target="_blank">
     <button class="btn-reglamento">
@@ -905,10 +919,11 @@ body {
 </div>
 
   <script>
-    // Alterna la visibilidad del contenido justo después del encabezado clickeado
-    function toggle(h) {
-      let c = h.nextElementSibling;
-      c.style.display = (c.style.display === "block") ? "none" : "block";
+    function toggleAcordeon(header) {
+      const content = header.nextElementSibling;
+      const isOpen = content.style.display === 'block';
+      content.style.display = isOpen ? 'none' : 'block';
+      header.classList.toggle('open', !isOpen);
     }
   </script>
 <script>

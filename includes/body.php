@@ -508,18 +508,20 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 
 .res-card.verde .diaria-card-bola {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 40px;
-  height: 40px;
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  min-width: 35px;
+  line-height: 35px;
+  aspect-ratio: 1 / 1;
+  text-align: center;
   border-radius: 50%;
-  font-weight: bold;
-  font-size: 19px;
+  border: 0;
+  font-weight: 900;
+  font-size: 17px;
   color: #111;
   padding: 0;
   margin: 0;
-  border: 0;
   box-shadow: none;
 }
 
@@ -529,17 +531,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 .res-card.verde .diaria-card-bola.naranja {
   background: #f59a55;
-}
-
-.res-card.verde .diaria-card-numeros span.diaria-card-bola {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  font-weight: bold;
-  font-size: 19px;
 }
 
 /* Mantener botones tal como los tenías antes */
@@ -2406,10 +2397,14 @@ $rse = $stmt->fetch(PDO::FETCH_ASSOC);
 
     <!-- Texto y número -->
     <div class="rse-text">
-      <h2 class="numero" id="contador">0</h2>
+      <p style="font-size:30px; font-weight:600; margin-left:25px;">
+        LOTO ha entregado en premios, m&aacute;s de
+      </p>
+
+      <h2 class="numero" id="contador">C$7,983</h2>
 
       <p style="font-size:30px; font-weight:600; margin-left:25px;">
-        <?= $rse['texto'] ?? 'DESDE 2023 HASTA 2025' ?>
+        Millones de c&oacute;rdobas
       </p>
     </div>
 
@@ -2461,7 +2456,7 @@ $rse = $stmt->fetch(PDO::FETCH_ASSOC);
 
         }
         // Formatear con separador de miles (coma) y agregar + al inicio
-        elemento.textContent = "$" + valorInicial
+        elemento.textContent = "C$" + valorInicial
   .toLocaleString("es-ES")
   .replace(/\./g, ",");
         // Actualiza el texto del elemento con el valor formateado
@@ -2472,7 +2467,7 @@ $rse = $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     // Llamada a la función
-    animarContador("contador", <?= $rse['titulo'] ?? 1962862 ?>, 2000);
+    animarContador("contador", 7983, 2000);
     // Anima el contador con el valor de la base de datos o un valor por defecto
 
   </script>

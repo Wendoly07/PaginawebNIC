@@ -194,13 +194,6 @@
             Contáctanos
         </a>
     </p>
-    <!-- Enlace a documento descargable de reglamento -->
-    <p>
-        <a href="/ImagesSV/documentos/120226 LOTO - Bases de la Promoción Dobleteá tu Suerte vFinal.pdf"
-           style="color: inherit; text-decoration: none;"
-           download>
-          Reglamento promoción
-        </a>
     </p>
 </div>
 
