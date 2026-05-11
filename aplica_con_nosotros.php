@@ -34,7 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try {
         // Intenta procesar el envío del formulario
 
-        $cvRuta = 'pendiente_azure';
         if (empty($_FILES['cv']['tmp_name']) || $_FILES['cv']['error'] !== UPLOAD_ERR_OK) {
             throw new Exception("Debe adjuntar su CV en formato PDF.");
         }
@@ -44,6 +43,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if ($extension !== 'pdf' || $mimeType !== 'application/pdf') {
             throw new Exception("Solo se permite adjuntar archivos PDF.");
         }
+
+        $cvNombre = basename($_FILES['cv']['name']);
+        $cvRuta = $cvNombre;
+        $cvTipo = $_FILES['cv']['type'] ?: 'application/pdf';
+        $cvArchivo = file_get_contents($_FILES['cv']['tmp_name']);
+        if ($cvArchivo === false || $cvArchivo === '') {
+            throw new Exception("No se pudo leer el archivo PDF adjunto.");
+        }
+        $cvContenido = base64_encode($cvArchivo);
 
         // Conexión a SQL Server (se vuelve a conectar por seguridad)
         $conn = new PDO(
@@ -84,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // URL del Logic App de Azure que procesa las aplicaciones
 
         $data = [
-            // Datos a enviar al Logic App (sin el campo cv)
+            // Datos a enviar al Logic App
             "nombre" => $_POST['nombre'],
             "genero" => $_POST['genero'],
             "identidad" => $_POST['identidad'],
@@ -96,7 +104,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             "titulo" => $_POST['titulo'],
             "posicion" => $_POST['posicion'],
             "transporte" => $_POST['transporte'],
-            "cv" => $cvRuta
+            "cv" => $cvRuta,
+            "cv_nombre" => $cvNombre,
+            "cv_tipo" => $cvTipo,
+            "cv_contenido" => $cvContenido
         ];
 
         // Enviar datos al Logic App usando cURL
@@ -195,10 +206,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     position: relative;
     background: #0070d9;
     /* Fondo azul */
-    height: 150px;
+    min-height: 220px;
     display: flex;
     align-items: center;
-    padding-left: 250px;
+    padding: 28px 40px 28px 250px;
     /* Espacio para la imagen */
     border-radius: 1px;
     box-sizing: border-box;
@@ -305,25 +316,53 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   h3.form-title {
     /* Título del formulario */
     text-align: center;
-    color: #005bbb;
-    font-size: 24px;
-    margin-top: 35px;
+    color: #0f3d75;
+    font-size: 28px;
+    margin: 42px auto 12px;
+    letter-spacing: 0;
   }
 
   form {
     /* Estilos del formulario */
-    padding: 0;
-    max-width: 700px;
+    padding: 28px;
+    max-width: 760px;
     /* Ancho máximo del formulario */
-    margin: 30px auto;
+    margin: 24px auto 36px;
     /* Centrado */
     box-sizing: border-box;
+    background: #ffffff;
+    border: 1px solid #dce6f2;
+    border-radius: 8px;
+    box-shadow: 0 18px 45px rgba(15, 61, 117, 0.12);
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 20px;
+  }
+
+  .form-field {
+    min-width: 0;
+  }
+
+  .form-field.full {
+    grid-column: 1 / -1;
+  }
+
+  form label,
+  .main-label {
+    display: block;
+    color: #1a2f4f;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
   }
 
   form label.required::after {
     /* Asterisco rojo para campos requeridos */
     content: "*";
-    color: red;
+    color: #ff6a00;
     margin-left: 3px;
   }
 
@@ -333,15 +372,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   form select {
     /* Estilos para inputs y select del formulario */
     width: 100%;
-    padding: 12px 15px;
-    margin-top: 6px;
-    border: 1px solid #bbb;
+    min-height: 48px;
+    padding: 12px 14px;
+    margin-top: 0;
+    border: 1px solid #c7d4e4;
     /* Borde gris claro */
-    border-radius: 10px;
+    border-radius: 6px;
     /* Bordes redondeados */
     font-size: 16px;
+    color: #14243d;
+    background: #f8fbff;
     box-sizing: border-box;
-    transition: border-color 0.3s;
+    transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
     /* Transición suave del borde */
   }
 
@@ -350,31 +392,52 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     /* Estilos cuando los campos están enfocados */
     border-color: #005bbb;
     /* Borde azul */
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(0, 91, 187, 0.12);
     outline: none;
     /* Sin outline por defecto */
   }
 
   .radio-group {
     /* Grupo de botones radio */
-    display: flex;
-    flex-direction: column;
-    margin-top: 6px;
-    gap: 6px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    margin-top: 0;
+    gap: 10px;
     /* Espacio entre opciones */
   }
 
   .radio-group label {
     /* Etiquetas de los radio buttons */
-    font-weight: normal;
-    color: #333;
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 1px solid #d6e1ef;
+    border-radius: 6px;
+    background: #f8fbff;
+    font-weight: 700;
+    color: #243955;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
+    margin: 0;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .radio-group label:has(input:checked) {
+    border-color: #1a8cff;
+    background: #edf6ff;
+    box-shadow: inset 4px 0 0 #ff6a00;
+  }
+
+  .radio-group input {
+    accent-color: #ff6a00;
   }
 
   .file-upload {
     display: block;
-    margin-top: 8px;
+    margin-top: 0;
   }
 
   .file-upload input[type="file"] {
@@ -392,11 +455,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     justify-content: space-between;
     gap: 18px;
     width: 100%;
-    min-height: 74px;
-    padding: 16px 18px;
-    border: 2px dashed #1a8cff;
-    border-radius: 12px;
-    background: #f3f8ff;
+    min-height: 96px;
+    padding: 20px;
+    border: 1px dashed #1a8cff;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #f8fbff 0%, #eef6ff 100%);
     box-sizing: border-box;
     cursor: pointer;
     transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
@@ -418,7 +481,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
   .file-upload-title {
     color: #005bbb;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 800;
   }
 
@@ -437,13 +500,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
   .file-upload-action {
     flex: 0 0 auto;
-    padding: 10px 16px;
-    border-radius: 24px;
+    padding: 12px 18px;
+    border-radius: 6px;
     background: #ff6a00;
     color: white;
     font-size: 14px;
     font-weight: 800;
     white-space: nowrap;
+    transition: background 0.25s ease;
+  }
+
+  .file-upload-box:hover .file-upload-action,
+  .file-upload input[type="file"]:focus + .file-upload-box .file-upload-action {
+    background: #1a8cff;
   }
 
   .file-upload-error {
@@ -465,29 +534,56 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
   .btn-submit {
     /* Botón de envío del formulario */
-    background: #1a8cff;
+    position: relative;
+    overflow: hidden;
+    background: #ff6a00;
     /* Fondo azul */
     color: white;
     display: block;
-    padding: 12px 28px;
+    width: 100%;
+    max-width: 300px;
+    padding: 14px 24px;
     font-size: 16px;
-    font-weight: 600;
-    border-radius: 25px;
+    font-weight: 800;
+    border-radius: 6px;
     /* Bordes muy redondeados */
     border: none;
     cursor: pointer;
-    transition: background 0.3s, transform 0.2s;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.25s ease;
     /* Transiciones suaves */
-    margin: 25px auto 0 auto;
+    margin: 28px auto 0 auto;
     /* Centrado con margen superior */
+    box-shadow: 0 10px 22px rgba(255, 106, 0, 0.26);
+  }
+
+  .btn-submit::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+    transform: skewX(-18deg);
+    transition: left 0.55s ease;
   }
 
   .btn-submit:hover {
     /* Efecto hover del botón */
-    background: #006fd6;
+    background: #1a8cff;
     /* Azul más oscuro */
-    transform: translateY(-2px);
+    transform: translateY(-3px);
     /* Efecto de elevación */
+    box-shadow: 0 16px 30px rgba(26, 140, 255, 0.34);
+  }
+
+  .btn-submit:hover::before {
+    left: 125%;
+  }
+
+  .btn-submit:active {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px rgba(26, 140, 255, 0.26);
   }
 
   .alert-success {
@@ -580,6 +676,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     line-height: 1.5;
     padding: 0 10px;
   }
+
+  form {
+    padding: 20px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .file-upload-box {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .file-upload-action {
+    text-align: center;
+  }
 }
 
 /* ===== BAJAR CONTENIDO POR HEADER FIJO – SOLO MÓVIL ===== */
@@ -627,7 +740,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       <!-- Contenido de texto del banner -->
       <p class="banner-text">
         <!-- Texto descriptivo del banner -->
-        <?= nl2br(htmlspecialchars($contenido['titulo'] ?? 'En LOTO somos una empresa dónde valoramos el talento y nos caracterizamos por brindar oportunidades de crecimiento y desarrollo profesional a nuestros colaboradores además de muchos beneficios.')) ?>
+        <?= nl2br(htmlspecialchars($contenido['titulo'] ?? 'En LOTO promovemos el desarrollo del talento humano, impulsando el crecimiento profesional de nuestros colaboradores y ofreciendo beneficios orientados a su bienestar integral. Nos consolidamos como una empresa sólida, que brinda estabilidad laboral y fomenta un ambiente de trabajo positivo, respaldado por nuestra certificación como Great Place to Work. Nuestra cultura organizacional se sustenta en pilares fundamentales que guían nuestras acciones y hacen nuestra dinámica laboral más motivadora, como son la Pasión, el Profesionalismo, el Balance Vida-Trabajo y la Alegría.')) ?>
         <!-- Contenido dinámico de la base de datos con saltos de línea preservados -->
       </p>
     </div>
