@@ -75,6 +75,10 @@ switch ($pag) {
         // Página de Jugá Tres
         include 'juga_tres.php';
         break;
+    case 'juga_cuatro':
+        // Pagina de Juga Cuatro
+        include 'juga_cuatro.php';
+        break;
     case 'premiado':
         // Página de Premiado
         include 'premiado.php';

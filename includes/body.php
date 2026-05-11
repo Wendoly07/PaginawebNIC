@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // Inicia el bloque de código PHP para la conexión a la base de datos
 
 try {
@@ -1567,6 +1567,17 @@ document.addEventListener("DOMContentLoaded", function() {
   flex: 0 0 250px;
 }
 
+.res-card.magenta-jugacuatro {
+  background: radial-gradient(circle at 50% 0%, #d6008f 0%, #a50064 46%, #5b123f 100%);
+  border-radius: 15px;
+  padding: 15px;
+  text-align: center;
+  color: white;
+  width: 200px;
+  height: 360px;
+  flex: 0 0 250px;
+}
+
 .bola-blanca {
   display: inline-block;
   width: 40px;
@@ -1609,6 +1620,18 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 
 .res-card.azul-jugatres .btn-info {    
+  background-color: rgba(255,255,255,0.2);
+  color: white;
+  border: 1px solid white;
+}
+
+.res-card.magenta-jugacuatro .btn-jugar {
+  background-color: white;
+  color: #a50064;
+  font-weight: bold;
+}
+
+.res-card.magenta-jugacuatro .btn-info {
   background-color: rgba(255,255,255,0.2);
   color: white;
   border: 1px solid white;
@@ -1768,6 +1791,7 @@ if ($rss && isset($rss->entry[0])) {
 $logoFechasLotos = '/ImagesSV/LOGO FECHAS LOTOS.png.png';
 $logoDiaria = '/ImagesSV/LOGO DIARIA.svg';
 $logoJugaTres = '/ImagesSV/LOGOJUGATRES.png';
+$logoJugaCuatro = '/ImagesSV/Logo Juga4 - LOTO NIC- 2025.png';
 $logoPremiado = '/ImagesSV/Premiado2.png';
 $logoTerminacion2 = '/ImagesSV/logo terminacion2.png';
 
@@ -1886,6 +1910,26 @@ try {
         </button>
         <a href="index.php?pag=juga_tres">
           <button class="btn-info">Conocé más</button>
+        </a>
+      </div>
+    </div>
+  <!-- JUGA CUATRO -->
+    <div class="res-card magenta-jugacuatro">
+      <img src="<?= htmlspecialchars($logoJugaCuatro) ?>"
+           alt="Juga Cuatro"
+           style="width:205px; height:auto; position:relative; top:12px;">
+      <div class="numeros" style="position:relative; top:12px;">
+        <span class="bola-blanca">-</span>
+        <span class="bola-blanca">-</span>
+        <span class="bola-blanca">-</span>
+        <span class="bola-blanca">-</span>
+      </div>
+      <div class="btn-container">
+        <button class="btn-jugar" onclick="window.location.href='index.php?pag=juga_cuatro'">
+          Jug&aacute; aqu&iacute;
+        </button>
+        <a href="index.php?pag=juga_cuatro">
+          <button class="btn-info">Conoc&eacute; m&aacute;s</button>
         </a>
       </div>
     </div>

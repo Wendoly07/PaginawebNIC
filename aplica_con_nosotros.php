@@ -34,20 +34,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try {
         // Intenta procesar el envío del formulario
 
-        $cvRuta = 'sin_cv';
-        if (!empty($_FILES['cv']['tmp_name'])) {
-            $uploadDir = __DIR__ . "/ImagesSV/uploads/cv/";
-            if (!is_dir($uploadDir)) {
-                mkdir($uploadDir, 0775, true);
-            }
+        $cvRuta = 'pendiente_azure';
+        if (empty($_FILES['cv']['tmp_name']) || $_FILES['cv']['error'] !== UPLOAD_ERR_OK) {
+            throw new Exception("Debe adjuntar su CV en formato PDF.");
+        }
 
-            $extension = strtolower(pathinfo($_FILES['cv']['name'], PATHINFO_EXTENSION));
-            $nombreArchivo = uniqid("cv_", true) . "." . $extension;
-            $rutaDestino = $uploadDir . $nombreArchivo;
-
-            if (move_uploaded_file($_FILES['cv']['tmp_name'], $rutaDestino)) {
-                $cvRuta = "ImagesSV/uploads/cv/" . $nombreArchivo;
-            }
+        $extension = strtolower(pathinfo($_FILES['cv']['name'], PATHINFO_EXTENSION));
+        $mimeType = mime_content_type($_FILES['cv']['tmp_name']);
+        if ($extension !== 'pdf' || $mimeType !== 'application/pdf') {
+            throw new Exception("Solo se permite adjuntar archivos PDF.");
         }
 
         // Conexión a SQL Server (se vuelve a conectar por seguridad)
@@ -129,7 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $mensajeExito = "Formulario enviado correctamente ✅";
         // Establece mensaje de éxito
 
-    } catch (PDOException $e) {
+    } catch (Exception $e) {
         // Captura errores de base de datos
         $mensajeExito = "Error: " . $e->getMessage();
         // Establece mensaje de error
@@ -377,6 +372,97 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     gap: 6px;
   }
 
+  .file-upload {
+    display: block;
+    margin-top: 8px;
+  }
+
+  .file-upload input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .file-upload-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    width: 100%;
+    min-height: 74px;
+    padding: 16px 18px;
+    border: 2px dashed #1a8cff;
+    border-radius: 12px;
+    background: #f3f8ff;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .file-upload-box:hover,
+  .file-upload input[type="file"]:focus + .file-upload-box {
+    border-color: #005bbb;
+    background: #eaf4ff;
+    box-shadow: 0 8px 20px rgba(0, 91, 187, 0.12);
+  }
+
+  .file-upload-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  .file-upload-title {
+    color: #005bbb;
+    font-size: 16px;
+    font-weight: 800;
+  }
+
+  .file-upload-help,
+  .file-upload-name {
+    color: #606b7b;
+    font-size: 14px;
+    line-height: 1.35;
+  }
+
+  .file-upload-name {
+    color: #27364a;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+
+  .file-upload-action {
+    flex: 0 0 auto;
+    padding: 10px 16px;
+    border-radius: 24px;
+    background: #ff6a00;
+    color: white;
+    font-size: 14px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  .file-upload-error {
+    display: none;
+    margin-top: 8px;
+    color: #b00020;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .file-upload.has-error .file-upload-box {
+    border-color: #b00020;
+    background: #fff3f5;
+  }
+
+  .file-upload.has-error .file-upload-error {
+    display: block;
+  }
+
   .btn-submit {
     /* Botón de envío del formulario */
     background: #1a8cff;
@@ -511,6 +597,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     text-align: center;
   }
 
+}
+@media (max-width: 768px) {
+  .file-upload-box {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
 }
 </style>
 </head>
@@ -666,8 +759,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
     <br>
 
-    <label class="required">Adjuntar CV:</label>
-    <input type="file" name="cv" accept=".pdf,.doc,.docx" required>
+    <label class="required" for="cv">Adjuntar CV:</label>
+    <label class="file-upload" id="cv-upload">
+      <input type="file" id="cv" name="cv" accept="application/pdf,.pdf" required>
+      <span class="file-upload-box">
+        <span class="file-upload-copy">
+          <span class="file-upload-title">Subir CV en PDF</span>
+          <span class="file-upload-help">Selecciona un archivo PDF.</span>
+          <span class="file-upload-name" id="cv-file-name">Ningun archivo seleccionado</span>
+        </span>
+        <span class="file-upload-action">Elegir PDF</span>
+      </span>
+      <span class="file-upload-error" id="cv-file-error">Solo se permite adjuntar un archivo PDF.</span>
+    </label>
     <br><br>
 
     <button type="submit" class="btn-submit">Enviar información</button>
@@ -677,6 +781,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </div>
 
 <script>
+  const cvInput = document.getElementById('cv');
+  const cvUpload = document.getElementById('cv-upload');
+  const cvFileName = document.getElementById('cv-file-name');
+
+  if (cvInput && cvUpload && cvFileName) {
+    cvInput.addEventListener('change', () => {
+      const file = cvInput.files[0];
+      cvUpload.classList.remove('has-error');
+
+      if (!file) {
+        cvFileName.textContent = 'Ningun archivo seleccionado';
+        return;
+      }
+
+      const isPdf = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+      if (!isPdf) {
+        cvInput.value = '';
+        cvFileName.textContent = 'Ningun archivo seleccionado';
+        cvUpload.classList.add('has-error');
+        return;
+      }
+
+      cvFileName.textContent = file.name;
+    });
+  }
   // Script para manejar la alerta de éxito
   const alertBox = document.getElementById('alert-success');
   // Obtiene la referencia al elemento de alerta
