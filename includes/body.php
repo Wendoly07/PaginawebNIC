@@ -597,7 +597,7 @@ document.addEventListener("DOMContentLoaded", function() {
   align-self: center;
   justify-content: center;
   width: 100%;
-  margin-top: 48px;
+  margin-top: 78px;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
@@ -610,15 +610,15 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 
 .youtube-boton {
+  background: #ff7e00;
+  color: white;
+  border: none;
   padding: 12px 30px;
   border-radius: 30px;
   font-size: 18px;
   font-weight: bold;
-  color: white; /* Texto blanco */
-  background: orange; /* Fondo naranja */
-  border: none;
   cursor: pointer;
-  transition: transform 0.2s ease, background 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .youtube-boton:hover {
