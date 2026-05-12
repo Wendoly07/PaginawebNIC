@@ -11,8 +11,7 @@ header {
   color: white;
   padding: 0;
   position: relative;
-  height: auto;
-  padding-bottom: 0;
+  height: 100px;
 }
 
 .top-menu {
@@ -50,7 +49,7 @@ header {
   justify-content: space-between;
   width: 60%;
   /* más angosto que el azul */
-  margin: 10px auto 0;
+  margin: 10px auto 20px;
   /* sube 40px (la mitad) para que quede mitad en azul, mitad afuera */
   position: relative;
   z-index: 2;
@@ -1818,21 +1817,3 @@ iframe {
   }
 }
 
-/* Ajuste final del header: sin franja blanca entre azul y naranja */
-header {
-  margin-bottom: 0 !important;
-  padding-bottom: 0 !important;
-  background: #034ea2;
-}
-
-.main-header {
-  margin-bottom: 0 !important;
-  box-shadow: 0 2px 0 #ff6700;
-}
-
-header + .hero,
-header + .hero-carousel,
-header + main,
-header + section {
-  margin-top: 0 !important;
-}

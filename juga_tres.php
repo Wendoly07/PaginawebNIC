@@ -216,29 +216,37 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGOJUGATRES.p
     .calendario-real {
       background: linear-gradient(145deg, #ffffff, #f4f4f4);
       border-radius: 16px;
-      padding: 12px 14px;
+      padding: 14px 16px;
       box-shadow: 0 8px 18px rgba(0,0,0,0.15);
       border: 1px solid #e5e5e5;
-      max-width: 260px;
+      width: min(100%, 300px);
+  max-width: 300px;
       margin: auto;
     }
 
     .calendario-real table {
       width: 100%;
-      border-collapse: collapse;
+      table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0 4px;
       text-align: center;
     }
 
     .calendario-real th {
-      font-size: 12px;
+      width: 14.285%;
+      font-size: 10px;
       font-weight: 800;
       color: #0075bf;
-      padding: 6px 0;
+      padding: 6px 2px;
       text-transform: uppercase;
+      white-space: nowrap;
     }
 
     .calendario-real td {
-      padding: 7px 0;
+      width: 14.285%;
+      height: 28px;
+      padding: 0;
+      line-height: 28px;
       font-weight: 700;
       font-size: 13px;
       color: #444;
@@ -505,7 +513,8 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGOJUGATRES.p
 
       .menu a {
         width: 100%;
-        max-width: 260px;
+        width: min(100%, 300px);
+  max-width: 300px;
         text-align: center;
         margin-left: 0 !important;
         margin-right: 0 !important;

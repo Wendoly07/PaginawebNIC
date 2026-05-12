@@ -12,7 +12,7 @@ try {
 
     $stmt = $conn->query("SELECT TOP 1 *
                           FROM numeros_ganadores_sorteos_prod
-                          WHERE game_name = 9
+                          WHERE UPPER(LTRIM(RTRIM(game_name))) = 'JUGA 3'
                           AND UPPER(LTRIM(RTRIM(pais))) = 'NICARAGUA'
                           ORDER BY draw_date DESC, draw_time DESC");
 
@@ -23,10 +23,17 @@ try {
         exit;
     }
 
+    if ($row["par2"] !== null || $row["par3"] !== null) {
+        $numero = sprintf('%s%s%s', (string) $row["par1"], (string) $row["par2"], (string) $row["par3"]);
+    } else {
+        $numero = str_pad((string) $row["par1"], 3, "0", STR_PAD_LEFT);
+    }
+
     echo json_encode([
-        "par1" => isset($row["par1"]) ? (string) $row["par1"] : null,
-        "par2" => isset($row["par2"]) ? (string) $row["par2"] : null,
-        "par3" => isset($row["par3"]) ? (string) $row["par3"] : null,
+        "par1" => $numero[0],
+        "par2" => $numero[1],
+        "par3" => $numero[2],
+        "numero" => $numero,
         "draw_number" => $row["draw_number"],
         "draw_time" => $row["draw_time"],
         "draw_date" => $row["draw_date"]

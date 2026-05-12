@@ -238,29 +238,37 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO DIARIA.sv
 .calendario-real {
   background: linear-gradient(145deg, #ffffff, #f4f4f4);
   border-radius: 16px;
-  padding: 12px 14px;       /* MÁS PEQUEÑO */
+  padding: 14px 16px;       /* MÁS PEQUEÑO */
   box-shadow: 0 8px 18px rgba(0,0,0,0.15);
   border: 1px solid #e5e5e5;
-  max-width: 260px;        /* TAMAÑO CONTROLADO */
+  width: min(100%, 300px);
+  max-width: 300px;        /* TAMAÑO CONTROLADO */
   margin: auto;
 }
 
 .calendario-real table {
   width: 100%;
-  border-collapse: collapse;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0 4px;
   text-align: center;
 }
 
 .calendario-real th {
-  font-size: 12px;         /* MÁS PEQUEÑO */
+  width: 14.285%;
+  font-size: 10px;
   font-weight: 800;
   color: #13a538;
-  padding: 6px 0;
+  padding: 6px 2px;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .calendario-real td {
-  padding: 7px 0;         /* MÁS PEQUEÑO */
+  width: 14.285%;
+  height: 28px;
+  padding: 0;
+  line-height: 28px;
   font-weight: 700;
   font-size: 13px;
   color: #444;
@@ -779,7 +787,8 @@ body {
 
       .menu a {
         width: 100%;
-        max-width: 260px;
+        width: min(100%, 300px);
+  max-width: 300px;
         text-align: center;
         margin-left: 0 !important;
         margin-right: 0 !important;
@@ -978,31 +987,18 @@ body {
   <!-- ACORDEONES -->
   <div class="accordion">
     <div class="accordion-header open" onclick="toggleAcordeon(this)">
-      <?= htmlspecialchars($config['titulo1'] ?? 'COMO JUGAR') ?>
-      <span class="arrow-circle">&#9660;</span>
+      <?= htmlspecialchars($config['titulo1'] ?? 'CÓMO JUGAR') ?>
+      <span class="arrow-circle">▼</span>
     </div>
     <div class="accordion-content" style="display:block;">
-      <div class="info-juego">
-        <p class="descripcion">
-          <?= nl2br(htmlspecialchars($config['contenido1'] ?? '')) ?>
-        </p>
-
-        <div class="linea-juego">
-          <div class="img-container">
-            <img src="/ImagesSV/Diaria.webp" class="img-diaria" alt="Imagen Diaria">
-          </div>
-          <div class="texto-principal">
-            <?= nl2br(htmlspecialchars($config['contenido_principal'] ?? '')) ?>
-          </div>
-        </div>
-      </div>
+      <?= nl2br(htmlspecialchars($config['contenido1'] ?? '')) ?>
     </div>
   </div>
 
   <div class="accordion">
     <div class="accordion-header" onclick="toggleAcordeon(this)">
       <?= htmlspecialchars($config['titulo2'] ?? 'CONOZCA LOS RESULTADOS') ?>
-      <span class="arrow-circle">&#9660;</span>
+      <span class="arrow-circle">▼</span>
     </div>
     <div class="accordion-content">
       <?= nl2br(htmlspecialchars($config['contenido2'] ?? '')) ?>
@@ -1012,7 +1008,7 @@ body {
   <div class="accordion">
     <div class="accordion-header" onclick="toggleAcordeon(this)">
       <?= htmlspecialchars($config['titulo3'] ?? 'RECLAME SU PREMIO') ?>
-      <span class="arrow-circle">&#9660;</span>
+      <span class="arrow-circle">▼</span>
     </div>
     <div class="accordion-content">
       <?= nl2br(htmlspecialchars($config['contenido3'] ?? '')) ?>

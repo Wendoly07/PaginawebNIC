@@ -48,20 +48,25 @@ if (!isset($_GET['fecha'])) {
 $fecha = $_GET['fecha']; // espera formato YYYY-MM-DD
 // Asigna el valor del parametro 'fecha' de GET a la variable $fecha (espera formato YYYY-MM-DD)
 
-$gameName = 13; // DIARIA
-// Establece el identificador del juego Diaria en la columna game_name
-
 $sql = "
 SELECT
     DATEPART(HOUR, draw_time) AS hora_sorteo,
+    UPPER(LTRIM(RTRIM(game_name))) AS game_name,
     par1,
     par2,
     par3
 FROM numeros_ganadores_sorteos_prod
-WHERE game_name = :game_name
+WHERE UPPER(LTRIM(RTRIM(game_name))) IN ('13', 'DIARIA', 'MULTI-X-DIARIA', N'MÁS 1', 'MAS 1')
 AND UPPER(LTRIM(RTRIM(pais))) = 'NICARAGUA'
 AND CONVERT(date, draw_date) = :fecha
-ORDER BY draw_time ASC
+ORDER BY draw_time ASC,
+CASE
+    WHEN UPPER(LTRIM(RTRIM(game_name))) IN ('13', 'DIARIA') THEN 1
+    WHEN UPPER(LTRIM(RTRIM(game_name))) = 'MULTI-X-DIARIA' THEN 2
+    WHEN UPPER(LTRIM(RTRIM(game_name))) IN (N'MÁS 1', 'MAS 1') THEN 3
+    ELSE 4
+END,
+CASE WHEN UPPER(LTRIM(RTRIM(game_name))) = 'DIARIA' THEN 1 ELSE 0 END
 ";
 // Define la consulta SQL para seleccionar la hora del sorteo y par1 de la tabla numeros_ganadores_sorteos_prod donde game_name es 13, el pais es Nicaragua y la fecha coincide
 
@@ -70,7 +75,6 @@ try {
     // Prepara la consulta SQL para ejecucion
 
     $stmt->execute([
-        'game_name' => $gameName,
         'fecha' => $fecha
     ]);
     // Ejecuta la consulta preparada, pasando los parametros game_name y fecha
@@ -98,39 +102,41 @@ $filas = 0;
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     // Inicia un bucle while para recorrer cada fila del resultado de la consulta
 
-    $hora = $row['hora_sorteo'];
+    $hora = (int) $row['hora_sorteo'];
     // Asigna la hora del sorteo de la fila actual a la variable $hora
 
     $filas++;
 
-    if ($hora == 12) {
-        // Si la hora es 12
+    $clave = null;
+    if ($hora == 11 || $hora == 12) {
+        $clave = '12:00';
+    } elseif ($hora == 14 || $hora == 15) {
+        $clave = '15:00';
+    } elseif ($hora == 17 || $hora == 18) {
+        $clave = '18:00';
+    } elseif ($hora == 20 || $hora == 21) {
+        $clave = '21:00';
+    }
 
-        $numero = str_pad($row['par1'], 2, '0', STR_PAD_LEFT);
-        $resultados['12:00'] = [$numero[0], $numero[1], (string) $row['par2'], (string) $row['par3']];
-        // Asigna el valor de par1 formateado con ceros a la izquierda a la clave '12:00' del array resultados
+    if ($clave !== null) {
+        if ($resultados[$clave] === null) {
+            $resultados[$clave] = ['0', '0', '0', '0'];
+        }
 
-    } elseif ($hora == 15) {
-        // Si la hora es 15
+        $gameName = strtoupper(trim((string) $row['game_name']));
 
-        $numero = str_pad($row['par1'], 2, '0', STR_PAD_LEFT);
-        $resultados['15:00'] = [$numero[0], $numero[1], (string) $row['par2'], (string) $row['par3']];
-        // Asigna el valor de par1 formateado con ceros a la izquierda a la clave '15:00' del array resultados
-
-    } elseif ($hora == 18) {
-        // Si la hora es 18
-
-        $numero = str_pad($row['par1'], 2, '0', STR_PAD_LEFT);
-        $resultados['18:00'] = [$numero[0], $numero[1], (string) $row['par2'], (string) $row['par3']];
-        // Asigna el valor de par1 formateado con ceros a la izquierda a la clave '18:00' del array resultados
-
-    } elseif ($hora == 21) {
-        // Si la hora es 21
-
-        $numero = str_pad($row['par1'], 2, '0', STR_PAD_LEFT);
-        $resultados['21:00'] = [$numero[0], $numero[1], (string) $row['par2'], (string) $row['par3']];
-        // Asigna el valor de par1 formateado con ceros a la izquierda a la clave '21:00' del array resultados
-
+        if ($gameName === '13' || $gameName === 'DIARIA') {
+            $numero = str_pad($row['par1'], 2, '0', STR_PAD_LEFT);
+            $resultados[$clave][0] = $numero[0];
+            $resultados[$clave][1] = $numero[1];
+            if ($gameName === 'DIARIA') {
+                $resultados[$clave][2] = (string) ($row['par2'] ?? '0');
+            }
+        } elseif ($gameName === 'MULTI-X-DIARIA') {
+            $resultados[$clave][2] = (string) ($row['par2'] ?? $row['par1'] ?? '0');
+        } elseif ($gameName === 'MÁS 1' || $gameName === 'MAS 1') {
+            $resultados[$clave][3] = (string) ($row['par2'] ?? $row['par1'] ?? '0');
+        }
     }
     // Fin del bucle if-elseif
 }
@@ -139,7 +145,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 if (isset($_GET['debug'])) {
     $resultados['_debug'] = [
         'fecha' => $fecha,
-        'game_name' => $gameName,
+        'game_name' => ['13', 'DIARIA', 'Multi-X-Diaria', 'Más 1'],
         'filas' => $filas
     ];
 }

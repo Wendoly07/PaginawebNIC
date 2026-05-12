@@ -12,7 +12,7 @@ try {
 
     $stmt = $conn->query("SELECT TOP 1 *
                           FROM numeros_ganadores_sorteos_prod
-                          WHERE game_name = 2
+                          WHERE UPPER(LTRIM(RTRIM(game_name))) = 'PREMIA 2'
                           AND UPPER(LTRIM(RTRIM(pais))) = 'NICARAGUA'
                           ORDER BY draw_date DESC, draw_time DESC");
 

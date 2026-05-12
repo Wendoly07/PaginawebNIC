@@ -596,6 +596,8 @@ document.addEventListener("DOMContentLoaded", function() {
 .youtube-right .boton-container {
   align-self: center;
   justify-content: center;
+  width: 100%;
+  margin-top: 48px;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
@@ -1993,15 +1995,36 @@ try {
         </a>
       </div>
     </div>
+
+      <script>
+      async function cargarResultadoFechasLotosCard() {
+          try {
+              const response = await fetch('/api/resultado-fechas-lotos.php');
+              if (!response.ok) throw new Error('Error en la respuesta de la API');
+              const data = await response.json();
+              if (data.error) throw new Error(data.error);
+
+              const card = document.querySelector('.res-card.rojo-fechas');
+              const numero = card?.querySelector('#fl-numero');
+              const mes = card?.querySelector('#fl-mes');
+
+              if (numero) numero.innerText = data.numero || '--';
+              if (mes) mes.innerText = data.mes || '---';
+          } catch (error) {
+              console.error('No se pudo cargar el resultado de Fechas Lotos:', error);
+          }
+      }
+      cargarResultadoFechasLotosCard();
+      </script>
   <!-- JUGA TRES (Blue) -->
     <div class="res-card azul-jugatres">
       <img src="<?= htmlspecialchars($logoJugaTres) ?>"
            alt="Juga Tres"
            style="width:190px; height:auto; position:relative; top:20px;">
       <div class="numeros" style="position:relative; top:15px;">
-        <span class="bola-blanca" id="numNumero">-</span>
-        <span class="bola-blanca" id="numNumero">-</span>
-        <span class="bola-blanca" id="numNumero">-</span>
+        <span class="bola-blanca" id="jt-numero-1">-</span>
+        <span class="bola-blanca" id="jt-numero-2">-</span>
+        <span class="bola-blanca" id="jt-numero-3">-</span>
       </div>
       <div class="btn-container">
         <button class="btn-jugar" onclick="window.location.href='index.php?pag=juga_tres'">
@@ -2012,6 +2035,27 @@ try {
         </a>
       </div>
     </div>
+      <script>
+      async function cargarResultadoJugaTresCard() {
+          try {
+              const response = await fetch('/api/resultado-juga-tres.php');
+              if (!response.ok) throw new Error('Error en la respuesta de la API');
+              const data = await response.json();
+              if (data.error) throw new Error(data.error);
+
+              const card = document.querySelector('.res-card.azul-jugatres');
+              const valores = [data.par1, data.par2, data.par3];
+
+              valores.forEach((valor, index) => {
+                  const elem = card?.querySelector(`#jt-numero-${index + 1}`);
+                  if (elem) elem.innerText = valor ?? '-';
+              });
+          } catch (error) {
+              console.error('No se pudo cargar el resultado de Juga Tres:', error);
+          }
+      }
+      cargarResultadoJugaTresCard();
+      </script>
   <!-- JUGA CUATRO -->
     <div class="res-card magenta-jugacuatro">
       <img src="<?= htmlspecialchars($logoJugaCuatro) ?>"
@@ -2040,10 +2084,10 @@ try {
 
       <div class="numeros" style="position:relative; top:15px;">
         <div class="nums">
-        <span class="bola-blanca" id="numNumero">-</span>
-        <span class="bola-blanca" id="numNumero">-</span>
-        <span class="bola-blanca" id="numNumero">-</span>
-        <span class="bola-blanca" id="numNumero">-</span>
+        <span class="bola-blanca" id="premiado-numero-1">-</span>
+        <span class="bola-blanca" id="premiado-numero-2">-</span>
+        <span class="bola-mes-amarilla" id="premiado-numero-3">-</span>
+        <span class="bola-mes-amarilla" id="premiado-numero-4">-</span>
         </div>
       </div>
             <div class="btn-container">
@@ -2055,13 +2099,34 @@ try {
         </a>
       </div>
     </div>
+      <script>
+      async function cargarResultadoPremiadoCard() {
+          try {
+              const response = await fetch('/api/resultado-premiado.php');
+              if (!response.ok) throw new Error('Error en la respuesta de la API');
+              const data = await response.json();
+              if (data.error) throw new Error(data.error);
+
+              const card = document.querySelector('.res-card.morado-premiado');
+              const valores = [data.par1, data.par2, data.par3, data.par4];
+
+              valores.forEach((valor, index) => {
+                  const elem = card?.querySelector(`#premiado-numero-${index + 1}`);
+                  if (elem) elem.innerText = valor ?? '-';
+              });
+          } catch (error) {
+              console.error('No se pudo cargar el resultado de Premia2:', error);
+          }
+      }
+      cargarResultadoPremiadoCard();
+      </script>
      <!-- terminacion2-->
     <div class="res-card marino-terminacion2">
       <img src="<?= htmlspecialchars($logoTerminacion2) ?>"
            alt="Logo Terminacion2"
            style="width:190px; height:auto; position:relative; top:20px;">
       <div class="numeros" style="position:relative; top:15px;">
-        <span class="bola-blanca" id="fl-numero">--</span>
+        <span class="bola-blanca" id="terminacion2-numero">--</span>
       </div>
       <div class="btn-container">
         <button class="btn-jugar" onclick="window.location.href='index.php?pag=terminacion2'">

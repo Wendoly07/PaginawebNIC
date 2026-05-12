@@ -20,24 +20,24 @@ if (!isset($_GET['fecha'])) {
 }
 
 $fecha = $_GET['fecha'];
-$gameName = 12; // Fechas Lotos
 
 $sql = "
 SELECT
     DATEPART(HOUR, draw_time) AS hora_sorteo,
+    UPPER(LTRIM(RTRIM(game_name))) AS game_name,
     par1,
     par2
 FROM numeros_ganadores_sorteos_prod
-WHERE game_name = :game_name
+WHERE UPPER(LTRIM(RTRIM(game_name))) IN ('12', 'FECHAS')
 AND UPPER(LTRIM(RTRIM(pais))) = 'NICARAGUA'
 AND CONVERT(date, draw_date) = :fecha
-ORDER BY draw_time ASC
+ORDER BY draw_time ASC,
+CASE WHEN UPPER(LTRIM(RTRIM(game_name))) = 'FECHAS' THEN 1 ELSE 0 END
 ";
 
 try {
     $stmt = $conn->prepare($sql);
     $stmt->execute([
-        'game_name' => $gameName,
         'fecha' => $fecha
     ]);
 } catch (PDOException $e) {
@@ -67,14 +67,14 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         'mes' => $row['par2']
     ];
 
-    $hora = $row['hora_sorteo'];
-    if ($hora == 12) {
+    $hora = (int) $row['hora_sorteo'];
+    if ($hora == 11 || $hora == 12) {
         $resultados['12:00'] = $resultado;
-    } elseif ($hora == 15) {
+    } elseif ($hora == 14 || $hora == 15) {
         $resultados['15:00'] = $resultado;
-    } elseif ($hora == 18) {
+    } elseif ($hora == 17 || $hora == 18) {
         $resultados['18:00'] = $resultado;
-    } elseif ($hora == 21) {
+    } elseif ($hora == 20 || $hora == 21) {
         $resultados['21:00'] = $resultado;
     }
 }
@@ -82,7 +82,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 if (isset($_GET['debug'])) {
     $resultados['_debug'] = [
         'fecha' => $fecha,
-        'game_name' => $gameName,
+        'game_name' => ['12', 'FECHAS'],
         'filas' => $filas
     ];
 }

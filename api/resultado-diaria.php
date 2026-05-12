@@ -18,21 +18,64 @@ try {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     // Configura PDO para lanzar excepciones en caso de errores
     // Consulta último resultado de Diaria
-    $stmt = $conn->query("SELECT TOP 1 *
-                          FROM numeros_ganadores_sorteos_prod
-                          WHERE game_name = 13
-                          AND UPPER(LTRIM(RTRIM(pais))) = 'NICARAGUA'
-                          ORDER BY draw_date DESC, draw_time DESC");
+    $stmt = $conn->query("
+        WITH ultimo_sorteo AS (
+            SELECT TOP 1 draw_date, draw_time, draw_number
+            FROM numeros_ganadores_sorteos_prod
+            WHERE UPPER(LTRIM(RTRIM(game_name))) IN ('13', 'DIARIA')
+            AND UPPER(LTRIM(RTRIM(pais))) = 'NICARAGUA'
+            ORDER BY draw_date DESC, draw_time DESC
+        )
+        SELECT n.*
+        FROM numeros_ganadores_sorteos_prod n
+        CROSS JOIN ultimo_sorteo u
+        WHERE UPPER(LTRIM(RTRIM(n.game_name))) IN ('13', 'DIARIA', 'MULTI-X-DIARIA', N'MÁS 1', 'MAS 1')
+        AND UPPER(LTRIM(RTRIM(n.pais))) = 'NICARAGUA'
+        AND CONVERT(date, n.draw_date) = CONVERT(date, u.draw_date)
+        AND (n.draw_time = u.draw_time OR n.draw_number = u.draw_number)
+        ORDER BY
+            CASE
+                WHEN UPPER(LTRIM(RTRIM(n.game_name))) IN ('13', 'DIARIA') THEN 1
+                WHEN UPPER(LTRIM(RTRIM(n.game_name))) = 'MULTI-X-DIARIA' THEN 2
+                WHEN UPPER(LTRIM(RTRIM(n.game_name))) IN (N'MÁS 1', 'MAS 1') THEN 3
+                ELSE 4
+            END,
+            CASE WHEN UPPER(LTRIM(RTRIM(n.game_name))) = 'DIARIA' THEN 1 ELSE 0 END
+    ");
     // Ejecuta una consulta directa para seleccionar el primer registro (el mÃ¡s reciente) de la tabla loto_sorteos_sv donde juego es 1, ordenado por id descendente
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     // Obtiene el resultado de la consulta como un array asociativo
-    if (!$row) {
+    if (!$rows) {
         // Si no se encontró ningún resultado (row es null)
         echo json_encode(["error" => "No hay resultados"]);
         // Envía un JSON con un mensaje de error indicando que no hay resultados
         exit;
         // Termina la ejecución del script
     }
+    $row = null;
+    $multiX = null;
+    $mas1 = null;
+
+    foreach ($rows as $fila) {
+        $gameName = strtoupper(trim((string) $fila["game_name"]));
+
+        if ($gameName === "13" || $gameName === "DIARIA") {
+            $row = $fila;
+            if ($gameName === "DIARIA") {
+                $multiX = $fila["par2"] ?? $multiX;
+            }
+        } elseif ($gameName === "MULTI-X-DIARIA") {
+            $multiX = $fila["par2"] ?? $fila["par1"] ?? null;
+        } elseif ($gameName === "MÁS 1" || $gameName === "MAS 1") {
+            $mas1 = $fila["par1"] ?? $fila["par2"] ?? null;
+        }
+    }
+
+    if (!$row) {
+        echo json_encode(["error" => "No hay resultados"]);
+        exit;
+    }
+
     $numero = str_pad($row["par1"], 2, "0", STR_PAD_LEFT);
     // Formatea el valor de par1 con ceros a la izquierda hasta tener 2 dígitos y lo asigna a $numero
     echo json_encode([
@@ -44,8 +87,8 @@ try {
         "digito2" => $numero[1],
         // Segundo dígito del número formateado
 
-        "multi_x" => isset($row["par2"]) ? (string) $row["par2"] : null,
-        "mas_1" => isset($row["par3"]) ? (string) $row["par3"] : null,
+        "multi_x" => isset($multiX) ? (string) $multiX : null,
+        "mas_1" => isset($mas1) ? (string) $mas1 : null,
 
         "numero"  => $numero,
         // El número completo formateado
