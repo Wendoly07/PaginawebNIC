@@ -344,18 +344,50 @@ try {
 /* RESPONSIVE */
 /* Media queries para dispositivos móviles */
 @media (max-width: 767px) {
+  .container {
+    width: calc(100% - 20px);
+    margin: 40px auto 0;
+    padding: 10px 0;
+  }
+
   .offices-contact {
     flex-direction: column;
   }
-}
 
-@media (max-width: 767px) {
   .map-section {
-    padding-top: 70px; /* Ajusta este valor */
+    padding: 24px 14px;
+  }
+
+  .map-section h2,
+  .office h3,
+  .contact h3 {
+    font-size: 22px;
+    line-height: 1.2;
   }
 
   .map-section img {
-    width: 90%;
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .office,
+  .contact {
+    flex-basis: 100%;
+    padding: 18px 14px;
+  }
+
+  .accordion {
+    padding-right: 42px;
+    line-height: 1.25;
+  }
+
+  .panel {
+    padding: 14px;
+  }
+
+  .contact .submit-button {
+    width: 100%;
+    max-width: 260px;
   }
 }
 </style>

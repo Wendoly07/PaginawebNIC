@@ -192,41 +192,46 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
   .title-main {
     /* Estilo del título principal */
-    font-size: 42px;
+    font-size: 40px;
     font-weight: 800;
     color: #ff6a00;
     /* Color naranja */
     line-height: 1.1;
-    margin-bottom: 25px;
+    margin: 22px auto 22px;
     text-align: center;
+    max-width: 560px;
   }
 
   .banner {
     /* Estilo del banner superior */
     position: relative;
-    background: #0070d9;
+    background: linear-gradient(135deg, #0070d9 0%, #0062c4 100%);
     /* Fondo azul */
-    min-height: 220px;
+    min-height: 300px;
     display: flex;
     align-items: center;
-    padding: 28px 40px 28px 250px;
+    justify-content: center;
+    gap: 44px;
+    padding: 34px 54px;
     /* Espacio para la imagen */
-    border-radius: 1px;
+    border-radius: 8px;
     box-sizing: border-box;
     color: white;
-    width: calc(100% + 100px);
+    width: calc(100% + 72px);
     /* Ancho extendido */
-    margin-left: -50px;
+    margin-left: -36px;
     /* Compensación del margen del contenedor */
   }
 
   .banner-img {
     /* Imagen del banner */
-    position: absolute;
-    top: -100px;
+    position: relative;
+    top: auto;
     /* Posicionamiento para que sobresalga */
-    left: 20px;
-    width: 200px;
+    left: auto;
+    width: 230px;
+    flex: 0 0 230px;
+    align-self: center;
     z-index: 2;
     /* Asegura que esté sobre otros elementos */
   }
@@ -234,22 +239,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   .banner-content {
     /* Contenido de texto del banner */
     max-width: 500px;
-    margin-left: 50px;
+    margin-left: 0;
   }
 
   .banner-text {
     /* Texto principal del banner */
     color: white;
-    font-size: 18px;
-    line-height: 1.4;
+    font-size: 17px;
+    line-height: 1.45;
     font-weight: 600;
+    text-wrap: pretty;
   }
 
   .banner-description {
     /* Descripción adicional debajo del banner */
-    margin-top: 40px;
+    max-width: 780px;
+    margin: 34px auto 0;
     font-size: 16px;
-    line-height: 1.5;
+    line-height: 1.55;
     color: #005bbb;
     /* Color azul más oscuro */
     font-weight: 600;
@@ -316,7 +323,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   h3.form-title {
     /* Título del formulario */
     text-align: center;
-    color: #0f3d75;
+    color: #ff6a00 ;
     font-size: 28px;
     margin: 42px auto 12px;
     letter-spacing: 0;
@@ -633,9 +640,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     /* Disposición vertical */
     align-items: center;
     justify-content: center;
-    height: auto;
+    min-height: 0;
     /* Altura automática */
-    padding: 80px 20px 30px 20px;
+    padding: 28px 20px 30px;
     /* Padding ajustado */
     width: 100%;
     margin: 0;
@@ -650,6 +657,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     top: 0;
     left: 0;
     width: 160px;
+    flex-basis: auto;
     /* Más pequeña */
     margin-bottom: 15px;
   }
@@ -718,6 +726,49 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     gap: 12px;
   }
 }
+
+@media (max-width: 480px) {
+  .container {
+    max-width: calc(100% - 16px);
+    margin: 92px auto 24px;
+    padding: 24px 16px;
+    border-radius: 10px;
+  }
+
+  .title-main {
+    font-size: 26px;
+    line-height: 1.12;
+  }
+
+  .banner {
+    padding: 22px 16px;
+  }
+
+  .banner-img {
+    width: 140px;
+  }
+
+  .banner-text,
+  .banner-description {
+    font-size: 14px;
+  }
+
+  h3.form-title {
+    font-size: 22px;
+  }
+
+  form {
+    padding: 18px 14px;
+  }
+
+  .radio-group {
+    grid-template-columns: 1fr;
+  }
+
+  .btn-submit {
+    max-width: none;
+  }
+}
 </style>
 </head>
 <body>
@@ -752,6 +803,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <!-- Contenido dinámico de la base de datos -->
   </p>
 
+  <?php if (false): ?>
   <h2 class="section-title">CONOCÉ ALGUNOS DE NUESTROS BENEFICIOS</h2>
   <!-- Título de la sección de beneficios -->
 
@@ -773,6 +825,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <img src="<?= htmlspecialchars($contenido['imagen2'] ?? '/ImagesSV/icono beneficios.png') ?>">
     <!-- Imagen de beneficios obtenida dinámicamente -->
   </div>
+
+  <?php endif; ?>
 
   <h3 class="form-title">LLENÁ EL SIGUIENTE FORMULARIO</h3>
   <!-- Título del formulario de aplicación -->

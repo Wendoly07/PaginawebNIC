@@ -593,6 +593,20 @@ document.addEventListener("DOMContentLoaded", function() {
   margin-top: 20px;        /* separación del texto */
 }
 
+.youtube-right .boton-container {
+  align-self: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.youtube-right .boton-container a {
+  display: inline-flex;
+  justify-content: center;
+  text-decoration: none;
+}
+
 .youtube-boton {
   padding: 12px 30px;
   border-radius: 30px;
@@ -711,28 +725,31 @@ document.addEventListener("DOMContentLoaded", function() {
 /* ===== HERO RESPONSIVE MOVIL COMO PC ===== */
 @media (max-width: 768px) {
 
-  /* Baja todo el carousel para que el header no lo tape */
   .hero-carousel {
-    margin-top: 200px !important;
+    margin-top: 0 !important;
   }
 
   .hero {
     display: flex !important;
-    flex-direction: row !important; /* texto izquierda, modelo derecha */
-    justify-content: space-between;
+    flex-direction: column !important;
+    justify-content: center;
     align-items: center;
     position: relative !important;
     width: 95%;
     max-width: 100%;
     margin: 0 auto;
-    flex-wrap: wrap; /* permite que no se salga en pantallas muy chicas */
+    padding: 24px 14px 18px !important;
+    gap: 16px;
+    text-align: center;
+    flex-wrap: nowrap;
   }
 
-  /* Texto a la izquierda */
   .texto-hero {
-    flex: 1 1 40%;
-    text-align: left !important;
-    margin-left: 10px;
+    flex: 0 0 auto;
+    width: 100%;
+    text-align: center !important;
+    margin-left: 0;
+    order: 1;
   }
 
   .texto-hero h1 {
@@ -750,29 +767,28 @@ document.addEventListener("DOMContentLoaded", function() {
     padding: 8px 18px !important;
   }
 
-  /* Modelo a la derecha */
   .hero img:not(.esfera) {
-    flex: 1 1 55%;
-    max-width: 100%;
+    flex: 0 0 auto;
+    width: min(240px, 74vw);
+    max-width: 74vw;
     height: auto;
     display: block !important;
     margin: 0 auto;
     position: relative;
+    order: 2;
   }
 
-  /* Esferas: redimensionar y reposicionar proporcionalmente */
   .esfera {
-    width: 35px !important;
-    height: 35px !important;
-    line-height: 35px !important;
+    width: 30px !important;
+    height: 30px !important;
+    line-height: 30px !important;
     font-size: 14px !important;
     position: absolute !important;
   }
 
-  /* Ajustar posiciones de cada esfera */
-  .esfera:nth-of-type(1) { top: 10% !important; left: 60% !important; }
-  .esfera:nth-of-type(2) { top: 65% !important; left: 55% !important; }
-  .esfera:nth-of-type(3) { top: 45% !important; left: 88% !important; }
+  .esfera:nth-of-type(1) { top: 18% !important; left: 62% !important; }
+  .esfera:nth-of-type(2) { top: 74% !important; left: 16% !important; }
+  .esfera:nth-of-type(3) { top: 70% !important; left: 77% !important; }
 }
 
 @media (max-width: 768px) {
@@ -788,12 +804,9 @@ document.addEventListener("DOMContentLoaded", function() {
     position: relative;
   }
 
-  /* Bola roja al lado izquierdo de la modelo */
-  /* Ajusta según tu HTML: si la bola roja es la primera .esfera, se coloca aquí */
-  .esfera:nth-of-type(1) { top: 40% !important; left: 42% !important; } /* bola roja */
-  .esfera:nth-of-type(2) { top: 10% !important; left: 60% !important; }
-  .esfera:nth-of-type(3) { top: 65% !important; left: 55% !important; }
-  .esfera:nth-of-type(4) { top: 45% !important; left: 88% !important; }
+  .esfera:nth-of-type(1) { top: 18% !important; left: 62% !important; }
+  .esfera:nth-of-type(2) { top: 74% !important; left: 16% !important; }
+  .esfera:nth-of-type(3) { top: 70% !important; left: 77% !important; }
 }
 
 /* ===== RESPONSIVE MÓVIL SOLO RESULTADOS-BOX ===== */
@@ -989,6 +1002,62 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 }
 
+/* Ajuste final del home: resultados y noticias */
+.resultados-carousel {
+  overflow: hidden;
+}
+
+.resultados-carousel .res-cards {
+  overflow: hidden;
+}
+
+@media (min-width: 769px) {
+  .resultados-carousel .res-card {
+    flex: 0 0 250px;
+    max-width: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .resultados-box {
+    width: calc(100% - 20px) !important;
+    padding: 28px 10px 0 !important;
+    overflow: hidden;
+  }
+
+  .resultados-carousel {
+    width: 100%;
+    padding: 0 42px 10px !important;
+    overflow: hidden;
+  }
+
+  .resultados-carousel .res-cards {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    gap: 0 !important;
+  }
+
+  .resultados-carousel .res-card {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+  }
+
+  .res-prev {
+    left: 8px;
+  }
+
+  .res-next {
+    right: 8px;
+  }
+
+  .noticias-box .card-content p {
+    display: none;
+  }
+}
+
 /* ===== NOTICIAS RESPONSIVE MOVIL ===== */
 @media (max-width: 768px) {
 
@@ -1118,10 +1187,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
 @media (max-width: 768px) {
 
-  /* SOLO mover la imagen de la modelo un poco a la izquierda */
   .hero img[src="/ImagesSV/conductora.png"] {
     position: relative;
-    left: -25px;   /*  ajustá: -15px, -20px, -30px según necesites */
+    left: 0 !important;
   }
 
 }
@@ -1142,16 +1210,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
   .rse-image {
     order: 2;               
-    align-self: flex-start; /* la alinea a la izquierda */
-    margin-left: 0;         
-    transform: translateX(-2cm); /* Mueve la imagen 1cm a la izquierda */
+    align-self: center;
+    margin-left: 0;
+    transform: none;
   }
 
   .rse-image img {
     width: auto;
-    max-width: 80%;         
+    max-width: 88%;
     height: auto;
     display: block;
+    margin: 0 auto;
   }
 }
 
@@ -1239,44 +1308,57 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 
 @media (max-width: 768px) {
+  div[style*="height: 50px"] {
+    height: 6px !important;
+  }
+
+  .youtube {
+    margin-bottom: 6px !important;
+  }
+
+  .youtube-inner {
+    padding-bottom: 0 !important;
+  }
+
   .youtube-video {
-    margin-bottom: 4px !important; /* reduce espacio debajo del video */
+    margin-bottom: 0 !important;
   }
 
   .youtube-right {
-    margin-top: 0 !important; /* elimina el espacio arriba del container naranja */
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
   }
 
   /* ajuste lateral fino */
   .youtube-video,
   .youtube-right {
-    margin-left: 1px !important;
-    margin-right: 15px;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
 
   /* espacio después de TODA la sección (para que no se pegue a banners) */
   .youtube {
-    margin-bottom: 20px !important;
+    margin-bottom: 6px !important;
   }
 
   .youtube-inner {
-    padding-bottom: 0;
+    padding-bottom: 0 !important;
   }
 }
 @media (max-width: 768px) {
 
   .video-subtext {
-    margin-bottom: 4px !important;
+    margin-bottom: 0 !important;
   }
 
   .youtube-video,
   .youtube-right {
-    margin-left: 2px !important;
-    margin-right: 15px;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
 
   .youtube {
-    margin-bottom: 20px !important;
+    margin-bottom: 6px !important;
   }
 
 }
@@ -1284,14 +1366,21 @@ document.addEventListener("DOMContentLoaded", function() {
 .hero-carousel {
   position: relative;
   overflow: visible;
+  margin-top: -18px !important;
+  padding-top: 0 !important;
 }
 
 .hero-slide {
   display: none;
+  margin-top: 0 !important;
 }
 
 .hero-slide.active {
   display: block;
+}
+
+.hero-carousel .hero {
+  margin-top: 0 !important;
 }
 
 /* Flechas */
@@ -1705,9 +1794,19 @@ document.addEventListener("DOMContentLoaded", function() {
 .card-content p {
   color: #fff;
 }
+
+@media (max-width: 768px) {
+  .noticias-box .noticias-right .carousel .card .card-content p {
+    display: none !important;
+  }
+
+  .noticias-box .noticias-right .carousel .card {
+    height: auto !important;
+  }
+}
   </style>
 
-  <div></div>
+  <div style="display:none;"></div>
 
 <?php
 $stmt = $conn->prepare("

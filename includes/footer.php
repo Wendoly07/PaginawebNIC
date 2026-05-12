@@ -18,12 +18,12 @@
     /* Sección del logo ocupa todo el ancho en móviles */
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 12px;
+    gap: 0;
     /* Centra el logo horizontalmente */
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     /* Espacio inferior antes de las columnas */
   }
 
@@ -33,16 +33,22 @@
     /* Mantiene tamaño grande pero controlado */
     margin-top: 0 !important;
     /* Margen superior para posicionamiento */
+    position: static !important;
+    display: block;
   }
 
   .footer-logo {
-    width: 300px;
+    width: min(160px, 48vw) !important;
+    max-width: 48vw !important;
+    position: static !important;
+    top: 0 !important;
   }
 
   /* COLUMNAS */
   .footer-right {
     /* Sección derecha ocupa todo el ancho en móviles */
     width: 100%;
+    position: static !important;
   }
 
   .footer-columns {
@@ -119,6 +125,46 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .footer {
+    justify-content: flex-start !important;
+    padding: 28px 20px 24px !important;
+    gap: 12px;
+    position: relative;
+  }
+
+  .footer-right {
+    display: block;
+  }
+
+  .footer-columns {
+    gap: 14px !important;
+    width: 100%;
+    justify-content: flex-start !important;
+    margin-top: 0 !important;
+  }
+
+  .footer-column {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .footer-column h3 {
+    margin: 0 0 8px !important;
+  }
+
+  .footer-column p {
+    margin: 0 0 6px !important;
+  }
+
+  .footer-logos {
+    margin-top: 10px !important;
+    position: static !important;
+  }
+
+  .social-icons {
+    margin-top: 8px !important;
   }
 }
 </style>

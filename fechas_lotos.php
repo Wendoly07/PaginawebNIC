@@ -473,6 +473,115 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO FECHAS LO
         margin-left: 0;
       }
     }
+    @media (max-width: 480px) {
+      .top {
+        padding: 18px 10px;
+      }
+
+      .top-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 14px;
+      }
+
+      .top img,
+      .ganador-box {
+        margin-left: 0;
+        margin-top: 0;
+      }
+
+      .top img {
+        width: min(210px, 82vw);
+      }
+
+      .ganador {
+        font-size: 20px;
+      }
+
+      .nums {
+        flex-wrap: wrap;
+      }
+
+      .num,
+      .num-numero,
+      .num-mes {
+        width: 44px;
+        height: 44px;
+        line-height: 44px;
+        font-size: 16px;
+      }
+
+      .menu {
+        gap: 10px;
+        padding: 12px;
+      }
+
+      .menu a {
+        width: 100%;
+        max-width: 260px;
+        text-align: center;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+
+      .resultados {
+        width: calc(100% - 20px);
+        grid-template-columns: 1fr;
+        padding: 18px;
+        margin: 24px auto;
+      }
+
+      .izquierda {
+        align-items: center;
+      }
+
+      .izquierda h2 {
+        font-size: 30px;
+        text-align: center;
+      }
+
+      .label-fecha {
+        margin-left: 0;
+      }
+
+      .calendario-real {
+        max-width: 100%;
+        overflow-x: auto;
+      }
+
+      .accordion,
+      .resultados-anteriores,
+      .como-jugar {
+        width: calc(100% - 20px);
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+    @media (max-width: 768px) {
+      .top {
+        min-height: 0 !important;
+        padding: 16px 10px !important;
+      }
+
+      .top-content {
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 12px !important;
+        margin-top: 0 !important;
+      }
+
+      .top img {
+        display: block !important;
+        width: min(210px, 78vw) !important;
+        max-width: 78vw !important;
+        margin: 0 auto 10px !important;
+      }
+
+      .ganador-box {
+        width: 100%;
+        margin: 0 auto !important;
+      }
+    }
   </style>
 </head>
 

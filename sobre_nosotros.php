@@ -886,6 +886,65 @@ header img {
 .rosado {
     background: linear-gradient(135deg, #d63384, #ff9ecf);
 }
+        @media (max-width: 480px) {
+            .container-quienes,
+            .container-blanco,
+            .azar-container {
+                width: calc(100% - 20px);
+                margin-left: auto;
+                margin-right: auto;
+                padding: 18px 14px;
+                border-radius: 12px;
+            }
+
+            .quienes-text h2,
+            .mision-text-center h2,
+            .azar-container h2 {
+                font-size: 24px;
+                line-height: 1.18;
+                text-align: center;
+            }
+
+            .quienes-text p,
+            .descripcion-azar,
+            .acordeon-contenido {
+                font-size: 15px;
+                line-height: 1.45;
+            }
+
+            .orange-rect,
+            .cuadros-extra {
+                grid-template-columns: 1fr !important;
+                gap: 12px;
+            }
+
+            .metric {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .metric img {
+                width: 56px;
+            }
+
+            .sello-rse {
+                position: static;
+                display: flex;
+                justify-content: center;
+                margin: 14px 0;
+            }
+
+            .sello-rse img {
+                width: 130px;
+            }
+
+            .card-extra,
+            .resp-item,
+            .acordeon-btn {
+                font-size: 15px;
+                line-height: 1.3;
+            }
+        }
     </style>
 
     <script>
