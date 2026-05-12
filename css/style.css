@@ -524,16 +524,6 @@ header {
   color: white;
   border: 2px solid white;
   border-radius: 15px;
-  -webkit-text-stroke: 4px #ff7e00;
-  text-shadow:
-    2px 0 #ff7e00,
-    -2px 0 #ff7e00,
-    0 2px #ff7e00,
-    0 -2px #ff7e00,
-    2px 2px #ff7e00,
-    -2px -2px #ff7e00,
-    2px -2px #ff7e00,
-    -2px 2px #ff7e00;
   font-size: 12px;
   /* más pequeño */
   font-weight: bold;
