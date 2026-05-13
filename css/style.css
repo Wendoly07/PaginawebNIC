@@ -1070,6 +1070,16 @@ img {
   font-size: 120px;
   /* más grande que antes */
   font-weight: bold;
+  color: #ffffff;
+  text-shadow:
+    3px 0 #ff7e00,
+    -3px 0 #ff7e00,
+    0 3px #ff7e00,
+    0 -3px #ff7e00,
+    2px 2px #ff7e00,
+    -2px -2px #ff7e00,
+    2px -2px #ff7e00,
+    -2px 2px #ff7e00;
   margin: 0 auto 10px auto;
   background: transparent;
   display: inline-block;

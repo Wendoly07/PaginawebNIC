@@ -265,6 +265,8 @@
         </div>
         <a href="index.php?pag=noticias">NOTICIAS</a>
         <!-- Enlace a la página de noticias -->
+        <a href="index.php?pag=promociones">PROMOCIONES</a>
+        <!-- Enlace a la pagina de promociones -->
         <a href="index.php?pag=contactanos">CONTÁCTANOS</a>
         <!-- Enlace a la página de contacto -->
       </nav>

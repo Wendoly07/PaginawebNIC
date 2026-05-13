@@ -16,20 +16,20 @@ try {
 $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 
 if ($id <= 0) {
-    header("Location: index.php?pag=noticias");
+    header("Location: index.php?pag=promociones");
     exit();
 }
 
 $stmt = $conn->prepare("
     SELECT *
-    FROM paginaweb_nic_noticias
+    FROM paginaweb_nic_promociones
     WHERE id = :id
 ");
 $stmt->execute([':id' => $id]);
-$noticia = $stmt->fetch(PDO::FETCH_ASSOC);
+$promocion = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if (!$noticia) {
-    header("Location: index.php?pag=noticias");
+if (!$promocion) {
+    header("Location: index.php?pag=promociones");
     exit();
 }
 ?>
@@ -38,7 +38,7 @@ if (!$noticia) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title><?= htmlspecialchars($noticia['titulo']) ?></title>
+<title><?= htmlspecialchars($promocion['titulo']) ?></title>
 
 <style>
 @font-face {
@@ -92,7 +92,8 @@ body{
 .detalle-imagen{
   width:100%;
   max-height:480px;
-  object-fit:cover;
+  object-fit:contain;
+  background:#fff;
   display:block;
 }
 
@@ -118,53 +119,6 @@ body{
   font-size:17px;
   line-height:1.8;
   white-space:normal;
-}
-
-.detalle-invitacion{
-  color:#555;
-  font-size:18px;
-  font-weight:700;
-  line-height:1.5;
-  margin-top:28px;
-  text-align:center;
-}
-
-.btn-jugar-aqui{
-  display:inline-block;
-  position:relative;
-  overflow:hidden;
-  padding:6px 15px;
-  margin:0 4px;
-  background:linear-gradient(135deg, #1a73e8 0%, #0057d9 100%);
-  color:#fff;
-  border-radius:999px;
-  text-decoration:none;
-  font-size:15px;
-  font-weight:900;
-  box-shadow:0 9px 20px rgba(26,115,232,0.34);
-  transition:transform .2s ease, background .2s ease, box-shadow .2s ease;
-}
-
-.btn-jugar-aqui::before{
-  content:"";
-  position:absolute;
-  top:0;
-  left:-85%;
-  width:55%;
-  height:100%;
-  background:linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-  transform:skewX(-22deg);
-  transition:left .45s ease;
-}
-
-.btn-jugar-aqui:hover{
-  background:linear-gradient(135deg, #ff6600 0%, #f04d00 100%);
-  box-shadow:0 13px 26px rgba(255,102,0,0.38);
-  transform:translateY(-3px) scale(1.04);
-}
-
-.btn-jugar-aqui:hover::before{
-  left:125%;
 }
 
 .btn-volver{
@@ -208,10 +162,6 @@ body{
   .detalle-texto{
     font-size:15px;
   }
-
-  .detalle-invitacion{
-    font-size:16px;
-  }
 }
 </style>
 </head>
@@ -219,26 +169,22 @@ body{
 
 <div class="container-general">
   <section class="titulo-noticias">
-    <h1>NOTICIAS RECIENTES</h1>
+    <h1>PROMOCIONES</h1>
   </section>
 </div>
 
 <main class="detalle-container">
-  <?php if (!empty($noticia['imagen_url'])): ?>
-    <img class="detalle-imagen" src="<?= htmlspecialchars($noticia['imagen_url']) ?>" alt="<?= htmlspecialchars($noticia['titulo']) ?>">
+  <?php if (!empty($promocion['imagen_url'])): ?>
+    <img class="detalle-imagen" src="<?= htmlspecialchars($promocion['imagen_url']) ?>" alt="<?= htmlspecialchars($promocion['titulo']) ?>">
   <?php endif; ?>
 
   <section class="detalle-contenido">
-    <p class="detalle-fecha"><?= htmlspecialchars($noticia['fecha']) ?></p>
-    <h1><?= htmlspecialchars($noticia['titulo']) ?></h1>
+    <p class="detalle-fecha"><?= htmlspecialchars($promocion['fecha']) ?></p>
+    <h1><?= htmlspecialchars($promocion['titulo']) ?></h1>
     <div class="detalle-texto">
-      <?= nl2br(htmlspecialchars($noticia['descripcion'])) ?>
+      <?= nl2br(htmlspecialchars($promocion['descripcion'])) ?>
     </div>
-    <p class="detalle-invitacion">
-      Te invitamos a jugar todos nuestros juegos ingresando
-      <a class="btn-jugar-aqui" href="https://juega.loto.com.ni/websales/?utm_source=NICARAGUA_MULTIMARCA_2026_LOTONI_NOTAWEB&amp;utm_medium=NICARAGUA_MULTIMARCA_2026_LOTONI_NOTAWEB&amp;utm_campaign=NICARAGUA_MULTIMARCA_2026_LOTONI_NOTAWEB&amp;utm_id=NICARAGUA_MULTIMARCA_2026_LOTONI_NOTAWEB" target="_blank" rel="noopener noreferrer">aquí</a>.
-    </p>
-    <a class="btn-volver" href="index.php?pag=noticias">Volver a noticias</a>
+    <a class="btn-volver" href="index.php?pag=promociones">Volver a promociones</a>
   </section>
 </main>
 

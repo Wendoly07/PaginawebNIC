@@ -39,6 +39,14 @@ switch ($pag) {
         // Página de detalle de una noticia
         include 'noticia_detalle.php';
         break;
+    case 'promociones':
+        // Pagina de promociones
+        include 'promociones.php';
+        break;
+    case 'promociones_detallado':
+        // Pagina de detalle de una promocion
+        include 'promociones_detallado.php';
+        break;
     case 'apostemos':
         // Página de apuestas deportivas
         include 'apostemos.php';

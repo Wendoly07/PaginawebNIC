@@ -247,6 +247,11 @@
         </a>
     </p>
     <p>
+        <a href="index.php?pag=promociones" style="color: inherit; text-decoration: none;">
+            Promociones
+        </a>
+    </p>
+    <p>
         <a href="index.php?pag=contactanos" style="color: inherit; text-decoration: none;">
             Contáctanos
         </a>

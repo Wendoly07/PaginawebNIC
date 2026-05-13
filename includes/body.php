@@ -580,6 +580,7 @@ document.addEventListener("DOMContentLoaded", function() {
   flex: 0 0 auto;
   min-width: 300px;
   max-width: 500px;
+  position: relative;
   
   display: flex;
   flex-direction: column;
@@ -597,10 +598,14 @@ document.addEventListener("DOMContentLoaded", function() {
   align-self: center;
   justify-content: center;
   width: 100%;
-  margin-top: 78px;
+  margin-top: 0;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+  position: absolute;
+  top: 305px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .youtube-right .boton-container a {
@@ -1306,6 +1311,12 @@ document.addEventListener("DOMContentLoaded", function() {
   .boton-container {
     justify-content: center !important; /* centrar botón */
     margin-top: 10px !important;       /* separar un poco del texto */
+  }
+
+  .youtube-right .boton-container {
+    position: static !important;
+    transform: none !important;
+    margin-top: 10px !important;
   }
 }
 
