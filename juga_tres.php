@@ -54,7 +54,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGOJUGATRES.p
     }
 
     .top img {
-      width: 330px;
+      width: 300px;
       height: auto;
       margin-top: 70px;
       margin-left: 80px;
@@ -589,7 +589,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGOJUGATRES.p
       <img src="<?= htmlspecialchars($logoUrl) ?>" alt="Logo Juga Tres">
 
       <div class="ganador-box">
-        <div class="ganador">ÚLTIMA FECHA GANADORA</div>
+        <div class="ganador">ÚLTIMO NÚMERO GANADOR</div>
 
         <div class="nums">
           <span class="num-numero" id="ultimo1">--</span>

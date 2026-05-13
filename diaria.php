@@ -62,11 +62,34 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO DIARIA.sv
 }
 
 /* Imagen del logo/cabecera ubicada en la sección superior */
-.top img {
+.top .logo-diaria-principal {
   width: 330px; /* Imagen más grande */
   height: auto;
   margin-top: 70px;
   margin-left: 80px;
+}
+
+.guia-suenos-preview {
+  width: 200px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 12px 26px rgba(0,0,0,.22);
+  border: 3px solid rgba(255,255,255,.85);
+  transform: rotate(1.5deg);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+
+.guia-suenos-link {
+  display: inline-block;
+  margin: 34px 70px 0 auto;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.guia-suenos-link:hover .guia-suenos-preview {
+  transform: translateY(-6px) scale(1.05) rotate(0deg);
+  box-shadow: 0 18px 34px rgba(0,0,0,.32);
+  border-color: #ffdf00;
 }
 
 /* Caja que muestra el último número ganador y el contador */
@@ -759,8 +782,12 @@ body {
         margin-top: 0;
       }
 
-      .top img {
+      .top .logo-diaria-principal {
         width: min(210px, 82vw);
+      }
+
+      .guia-suenos-preview {
+        display: none !important;
       }
 
       .ganador {
@@ -847,6 +874,10 @@ body {
         margin: 0 auto 10px !important;
       }
 
+      .guia-suenos-link {
+        display: none !important;
+      }
+
       .ganador-box {
         width: 100%;
         margin: 0 auto !important;
@@ -861,7 +892,7 @@ body {
   <!-- Área superior con logo y último número ganador -->
   <div class="top">
     <div class="top-content">
-      <img src="<?= htmlspecialchars($logoUrl) ?>" alt="Logo Diaria">
+      <img class="logo-diaria-principal" src="<?= htmlspecialchars($logoUrl) ?>" alt="Logo Diaria">
 
       <div class="ganador-box">
         <div class="ganador">ÚLTIMO NÚMERO GANADOR</div>
@@ -890,6 +921,9 @@ body {
   <span id="segHeader">00</span>
 </div>
       </div>
+      <a class="guia-suenos-link" href="/ImagesSV/documentos/guia-de-los-suenos-2023.pdf" download>
+        <img class="guia-suenos-preview" src="/ImagesSV/guia-de-los-suenos-2023_page-0001.jpg" alt="Guía de los sueños">
+      </a>
     </div>
   </div>
 

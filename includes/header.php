@@ -260,11 +260,11 @@
           <!-- Enlace principal del dropdown con flecha -->
           <div class="dropdown-content">
             <a href="index.php?pag=diaria">Diaria</a>
-            <a href="index.php?pag=fechas_lotos">Fechas Loto</a>
+            <a href="index.php?pag=fechas_lotos">Fechas</a>
             <a href="index.php?pag=premiado">Premia2</a>
-            <a href="index.php?pag=juga_tres">Juga Tres</a>
-            <a href="index.php?pag=juga_cuatro">Juga Cuatro</a>
-            <a href="index.php?pag=terminacion2">Terminación 2</a>
+            <a href="index.php?pag=juga_tres">Jugá Tres</a>
+            <a href="index.php?pag=juga_cuatro">Jugá4</a>
+            <a href="index.php?pag=terminacion2">Terminación2</a>
           </div>
         </div>
         <a href="index.php?pag=noticias">NOTICIAS</a>

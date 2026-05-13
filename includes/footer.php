@@ -174,7 +174,7 @@
   <!-- Sección izquierda del footer - Logo principal -->
   <div class="footer-left">
    <!-- Logo de LOTO -->
-   <img src="/ImagesSV/LOGO JUEGOS DE LOTERIA FOOTER.svg" alt="Logo" class="footer-logo">
+   <img src="/ImagesSV/LOGO JUEGOS DE LOTERIA FOOTER.svg" alt="Logo" class="footer-logo" style="transform: scale(2.5) translateX(40px); margin-top: 25px;">
   </div>
 
   <!-- Sección derecha del footer - Contenido -->
@@ -192,22 +192,27 @@
         </p>
                 <p>
           <a href="index.php?pag=fechas_lotos" style="color: inherit; text-decoration: none;">
-            Fechas Lotos
+            Fechas
           </a>
         </p>
                 <p>
           <a href="index.php?pag=premiado" style="color: inherit; text-decoration: none;">
-            Premiado
+            Premia2
           </a>
         </p>
                 <p>
           <a href="index.php?pag=juga_tres" style="color: inherit; text-decoration: none;">
-            Jugá Tres
+            Jug&aacute; Tres
+          </a>
+        </p>
+        <p>
+          <a href="index.php?pag=juga_cuatro" style="color: inherit; text-decoration: none;">
+            Jug&aacute;4
           </a>
         </p>
         <p>
           <a href="index.php?pag=terminacion2" style="color: inherit; text-decoration: none;">
-            Terminación 2
+            Terminaci&oacute;n2
           </a>
         </p>
 
@@ -256,9 +261,18 @@
             Contáctanos
         </a>
     </p>
-    </p>
+</p>
 </div>
 
+      <!-- Columna de Enlaces -->
+      <div class="footer-column">
+        <h3>Enlaces</h3>
+        <p>
+          <a href="https://www.cbnco.com/" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">
+            Canadian Bank Note
+          </a>
+        </p>
+      </div>
 
     </div>
   </div>
@@ -272,7 +286,7 @@
   </div>
 
   <!-- Iconos de redes sociales -->
-  <div class="social-icons">
+<div class="social-icons">
   <!-- Enlaces a perfiles sociales que se abren en nueva pestaña -->
   <a href="https://www.tiktok.com/@lotonicaragua" target="_blank">
     <img src="/ImagesSV/tik-tok.svg" alt="TikTok">
@@ -293,6 +307,10 @@
   <a href="https://www.linkedin.com/company/loto-nicaragua" target="_blank">
     <img src="/ImagesSV/linkedin.svg" alt="LinkedIn">
   </a>
+</div>
+
+<div class="footer-legal">
+  AVISO LEGAL *S&oacute;lo para mayores de 18 a&ntilde;os. V&aacute;lido &uacute;nicamente en Nicaragua.
 </div>
 
 </div>

@@ -589,7 +589,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Logo Juga4 - L
       <img src="<?= htmlspecialchars($logoUrl) ?>" alt="Logo Juga Cuatro">
 
       <div class="ganador-box">
-        <div class="ganador">ÚLTIMA FECHA GANADORA</div>
+        <div class="ganador">ÚLTIMO NÚMERO GANADOR</div>
 
         <div class="nums">
           <span class="num-numero" id="ultimo1">--</span>

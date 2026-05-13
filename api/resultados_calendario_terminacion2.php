@@ -20,14 +20,14 @@ if (!isset($_GET['fecha'])) {
 }
 
 $fecha = $_GET['fecha'];
-$gameName = 5; // Terminacion 2
+$gameNames = ['5', 'TERMINACION 2']; // Terminacion 2
 
 $sql = "
 SELECT
     DATEPART(HOUR, draw_time) AS hora_sorteo,
     par1
 FROM numeros_ganadores_sorteos_prod
-WHERE game_name = :game_name
+WHERE UPPER(LTRIM(RTRIM(game_name))) IN (:game_name_id, :game_name_texto)
 AND UPPER(LTRIM(RTRIM(pais))) = 'NICARAGUA'
 AND CONVERT(date, draw_date) = :fecha
 AND DATEPART(HOUR, draw_time) = 18
@@ -37,7 +37,8 @@ ORDER BY draw_time ASC
 try {
     $stmt = $conn->prepare($sql);
     $stmt->execute([
-        'game_name' => $gameName,
+        'game_name_id' => $gameNames[0],
+        'game_name_texto' => $gameNames[1],
         'fecha' => $fecha
     ]);
 } catch (PDOException $e) {
@@ -66,7 +67,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 if (isset($_GET['debug'])) {
     $resultados['_debug'] = [
         'fecha' => $fecha,
-        'game_name' => $gameName,
+        'game_name' => $gameNames,
         'filas' => $filas
     ];
 }
