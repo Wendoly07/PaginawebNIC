@@ -97,7 +97,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO DIARIA.sv
   text-align: center;
   color: white;
   margin-top: 10px;
-  margin-left: 160px; /* Mantener la posición al lado de la imagen */
+  margin-left: 70px;
 }
 
 .ganador {
@@ -430,6 +430,33 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO DIARIA.sv
       font-weight: 600;
       line-height: 1.7;
       color: #333;
+    }
+
+    .contenido-visible {
+      max-width: 1100px;
+      margin: 32px auto;
+      padding: 0 18px;
+    }
+
+    .contenido-visible h2 {
+      color: #0054a6;
+      font-size: 34px;
+      font-weight: 900;
+      margin-bottom: 28px;
+    }
+
+    .contenido-visible img {
+      display: block;
+      width: min(100%, 520px);
+      height: auto;
+      margin: 0 auto;
+    }
+
+    .contenido-visible-texto {
+      color: #333;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.7;
     }
 
     /* SUB-ACORDEONES */
@@ -1019,36 +1046,70 @@ body {
   <!-- ACCORDION -->
   <!-- Sección desplegable principal con información editable de la Diaria -->
   <!-- ACORDEONES -->
-  <div class="accordion">
-    <div class="accordion-header open" onclick="toggleAcordeon(this)">
-      <?= htmlspecialchars($config['titulo1'] ?? 'CÓMO JUGAR') ?>
-      <span class="arrow-circle">▼</span>
-    </div>
-    <div class="accordion-content" style="display:block;">
-      <?= nl2br(htmlspecialchars($config['contenido1'] ?? '')) ?>
-    </div>
-  </div>
+  <?php
+    $acordeonesDefault = [
+      1 => ['titulo' => 'CÓMO JUGAR', 'contenido' => ''],
+      2 => ['titulo' => 'CONOZCA LOS RESULTADOS', 'contenido' => ''],
+      3 => ['titulo' => 'RECLAME SU PREMIO', 'contenido' => ''],
+    ];
 
-  <div class="accordion">
-    <div class="accordion-header" onclick="toggleAcordeon(this)">
-      <?= htmlspecialchars($config['titulo2'] ?? 'CONOZCA LOS RESULTADOS') ?>
-      <span class="arrow-circle">▼</span>
-    </div>
-    <div class="accordion-content">
-      <?= nl2br(htmlspecialchars($config['contenido2'] ?? '')) ?>
-    </div>
-  </div>
+    $acordeones = [];
+    for ($i = 1; $i <= 3; $i++) {
+      $titulo = trim((string)($config["titulo{$i}"] ?? ($acordeonesDefault[$i]['titulo'] ?? '')));
+      $contenido = trim((string)($config["contenido{$i}"] ?? ($acordeonesDefault[$i]['contenido'] ?? '')));
 
-  <div class="accordion">
-    <div class="accordion-header" onclick="toggleAcordeon(this)">
-      <?= htmlspecialchars($config['titulo3'] ?? 'RECLAME SU PREMIO') ?>
-      <span class="arrow-circle">▼</span>
-    </div>
-    <div class="accordion-content">
-      <?= nl2br(htmlspecialchars($config['contenido3'] ?? '')) ?>
-    </div>
-  </div>
+      if ($titulo !== '' || $contenido !== '') {
+        $acordeones[] = [
+          'titulo' => $titulo,
+          'contenido' => $contenido,
+        ];
+      }
+    }
 
+    $contenidosVisibles = [];
+    for ($i = 4; $i <= 7; $i++) {
+      $titulo = trim((string)($config["titulo{$i}"] ?? ''));
+      $contenido = trim((string)($config["contenido{$i}"] ?? ''));
+
+      if ($titulo !== '' || $contenido !== '') {
+        $contenidosVisibles[] = [
+          'titulo' => $titulo,
+          'contenido' => $contenido,
+          'esImagen' => (bool)preg_match('/^https?:\\/\\//i', $contenido),
+        ];
+      }
+    }
+  ?>
+
+  <?php foreach ($acordeones as $index => $acordeon): ?>
+    <div class="accordion">
+      <div class="accordion-header <?= $index === 0 ? 'open' : '' ?>" onclick="toggleAcordeon(this)">
+        <?= htmlspecialchars($acordeon['titulo']) ?>
+        <span class="arrow-circle">▼</span>
+      </div>
+      <div class="accordion-content" <?= $index === 0 ? 'style="display:block;"' : '' ?>>
+        <?= nl2br(htmlspecialchars($acordeon['contenido'])) ?>
+      </div>
+    </div>
+  <?php endforeach; ?>
+
+  <?php foreach ($contenidosVisibles as $contenidoVisible): ?>
+    <section class="contenido-visible">
+      <?php if ($contenidoVisible['titulo'] !== ''): ?>
+        <h2><?= htmlspecialchars($contenidoVisible['titulo']) ?></h2>
+      <?php endif; ?>
+
+      <?php if ($contenidoVisible['contenido'] !== ''): ?>
+        <?php if ($contenidoVisible['esImagen']): ?>
+          <img src="<?= htmlspecialchars($contenidoVisible['contenido']) ?>" alt="<?= htmlspecialchars($contenidoVisible['titulo']) ?>">
+        <?php else: ?>
+          <div class="contenido-visible-texto">
+            <?= nl2br(htmlspecialchars($contenidoVisible['contenido'])) ?>
+          </div>
+        <?php endif; ?>
+      <?php endif; ?>
+    </section>
+  <?php endforeach; ?>
 <div class="reglamento">
   <a href="/ImagesSV/documentos/Reglamento La Diaria El Salvador.pdf" target="_blank">
     <button class="btn-reglamento">
