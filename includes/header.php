@@ -38,6 +38,7 @@
       color: white;
       text-decoration: none;
       font-weight: bold;
+      font-size: 14px !important;
       padding: 5px 10px;
       transition: color 0.3s;
       /* Transición suave para el cambio de color */
@@ -91,6 +92,9 @@
       color: white;
       text-decoration: none;
       font-weight: bold;
+      font-size: 14px !important;
+      line-height: 1.1;
+      white-space: nowrap;
       padding: 5px 10px;
       transition: color 0.3s;
     }

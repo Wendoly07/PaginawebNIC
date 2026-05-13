@@ -897,9 +897,9 @@ body {
   <!-- Botones principales de acción: jugar y descargar tabla de señales -->
   <div class="menu">
     <a href="https://juega.loto.com.ni/websales/" target="_blank">JUGÁ AQUÍ</a>
-    <a href="/ImagesSV/documentos/Diaria Tabla de señales.pdf" download>
-  SEÑALES QUE TE HACEN GANAR
-</a>
+  <a href="/ImagesSV/documentos/guia-de-los-suenos-2023.pdf" download>
+  CONSULTA LA GUIA DE LOS SUEÑOS
+  </a>
 
   </div>
 

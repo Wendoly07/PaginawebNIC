@@ -29,15 +29,18 @@ try {
         SELECT n.*
         FROM numeros_ganadores_sorteos_prod n
         CROSS JOIN ultimo_sorteo u
-        WHERE UPPER(LTRIM(RTRIM(n.game_name))) IN ('13', 'DIARIA', 'MULTI-X-DIARIA', N'MÁS 1', 'MAS 1')
+        WHERE (
+            UPPER(LTRIM(RTRIM(n.game_name))) IN ('13', 'DIARIA')
+            OR REPLACE(REPLACE(UPPER(LTRIM(RTRIM(n.game_name))) COLLATE Latin1_General_CI_AI, ' ', ''), '-', '') IN ('MULTIXDIARIA', 'MAS1')
+        )
         AND UPPER(LTRIM(RTRIM(n.pais))) = 'NICARAGUA'
         AND CONVERT(date, n.draw_date) = CONVERT(date, u.draw_date)
         AND (n.draw_time = u.draw_time OR n.draw_number = u.draw_number)
         ORDER BY
             CASE
                 WHEN UPPER(LTRIM(RTRIM(n.game_name))) IN ('13', 'DIARIA') THEN 1
-                WHEN UPPER(LTRIM(RTRIM(n.game_name))) = 'MULTI-X-DIARIA' THEN 2
-                WHEN UPPER(LTRIM(RTRIM(n.game_name))) IN (N'MÁS 1', 'MAS 1') THEN 3
+                WHEN REPLACE(REPLACE(UPPER(LTRIM(RTRIM(n.game_name))) COLLATE Latin1_General_CI_AI, ' ', ''), '-', '') = 'MULTIXDIARIA' THEN 2
+                WHEN REPLACE(REPLACE(UPPER(LTRIM(RTRIM(n.game_name))) COLLATE Latin1_General_CI_AI, ' ', ''), '-', '') = 'MAS1' THEN 3
                 ELSE 4
             END,
             CASE WHEN UPPER(LTRIM(RTRIM(n.game_name))) = 'DIARIA' THEN 1 ELSE 0 END
@@ -58,15 +61,16 @@ try {
 
     foreach ($rows as $fila) {
         $gameName = strtoupper(trim((string) $fila["game_name"]));
+        $gameKey = str_replace([' ', '-'], '', strtr($gameName, ['Á' => 'A', 'É' => 'E', 'Í' => 'I', 'Ó' => 'O', 'Ú' => 'U']));
 
         if ($gameName === "13" || $gameName === "DIARIA") {
             $row = $fila;
             if ($gameName === "DIARIA") {
                 $multiX = $fila["par2"] ?? $multiX;
             }
-        } elseif ($gameName === "MULTI-X-DIARIA") {
+        } elseif ($gameKey === "MULTIXDIARIA") {
             $multiX = $fila["par2"] ?? $fila["par1"] ?? null;
-        } elseif ($gameName === "MÁS 1" || $gameName === "MAS 1") {
+        } elseif ($gameKey === "MAS1") {
             $mas1 = $fila["par1"] ?? $fila["par2"] ?? null;
         }
     }
@@ -74,6 +78,20 @@ try {
     if (!$row) {
         echo json_encode(["error" => "No hay resultados"]);
         exit;
+    }
+
+    if ($mas1 === null || $mas1 === '') {
+        $stmtMas1 = $conn->query("
+            SELECT TOP 1 par1, par2
+            FROM numeros_ganadores_sorteos_prod
+            WHERE REPLACE(REPLACE(UPPER(LTRIM(RTRIM(game_name))) COLLATE Latin1_General_CI_AI, ' ', ''), '-', '') = 'MAS1'
+            AND UPPER(LTRIM(RTRIM(pais))) = 'NICARAGUA'
+            ORDER BY draw_date DESC, draw_time DESC, draw_number DESC
+        ");
+        $rowMas1 = $stmtMas1->fetch(PDO::FETCH_ASSOC);
+        if ($rowMas1) {
+            $mas1 = $rowMas1["par1"] ?? $rowMas1["par2"] ?? null;
+        }
     }
 
     $numero = str_pad($row["par1"], 2, "0", STR_PAD_LEFT);

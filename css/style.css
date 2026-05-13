@@ -47,8 +47,8 @@ header {
   align-items: center;
   padding: 0 26px;
   justify-content: space-between;
-  width: 70%;
-  max-width: 1140px;
+  width: 84%;
+  max-width: 1320px;
   /* más angosto que el azul */
   margin: 10px auto 20px;
   /* sube 40px (la mitad) para que quede mitad en azul, mitad afuera */
@@ -73,15 +73,16 @@ header {
 
 /* Tamaño del logo*/
 .main-header .logo img {
-  height: 112px;
+  height: 104px;
 }
 
 .nav-menu {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 14px;
+  gap: 22px;
   flex-wrap: nowrap;
+  flex: 1;
 }
 
 /* Estilos base para .nav-menu a */
@@ -89,7 +90,7 @@ header {
   text-decoration: none;
   color: white;
   font-weight: bold;
-  font-size: 17px;
+  font-size: 14px;
   line-height: 1.1;
   padding: 8px 6px;
   position: relative;
@@ -1356,7 +1357,7 @@ img {
 }
 
 .play-button img {
-  max-width: 220px;
+  max-width: 205px;
   /* controla el ancho de la imagen/botón */
   height: auto;
   display: block;

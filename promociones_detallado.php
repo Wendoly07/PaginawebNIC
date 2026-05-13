@@ -116,7 +116,7 @@ body{
 
 .detalle-texto{
   color:#444;
-  font-size:17px;
+  font-size:15px;
   line-height:1.8;
   white-space:normal;
 }
