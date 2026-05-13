@@ -133,8 +133,9 @@ body{
   display:inline-block;
   position:relative;
   overflow:hidden;
+  vertical-align:middle;
   padding:6px 15px;
-  margin:0 4px;
+  margin:0 5px 2px;
   background:linear-gradient(135deg, #1a73e8 0%, #0057d9 100%);
   color:#fff;
   border-radius:999px;
@@ -169,7 +170,7 @@ body{
 
 .btn-volver{
   display:inline-block;
-  margin-top:28px;
+  margin-top:42px;
   padding:9px 18px;
   background:#ef7d00;
   color:#fff;

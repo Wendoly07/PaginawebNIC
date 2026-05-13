@@ -68,7 +68,7 @@ body{ font-family:'HelveticaRounded', sans-serif; background:#f4f4f4; }
 
 .noticia-principal-container{
   display:grid;
-  grid-template-columns:minmax(0, 1.45fr) minmax(300px, .9fr);
+  grid-template-columns:minmax(0, 1fr) minmax(340px, .9fr);
   gap:26px;
   align-items:center;
   margin-bottom:90px;
@@ -78,6 +78,7 @@ body{ font-family:'HelveticaRounded', sans-serif; background:#f4f4f4; }
 
 .noticia-principal-container img{
   width:100%;
+  max-width:620px;
   border-radius:16px;
   object-fit:contain;
   background:#fff;
