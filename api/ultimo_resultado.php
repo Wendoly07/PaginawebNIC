@@ -12,6 +12,9 @@ try {
     // Inicia un bloque try para manejar excepciones
 
     require_once __DIR__ . '/../config/connection.php';
+    if (!$conn) {
+        throw new PDOException('Database connection unavailable');
+    }
     // Crea una nueva conexión PDO a SQL Server usando el host, base de datos, usuario y contraseña
 
     // Configura PDO para lanzar excepciones en caso de errores
@@ -60,9 +63,10 @@ try {
     }
 
 } catch(PDOException $e){
+    error_log(__FILE__ . ': ' . $e->getMessage());
     // Captura cualquier excepción de PDO
 
-    echo json_encode(["error" => $e->getMessage()]);
+    echo json_encode(["error" => 'Error interno']);
     // Envía un JSON con el mensaje de error de la excepción
 
 }

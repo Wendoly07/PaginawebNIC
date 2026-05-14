@@ -2,8 +2,12 @@
 header('Content-Type: application/json');
 try {
     require_once __DIR__ . '/../config/connection.php';
+    if (!$conn) {
+        throw new PDOException('Database connection unavailable');
+    }
 } catch (PDOException $e) {
-    echo json_encode(['error' => $e->getMessage()]);
+    error_log(__FILE__ . ': ' . $e->getMessage());
+echo json_encode(['error' => 'Error interno']);
     exit;
 }
 
@@ -35,8 +39,9 @@ try {
         'fecha' => $fecha
     ]);
 } catch (PDOException $e) {
-    echo json_encode([
-        'error' => $e->getMessage(),
+    error_log(__FILE__ . ': ' . $e->getMessage());
+echo json_encode([
+        'error' => 'Error interno',
         '12:00' => null,
         '15:00' => null,
         '18:00' => null,

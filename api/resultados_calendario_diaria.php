@@ -12,14 +12,18 @@ try {
     // Inicia un bloque try para intentar la conexion a la base de datos
 
     require_once __DIR__ . '/../config/connection.php';
+    if (!$conn) {
+        throw new PDOException('Database connection unavailable');
+    }
     // Crea una nueva conexion PDO a SQL Server usando el host, base de datos, usuario y contrasena
 
     // Configura PDO para lanzar excepciones en caso de errores
 
 } catch (PDOException $e) {
-    // Captura cualquier excepcion de PDO durante la conexion
+    error_log(__FILE__ . ': ' . $e->getMessage());
+// Captura cualquier excepcion de PDO durante la conexion
 
-    echo json_encode(['error' => $e->getMessage()]);
+    echo json_encode(['error' => 'Error interno']);
     // Envia un JSON con el mensaje de error de la excepcion
 
     exit;
@@ -70,8 +74,9 @@ try {
     ]);
     // Ejecuta la consulta preparada, pasando los parametros game_name y fecha
 } catch (PDOException $e) {
-    echo json_encode([
-        'error' => $e->getMessage(),
+    error_log(__FILE__ . ': ' . $e->getMessage());
+echo json_encode([
+        'error' => 'Error interno',
         '12:00' => null,
         '15:00' => null,
         '18:00' => null,

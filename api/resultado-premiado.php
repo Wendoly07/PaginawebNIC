@@ -2,6 +2,9 @@
 header('Content-Type: application/json');
 try {
     require_once __DIR__ . '/../config/connection.php';
+    if (!$conn) {
+        throw new PDOException('Database connection unavailable');
+    }
 
     $stmt = $conn->query("SELECT TOP 1 *
                           FROM numeros_ganadores_sorteos_prod
@@ -29,5 +32,6 @@ try {
         "draw_date" => $row["draw_date"]
     ]);
 } catch (PDOException $e) {
-    echo json_encode(["error" => $e->getMessage()]);
+    error_log(__FILE__ . ': ' . $e->getMessage());
+echo json_encode(["error" => 'Error interno']);
 }
