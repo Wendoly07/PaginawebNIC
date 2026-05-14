@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         // ===== LLAMAR LOGIC APP =====
         // URL del Logic App de Azure para procesar el formulario
-        $logicAppUrl = "https://prod-13.canadacentral.logic.azure.com:443/workflows/a79388f1bb064ceb80716647783c62f1/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=-7XKYAdI814tz-BuPFkRP-A0NuOlJDsg7BvfpHSX6-c";
+        $logicAppUrl = getenv('CONTACTANOS_LOGIC') ?: getenv('CONTANTANOS_LOGIC');
 
         // Datos a enviar al Logic App
         $data = [
@@ -39,15 +39,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         ];
 
         // Inicializar cURL para enviar datos al Logic App
-        $ch = curl_init($logicAppUrl);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            "Content-Type: application/json"
-        ]);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-        curl_exec($ch);
-        curl_close($ch);
+        if ($logicAppUrl) {
+            $ch = curl_init($logicAppUrl);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                "Content-Type: application/json"
+            ]);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+            curl_exec($ch);
+            curl_close($ch);
+        }
         // ===== FIN LOGIC APP =====
 
         // Mensaje de éxito si todo salió bien

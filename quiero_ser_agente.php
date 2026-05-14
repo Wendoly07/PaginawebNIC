@@ -81,7 +81,7 @@ if (!empty($_FILES['FotoNegocio']['tmp_name'])) {
         ]);
 
         //  Enviar los datos guardados a una Logic App externa para procesamiento adicional.
-        $logicAppUrl = "https://prod-15.canadacentral.logic.azure.com:443/workflows/56f8cb7879aa4a04bfd61f011b851aef/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=qd72sU3g0HgAk_OYW7JxehacumNReS-nBJLSgpRB-jI";
+        $logicAppUrl = getenv('QUIERO_SER_LOGIC');
 
         $data = [
             "Nombre" => $Nombre,
@@ -98,14 +98,18 @@ if (!empty($_FILES['FotoNegocio']['tmp_name'])) {
             "FotoNegocio" => $FotoNegocio
         ];
 
-        $ch = curl_init($logicAppUrl);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $httpCode = 0;
+        if ($logicAppUrl) {
+            $ch = curl_init($logicAppUrl);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-        $response = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            $response = curl_exec($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+        }
 
         if ($httpCode >= 200 && $httpCode < 300) {
             // Respuesta exitosa de la Logic App.
