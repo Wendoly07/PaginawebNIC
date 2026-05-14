@@ -6,11 +6,12 @@ try {
         throw new PDOException('Database connection unavailable');
     }
 
-    $stmt = $conn->query("SELECT TOP 1 *
+    $stmt = $conn->prepare("SELECT TOP 1 *
                           FROM numeros_ganadores_sorteos_prod
                           WHERE UPPER(LTRIM(RTRIM(game_name))) = 'JUGA 3'
                           AND UPPER(LTRIM(RTRIM(pais))) = 'NICARAGUA'
                           ORDER BY draw_date DESC, draw_time DESC");
+    $stmt->execute();
 
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 

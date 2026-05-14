@@ -12,7 +12,8 @@ try {
 // Consultar los datos de la página de selección de país desde la tabla de configuración
 $contenido = [];
 if ($conn) {
-    $stmt = $conn->query("SELECT * FROM paginaweb_sv_seleccion_pais WHERE id = 1");
+    $stmt = $conn->prepare("SELECT * FROM paginaweb_sv_seleccion_pais WHERE id = ?");
+    $stmt->execute([1]);
     $contenido = $stmt->fetch(PDO::FETCH_ASSOC) ?: [];
 }
 ?>

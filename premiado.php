@@ -3,7 +3,8 @@ $config = [];
 
 try {
     require_once __DIR__ . '/config/connection.php';
-    $stmt = $conn->query("SELECT * FROM paginaweb_nic_premiado WHERE id = 1");
+    $stmt = $conn->prepare("SELECT * FROM paginaweb_nic_premiado WHERE id = ?");
+    $stmt->execute([1]);
     $config = $stmt->fetch(PDO::FETCH_ASSOC) ?: [];
 } catch (PDOException $e) {
     $config = [];

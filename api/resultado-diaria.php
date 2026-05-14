@@ -16,7 +16,7 @@ try {
     // Crea una nueva conexión PDO a SQL Server usando el host, base de datos, usuario y contraseña
     // Configura PDO para lanzar excepciones en caso de errores
     // Consulta último resultado de Diaria
-    $stmt = $conn->query("
+    $stmt = $conn->prepare("
         WITH ultimo_sorteo AS (
             SELECT TOP 1 draw_date, draw_time, draw_number
             FROM numeros_ganadores_sorteos_prod
@@ -43,6 +43,7 @@ try {
             END,
             CASE WHEN UPPER(LTRIM(RTRIM(n.game_name))) = 'DIARIA' THEN 1 ELSE 0 END
     ");
+    $stmt->execute();
     // Ejecuta una consulta directa para seleccionar el primer registro (el más reciente) de la tabla loto_sorteos_sv donde juego es 1, ordenado por id descendente
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     // Obtiene el resultado de la consulta como un array asociativo
@@ -79,13 +80,14 @@ try {
     }
 
     if ($mas1 === null || $mas1 === '') {
-        $stmtMas1 = $conn->query("
+        $stmtMas1 = $conn->prepare("
             SELECT TOP 1 par1, par2
             FROM numeros_ganadores_sorteos_prod
             WHERE REPLACE(REPLACE(UPPER(LTRIM(RTRIM(game_name))) COLLATE Latin1_General_CI_AI, ' ', ''), '-', '') = 'MAS1'
             AND UPPER(LTRIM(RTRIM(pais))) = 'NICARAGUA'
             ORDER BY draw_date DESC, draw_time DESC, draw_number DESC
         ");
+        $stmtMas1->execute();
         $rowMas1 = $stmtMas1->fetch(PDO::FETCH_ASSOC);
         if ($rowMas1) {
             $mas1 = $rowMas1["par1"] ?? $rowMas1["par2"] ?? null;

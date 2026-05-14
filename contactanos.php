@@ -70,12 +70,14 @@ try {
 
     // Consulta para obtener información de lotocentros desde la base de datos
     $sqlLoto = "SELECT texto FROM paginaweb_nic_contactanos_acordeon ORDER BY id DESC";
-    $stmtLoto = $conn->query($sqlLoto);
+    $stmtLoto = $conn->prepare($sqlLoto);
+    $stmtLoto->execute();
     $lotocentros = $stmtLoto->fetchAll(PDO::FETCH_ASSOC);
 
     // Consulta para obtener la URL del mapa desde la configuración
     $sqlMapa = "SELECT mapa_url FROM paginaweb_nic_config WHERE id = 1 AND secciones = 'mapa_contactanos'" ;
-    $stmtMapa = $conn->query($sqlMapa);
+    $stmtMapa = $conn->prepare($sqlMapa);
+    $stmtMapa->execute();
     $mapa = $stmtMapa->fetch(PDO::FETCH_ASSOC);
 
 } catch (PDOException $e) {

@@ -14,20 +14,22 @@ try {
 $principal = null;
 $promociones = [];
 if ($conn) {
-    $stmt = $conn->query("
+    $stmt = $conn->prepare("
         SELECT TOP 1 *
         FROM paginaweb_nic_promociones
         WHERE es_principal = 1
         ORDER BY id DESC
     ");
+    $stmt->execute();
     $principal = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $stmt = $conn->query("
+    $stmt = $conn->prepare("
         SELECT TOP 8 *
         FROM paginaweb_nic_promociones
         WHERE es_principal = 0
         ORDER BY id DESC
     ");
+    $stmt->execute();
     $promociones = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 ?>

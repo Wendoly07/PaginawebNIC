@@ -17,7 +17,8 @@ try {
 // Obtener contenido dinámico de la página desde la base de datos
 $contenido = [];
 if ($conn) {
-    $stmt = $conn->query("SELECT * FROM paginaweb_nic_aplica_loto WHERE id = 1");
+    $stmt = $conn->prepare("SELECT * FROM paginaweb_nic_aplica_loto WHERE id = ?");
+    $stmt->execute([1]);
     $contenido = $stmt->fetch(PDO::FETCH_ASSOC) ?: [];
 }
 // Obtiene el registro como array asociativo

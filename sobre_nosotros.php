@@ -11,7 +11,8 @@ try {
 
     $datos = [];
     if ($conn) {
-        $stmt = $conn->query("SELECT * FROM paginaweb_nic_sobre_nosotros WHERE id=1");
+        $stmt = $conn->prepare("SELECT * FROM paginaweb_nic_sobre_nosotros WHERE id = ?");
+        $stmt->execute([1]);
         $datos = $stmt->fetch(PDO::FETCH_ASSOC) ?: [];
     }
 

@@ -21,7 +21,8 @@ try {
     // Configura PDO para lanzar excepciones en caso de errores
 
     // Obtener el jackpot del último sorteo
-    $stmt = $conn->query("SELECT TOP 1 jackpot FROM loto_jackpot_superpremio ORDER BY nsorteo DESC");
+    $stmt = $conn->prepare("SELECT TOP 1 jackpot FROM loto_jackpot_superpremio ORDER BY nsorteo DESC");
+    $stmt->execute();
     // Ejecuta una consulta directa para seleccionar el primer registro (el más reciente) de la columna jackpot de la tabla loto_jackpot_superpremio, ordenado por nsorteo descendente
 
     $resultado = $stmt->fetch(PDO::FETCH_ASSOC);

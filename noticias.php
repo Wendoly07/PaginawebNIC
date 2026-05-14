@@ -16,20 +16,22 @@ try {
 $principal = null;
 $noticias = [];
 if ($conn) {
-    $stmt = $conn->query("
+    $stmt = $conn->prepare("
         SELECT TOP 1 *
         FROM paginaweb_nic_noticias
         WHERE es_principal = 1
         ORDER BY id DESC
     ");
+    $stmt->execute();
     $principal = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $stmt = $conn->query("
+    $stmt = $conn->prepare("
         SELECT TOP 8 *
         FROM paginaweb_nic_noticias
         WHERE es_principal = 0
         ORDER BY id DESC
     ");
+    $stmt->execute();
     $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 ?>

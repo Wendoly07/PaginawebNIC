@@ -15,7 +15,8 @@ try {
 // Traer la configuración de contenido de la página desde la tabla correspondiente.
 $config = [];
 if ($conn) {
-    $stmt = $conn->query("SELECT * FROM paginaweb_nic_quiero_ser_agente WHERE id=1");
+    $stmt = $conn->prepare("SELECT * FROM paginaweb_nic_quiero_ser_agente WHERE id = ?");
+    $stmt->execute([1]);
     $config = $stmt->fetch(PDO::FETCH_ASSOC) ?: [];
 }
 
