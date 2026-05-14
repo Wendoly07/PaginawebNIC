@@ -6,22 +6,18 @@ error_reporting(E_ALL);
 // Conexión a SQL Server para obtener datos dinámicos de la página
 try {
     // Intenta establecer conexión con la base de datos
-    $conn = new PDO(
-        "sqlsrv:Server=srvdbcacdev.database.windows.net;Database=dblotocacdev",
-        "LotoAdmin",
-        "LotAdmin1.",
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-        // Configura PDO para lanzar excepciones en caso de error
-    );
+    require_once __DIR__ . '/config/connection.php';
 } catch (PDOException $e) {
     // Si falla la conexión, termina el script con mensaje de error
-    die("Error de conexión: " . $e->getMessage());
+    $conn = null;
 }
 
 // Obtener contenido dinámico de la página desde la base de datos
-$stmt = $conn->query("SELECT * FROM paginaweb_nic_aplica_loto WHERE id = 1");
-// Consulta la tabla que contiene la configuración de la página "Aplica con nosotros"
-$contenido = $stmt->fetch(PDO::FETCH_ASSOC);
+$contenido = [];
+if ($conn) {
+    $stmt = $conn->query("SELECT * FROM paginaweb_nic_aplica_loto WHERE id = 1");
+    $contenido = $stmt->fetch(PDO::FETCH_ASSOC) ?: [];
+}
 // Obtiene el registro como array asociativo
 
 $mensajeExito = "";
@@ -54,12 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $cvContenido = base64_encode($cvArchivo);
 
         // Conexión a SQL Server (se vuelve a conectar por seguridad)
-        $conn = new PDO(
-            "sqlsrv:Server=srvdbcacdev.database.windows.net;Database=dblotocacdev",
-            "LotoAdmin",
-            "LotAdmin1.",
-            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-        );
+        require_once __DIR__ . '/config/connection.php';
 
         // Insertar los datos del formulario en la base de datos
         $sql = "INSERT INTO aplica_con_nostros_NI

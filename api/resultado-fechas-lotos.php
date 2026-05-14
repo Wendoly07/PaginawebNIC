@@ -1,14 +1,7 @@
 <?php
 header('Content-Type: application/json');
-
-$host = "srvdbcacdev.database.windows.net";
-$db   = "dblotocacdev";
-$user = "LotoAdmin";
-$pass = "LotAdmin1.";
-
 try {
-    $conn = new PDO("sqlsrv:Server=$host;Database=$db", $user, $pass);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    require_once __DIR__ . '/../config/connection.php';
 
     $stmt = $conn->query("SELECT TOP 1 *
                           FROM numeros_ganadores_sorteos_prod

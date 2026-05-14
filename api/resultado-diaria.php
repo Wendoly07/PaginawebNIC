@@ -2,20 +2,15 @@
 // Inicia el bloque de código PHP
 header('Content-Type: application/json');
 // Establece el tipo de contenido de la respuesta como JSON
-$host = "srvdbcacdev.database.windows.net";
 // Define el nombre del servidor de la base de datos
-$db   = "dblotocacdev";
 // Define el nombre de la base de datos
-$user = "LotoAdmin";
 // Define el nombre de usuario para la conexión a la base de datos
-$pass = "LotAdmin1.";
 // Define la contraseña para la conexión a la base de datos
 try {
     // Inicia un bloque try para manejar excepciones
     // PDO para SQL Server
-    $conn = new PDO("sqlsrv:Server=$host;Database=$db", $user, $pass);
+    require_once __DIR__ . '/../config/connection.php';
     // Crea una nueva conexión PDO a SQL Server usando el host, base de datos, usuario y contraseña
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     // Configura PDO para lanzar excepciones en caso de errores
     // Consulta último resultado de Diaria
     $stmt = $conn->query("
@@ -45,7 +40,7 @@ try {
             END,
             CASE WHEN UPPER(LTRIM(RTRIM(n.game_name))) = 'DIARIA' THEN 1 ELSE 0 END
     ");
-    // Ejecuta una consulta directa para seleccionar el primer registro (el mÃ¡s reciente) de la tabla loto_sorteos_sv donde juego es 1, ordenado por id descendente
+    // Ejecuta una consulta directa para seleccionar el primer registro (el más reciente) de la tabla loto_sorteos_sv donde juego es 1, ordenado por id descendente
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     // Obtiene el resultado de la consulta como un array asociativo
     if (!$rows) {

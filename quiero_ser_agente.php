@@ -5,19 +5,17 @@ error_reporting(E_ALL);
 
 // Crear conexión PDO con SQL Server.
 try {
-    $conn = new PDO(
-        "sqlsrv:Server=srvdbcacdev.database.windows.net;Database=dblotocacdev",
-        "LotoAdmin",
-        "LotAdmin1.",
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-    );
+    require_once __DIR__ . '/config/connection.php';
 } catch (PDOException $e) {
-    die("Error de conexión: " . $e->getMessage());
+    $conn = null;
 }
 
 // Traer la configuración de contenido de la página desde la tabla correspondiente.
-$stmt = $conn->query("SELECT * FROM paginaweb_nic_quiero_ser_agente WHERE id=1");
-$config = $stmt->fetch(PDO::FETCH_ASSOC);
+$config = [];
+if ($conn) {
+    $stmt = $conn->query("SELECT * FROM paginaweb_nic_quiero_ser_agente WHERE id=1");
+    $config = $stmt->fetch(PDO::FETCH_ASSOC) ?: [];
+}
 
 $mensajeExito = "";
 
@@ -59,12 +57,7 @@ if (!empty($_FILES['FotoNegocio']['tmp_name'])) {
 
     try {
         //  Guardar los datos del formulario en SQL Server
-        $conn = new PDO(
-            "sqlsrv:Server=srvdbcacdev.database.windows.net;Database=dblotocacdev",
-            "LotoAdmin",
-            "LotAdmin1.",
-            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-        );
+        require_once __DIR__ . '/config/connection.php';
 
         $sql = "INSERT INTO quiero_ser_agente_nic 
                 (Nombre, Apellidos, Identidad, Telefono, Correo, Negocio, Direccion, TipoNegocio, Departamento, Municipio, Barrio, FotoNegocio)

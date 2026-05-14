@@ -2,23 +2,19 @@
 // ================= CONEXIÓN A BASE DE DATOS =================
 // Crear conexión PDO a la base de datos Azure SQL Server
 try {
-    $conn = new PDO(
-        "sqlsrv:Server=srvdbcacdev.database.windows.net;Database=dblotocacdev",
-        "LotoAdmin",
-        "LotAdmin1.",
-        [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-        ]
-    );
+    require_once __DIR__ . '/config/connection.php';
 } catch (PDOException $e) {
     // Si la conexión falla, mostrar el error y detener la ejecución
-    die("Error de conexión: " . $e->getMessage());
+    $conn = null;
 }
 
 // ================= OBTENER CONTENIDO DINÁMICO =================
 // Consultar los datos de la página de selección de país desde la tabla de configuración
-$stmt = $conn->query("SELECT * FROM paginaweb_sv_seleccion_pais WHERE id = 1");
-$contenido = $stmt->fetch(PDO::FETCH_ASSOC);
+$contenido = [];
+if ($conn) {
+    $stmt = $conn->query("SELECT * FROM paginaweb_sv_seleccion_pais WHERE id = 1");
+    $contenido = $stmt->fetch(PDO::FETCH_ASSOC) ?: [];
+}
 ?>
 
 <!DOCTYPE html>

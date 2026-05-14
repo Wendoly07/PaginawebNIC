@@ -1,19 +1,11 @@
 <?php
 $config = [];
-// ================= CONEXIÓN SQL SERVER =================
-// Establece la conexión con la base de datos SQL Server en Azure
-try {
-    $conn = new PDO(
-        "sqlsrv:Server=srvdbcacdev.database.windows.net;Database=dblotocacdev",
-        "LotoAdmin",
-        "LotAdmin1.",
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-    );
 
+try {
+    require_once __DIR__ . '/config/connection.php';
     $stmt = $conn->query("SELECT * FROM paginaweb_nic_diaria WHERE id = 1");
     $config = $stmt->fetch(PDO::FETCH_ASSOC) ?: [];
 } catch (PDOException $e) {
-    // Si la conexión falla, detiene la ejecución y muestra el error
     $config = [];
 }
 

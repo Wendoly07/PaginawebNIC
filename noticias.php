@@ -4,39 +4,34 @@
 // ==========================
 // Crear conexión PDO con SQL Server y habilitar excepciones en caso de error.
 try {
-    $conn = new PDO(
-        "sqlsrv:Server=srvdbcacdev.database.windows.net;Database=dblotocacdev",
-        "LotoAdmin",
-        "LotAdmin1.",
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-    );
+    require_once __DIR__ . '/config/connection.php';
 } catch (PDOException $e) {
-    die("Error de conexión: " . $e->getMessage());
+    $conn = null;
 }
 
 // ==========================
 // OBTENER NOTICIA PRINCIPAL
 // ==========================
 // Cargar la noticia destacada más reciente para mostrar arriba de la lista.
-$stmt = $conn->query("
-    SELECT TOP 1 *
-    FROM paginaweb_nic_noticias
-    WHERE es_principal = 1
-    ORDER BY id DESC
-");
-$principal = $stmt->fetch(PDO::FETCH_ASSOC);
+$principal = null;
+$noticias = [];
+if ($conn) {
+    $stmt = $conn->query("
+        SELECT TOP 1 *
+        FROM paginaweb_nic_noticias
+        WHERE es_principal = 1
+        ORDER BY id DESC
+    ");
+    $principal = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// ==========================
-// OBTENER NOTICIAS SECUNDARIAS (TOP 8)
-// ==========================
-// Cargar hasta 8 noticias secundarias ordenadas de la más reciente a la menos reciente.
-$stmt = $conn->query("
-    SELECT TOP 8 *
-    FROM paginaweb_nic_noticias
-    WHERE es_principal = 0
-    ORDER BY id DESC
-");
-$noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $conn->query("
+        SELECT TOP 8 *
+        FROM paginaweb_nic_noticias
+        WHERE es_principal = 0
+        ORDER BY id DESC
+    ");
+    $noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">

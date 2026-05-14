@@ -3,37 +3,33 @@
 // CONFIGURACION DE BD
 // ==========================
 try {
-    $conn = new PDO(
-        "sqlsrv:Server=srvdbcacdev.database.windows.net;Database=dblotocacdev",
-        "LotoAdmin",
-        "LotAdmin1.",
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-    );
+    require_once __DIR__ . '/config/connection.php';
 } catch (PDOException $e) {
-    die("Error de conexion: " . $e->getMessage());
+    $conn = null;
 }
 
 // ==========================
 // OBTENER PROMOCION PRINCIPAL
 // ==========================
-$stmt = $conn->query("
-    SELECT TOP 1 *
-    FROM paginaweb_nic_promociones
-    WHERE es_principal = 1
-    ORDER BY id DESC
-");
-$principal = $stmt->fetch(PDO::FETCH_ASSOC);
+$principal = null;
+$promociones = [];
+if ($conn) {
+    $stmt = $conn->query("
+        SELECT TOP 1 *
+        FROM paginaweb_nic_promociones
+        WHERE es_principal = 1
+        ORDER BY id DESC
+    ");
+    $principal = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// ==========================
-// OBTENER PROMOCIONES SECUNDARIAS (TOP 8)
-// ==========================
-$stmt = $conn->query("
-    SELECT TOP 8 *
-    FROM paginaweb_nic_promociones
-    WHERE es_principal = 0
-    ORDER BY id DESC
-");
-$promociones = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $conn->query("
+        SELECT TOP 8 *
+        FROM paginaweb_nic_promociones
+        WHERE es_principal = 0
+        ORDER BY id DESC
+    ");
+    $promociones = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">

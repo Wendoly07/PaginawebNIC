@@ -1,13 +1,8 @@
 <?php
 $config = [];
-try {
-    $conn = new PDO(
-        "sqlsrv:Server=srvdbcacdev.database.windows.net;Database=dblotocacdev",
-        "LotoAdmin",
-        "LotAdmin1.",
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-    );
 
+try {
+    require_once __DIR__ . '/config/connection.php';
     $stmt = $conn->query("SELECT * FROM paginaweb_nic_premiado WHERE id = 1");
     $config = $stmt->fetch(PDO::FETCH_ASSOC) ?: [];
 } catch (PDOException $e) {
@@ -413,9 +408,10 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Premiado2.png'
 
 
     .contenido-visible {
-      max-width: 1100px;
+      max-width: 1280px;
       margin: 32px auto;
       padding: 0 18px;
+      overflow-x: auto;
     }
 
     .contenido-visible h2 {
@@ -427,7 +423,9 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Premiado2.png'
 
     .contenido-visible img {
       display: block;
-      width: min(100%, 520px);
+      width: auto;
+      min-width: 900px;
+      max-width: none;
       height: auto;
       margin: 0 auto;
     }

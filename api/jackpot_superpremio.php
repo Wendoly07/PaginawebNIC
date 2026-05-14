@@ -3,27 +3,18 @@
 
 header('Content-Type: application/json');
 // Establece el tipo de contenido de la respuesta como JSON
-
-$serverName = "srvdbcacdev.database.windows.net";
 // Define el nombre del servidor de la base de datos
-
-$database = "dblotocacdev";
 // Define el nombre de la base de datos
-
-$username = "LotoAdmin";
 // Define el nombre de usuario para la conexión a la base de datos
-
-$password = "LotAdmin1.";
 // Define la contraseña para la conexión a la base de datos
 
 try {
     // Inicia un bloque try para manejar excepciones
 
     // Conexión a SQL Server
-    $conn = new PDO("sqlsrv:Server=$serverName;Database=$database", $username, $password);
+    require_once __DIR__ . '/../config/connection.php';
     // Crea una nueva conexión PDO a SQL Server usando el servidor, base de datos, usuario y contraseña
 
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     // Configura PDO para lanzar excepciones en caso de errores
 
     // Obtener el jackpot del último sorteo

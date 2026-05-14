@@ -1,21 +1,16 @@
-﻿<?php
+<?php
 // Inicia el bloque de código PHP para la conexión a la base de datos
 
 try {
     // Intenta establecer la conexión a la base de datos SQL Server
 
-    $conn = new PDO(
-        "sqlsrv:Server=srvdbcacdev.database.windows.net;Database=dblotocacdev",
-        "LotoAdmin",
-        "LotAdmin1.",
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-    );
+    require_once __DIR__ . '/../config/connection.php';
     // Crea una instancia de PDO para conectar a la base de datos con manejo de excepciones
 
 } catch(PDOException $e){
     // Captura cualquier error de conexión y termina el script con el mensaje de error
 
-    die("Error: " . $e->getMessage());
+    $conn = null;
 }
 ?>
 
@@ -164,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
-<body> 
+<body>
 
   <style>
 @font-face {
@@ -581,7 +576,7 @@ document.addEventListener("DOMContentLoaded", function() {
   min-width: 300px;
   max-width: 500px;
   position: relative;
-  
+
   display: flex;
   flex-direction: column;
   align-items: center; /* Centra todo el contenido dentro de este bloque */
@@ -1210,13 +1205,13 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   .rse-text {
-    order: 1;               
-    text-align: center;     
-    margin-bottom: 15px;    
+    order: 1;
+    text-align: center;
+    margin-bottom: 15px;
   }
 
   .rse-image {
-    order: 2;               
+    order: 2;
     align-self: center;
     margin-left: 0;
     transform: none;
@@ -1567,7 +1562,7 @@ document.addEventListener("DOMContentLoaded", function() {
   font-weight: bold;
   font-size: 18px;
   color: #333;
-  box-shadow: 
+  box-shadow:
     inset -3px -3px 6px rgba(0,0,0,0.15),
     inset 3px 3px 6px rgba(255,255,255,0.6),
     2px 2px 5px rgba(0,0,0,0.2);
@@ -1600,7 +1595,7 @@ document.addEventListener("DOMContentLoaded", function() {
   color: #6e2479;
   font-weight: bold;
 }
-.res-card.morado-premiado .btn-info { 
+.res-card.morado-premiado .btn-info {
   background-color: rgba(255,255,255,0.2);
   color: white;
   border: 1px solid white;
@@ -1710,7 +1705,7 @@ document.addEventListener("DOMContentLoaded", function() {
   font-weight: bold;
 }
 
-.res-card.marino-terminacion2 .btn-info {    
+.res-card.marino-terminacion2 .btn-info {
   background-color: rgba(255,255,255,0.2);
   color: white;
   border: 1px solid white;
@@ -1721,7 +1716,7 @@ document.addEventListener("DOMContentLoaded", function() {
   font-weight: bold;
 }
 
-.res-card.azul-jugatres .btn-info {    
+.res-card.azul-jugatres .btn-info {
   background-color: rgba(255,255,255,0.2);
   color: white;
   border: 1px solid white;
@@ -1823,8 +1818,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <?php
 $stmt = $conn->prepare("
-    SELECT * 
-    FROM paginaweb_nic_sobre_inicio 
+    SELECT *
+    FROM paginaweb_nic_sobre_inicio
     WHERE seccion='banner_principal'
     ORDER BY orden ASC
 ");
@@ -2137,7 +2132,7 @@ try {
            alt="Logo Terminacion2"
            style="width:190px; height:auto; position:relative; top:20px;">
       <div class="numeros" style="position:relative; top:15px;">
-        <span class="bola-blanca" id="terminacion2-numero">--</span>
+        <span class="bola-mes-amarilla" id="terminacion2-numero">--</span>
       </div>
       <div class="btn-container">
         <button class="btn-jugar" onclick="window.location.href='index.php?pag=terminacion2'">
@@ -2148,7 +2143,23 @@ try {
         </a>
       </div>
     </div>
-    
+      <script>
+      async function cargarResultadoTerminacion2Card() {
+          try {
+              const response = await fetch('/api/resultado-terminacion2.php');
+              if (!response.ok) throw new Error('Error en la respuesta de la API');
+              const data = await response.json();
+              if (data.error) throw new Error(data.error);
+
+              const numero = document.getElementById('terminacion2-numero');
+              if (numero) numero.innerText = data.numero || '--';
+          } catch (error) {
+              console.error('No se pudo cargar el resultado de Terminacion 2:', error);
+          }
+      }
+      cargarResultadoTerminacion2Card();
+      </script>
+
   </div>
   <button class="res-next" type="button" aria-label="Resultados siguientes">&#10095;</button>
 </div>
@@ -2227,7 +2238,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <br>
 <br>
  <p id="countdown-container" class="proximo" style="font-size: 28px; font-weight: 900; text-align: center; font-stretch: expanded;">
-  <span style="color: #003399;">PRÓXIMO SORTEO EN VIVO:</span> 
+  <span style="color: #003399;">PRÓXIMO SORTEO EN VIVO:</span>
   <span style="color: white;">
     <span id="hours">0</span>H :
     <span id="minutes">0</span>M :
@@ -2245,7 +2256,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <?php
 // ====================== CONSULTA JACKPOT ======================
 $stmt = $conn->prepare("
-    SELECT TOP 1 * 
+    SELECT TOP 1 *
     FROM paginaweb_nic_sobre_inicio
     WHERE seccion = 'popup_home'
     ORDER BY orden ASC
@@ -2259,9 +2270,9 @@ $jackpot = $stmt->fetch(PDO::FETCH_ASSOC);
 
     <?php if($jackpot): ?>
         <a href="<?= htmlspecialchars($jackpot['link_url'] ?? '#') ?>" target="_blank">
-            <img 
-                src="<?= htmlspecialchars($jackpot['imagen_url']) ?>" 
-                alt="Jackpot" 
+            <img
+                src="<?= htmlspecialchars($jackpot['imagen_url']) ?>"
+                alt="Jackpot"
                 style="width: 100%; max-width: 1700px; height: auto; border-radius: 16px; display: block; margin: 0 auto;"
             >
         </a>
@@ -2272,7 +2283,7 @@ $jackpot = $stmt->fetch(PDO::FETCH_ASSOC);
             top: 47%;
             left: 65%;
             transform: translateY(-50%);
-            font-size: 62px;  
+            font-size: 62px;
             font-weight: 900;
             color: #fafaf9ff;
             text-shadow: 3px 3px 8px rgba(0,0,0,0.5);
@@ -2283,9 +2294,9 @@ $jackpot = $stmt->fetch(PDO::FETCH_ASSOC);
 
     <?php else: ?>
         <!-- Fallback si no hay jackpot -->
-        <img 
-            src="/ImagesSV/BannerDefault.png" 
-            alt="Jackpot por defecto" 
+        <img
+            src="/ImagesSV/BannerDefault.png"
+            alt="Jackpot por defecto"
             style="width: 100%; max-width: 1700px; height: auto; border-radius: 16px; display: block; margin: 0 auto;"
         >
     <?php endif; ?>
@@ -2381,7 +2392,7 @@ if ($rss && isset($rss->entry[0])) {
       <?php
       // =================== Traer contenido dinámico ===================
       $stmt = $conn->prepare("
-          SELECT TOP 1 * 
+          SELECT TOP 1 *
           FROM paginaweb_nic_sobre_inicio
           WHERE seccion='youtube_home'
           ORDER BY id ASC
@@ -2422,7 +2433,7 @@ if ($rss && isset($rss->entry[0])) {
 
 <?php
 $stmt = $conn->prepare("
-    SELECT TOP 1 * 
+    SELECT TOP 1 *
     FROM paginaweb_nic_sobre_inicio
     WHERE seccion='banner_superpremio'
     ORDER BY id ASC
@@ -2435,9 +2446,9 @@ $superpremio = $stmt->fetch(PDO::FETCH_ASSOC);
  <!-- Banner Superpremio -->
 <a href="<?= $superpremio['link_url'] ?? 'https://juega.loto.sv/' ?>" target="_blank">
   <div class="banner-superpremio" style="width: 100%; max-width: 1700px; margin: 0 auto;">
-    
-    <img 
-      src="<?= $superpremio['imagen_url'] ?? '/ImagesSV/Banner Sp.gif' ?>" 
+
+    <img
+      src="<?= $superpremio['imagen_url'] ?? '/ImagesSV/Banner Sp.gif' ?>"
       alt="Banner Superpremio"
       style="width: 100%; height: auto; border-radius: 16px; display: block; margin: 0 auto;"
     >
@@ -2602,7 +2613,7 @@ document.addEventListener("DOMContentLoaded", function() {
   <?php
 // =================== RSE HOME ===================
 $stmt = $conn->prepare("
-    SELECT TOP 1 * 
+    SELECT TOP 1 *
     FROM paginaweb_nic_sobre_inicio
     WHERE seccion='rse_home'
     ORDER BY id ASC
@@ -2611,7 +2622,7 @@ $stmt->execute();
 $rse = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 
-  <div class="rse"> 
+  <div class="rse">
   <div class="rse-content">
 
     <!-- Texto y número -->
@@ -2629,8 +2640,8 @@ $rse = $stmt->fetch(PDO::FETCH_ASSOC);
 
     <!-- Imagen -->
     <div class="rse-image">
-      <img 
-        src="<?= $rse['imagen_url'] ?? '/ImagesSV/IMG_3933_00013.png' ?>" 
+      <img
+        src="<?= $rse['imagen_url'] ?? '/ImagesSV/IMG_3933_00013.png' ?>"
         alt="Imagen RSE">
     </div>
 
@@ -2851,4 +2862,3 @@ let x = setInterval(function() {
 
 
 </body>
-

@@ -11,12 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     try {
         // Conexión a la base de datos SQL Server en Azure
-        $conn = new PDO(
-            "sqlsrv:Server=srvdbcacdev.database.windows.net;Database=dblotocacdev",
-            "LotoAdmin",
-            "LotAdmin1.",
-            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-        );
+        require_once __DIR__ . '/config/connection.php';
 
         // Consulta SQL para insertar datos del formulario en la tabla contactanos_nic
         $sql = "INSERT INTO contactanos_nic   (nombre, correo, asunto, mensaje)
@@ -67,12 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <?php
 try {
     // Conexión a la base de datos para obtener datos dinámicos
-    $conn = new PDO(
-        "sqlsrv:Server=srvdbcacdev.database.windows.net;Database=dblotocacdev",
-        "LotoAdmin",
-        "LotAdmin1.",
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-    );
+    require_once __DIR__ . '/config/connection.php';
 
     // Consulta para obtener información de lotocentros desde la base de datos
     $sqlLoto = "SELECT texto FROM paginaweb_nic_contactanos_acordeon ORDER BY id DESC";

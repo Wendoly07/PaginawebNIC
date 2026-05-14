@@ -5,19 +5,16 @@ error_reporting(E_ALL);
 
 // Establecer conexión PDO con SQL Server y manejar excepciones en caso de error.
 try {
-    $conn = new PDO(
-        "sqlsrv:Server=srvdbcacdev.database.windows.net;Database=dblotocacdev",
-        "LotoAdmin",
-        "LotAdmin1.",
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-    );
+    require_once __DIR__ . '/config/connection.php';
 
-    // Cargar la configuración de contenido de la página desde la tabla correspondiente.
-    $stmt = $conn->query("SELECT * FROM paginaweb_nic_sobre_nosotros WHERE id=1");
-    $datos = $stmt->fetch(PDO::FETCH_ASSOC);
+    $datos = [];
+    if ($conn) {
+        $stmt = $conn->query("SELECT * FROM paginaweb_nic_sobre_nosotros WHERE id=1");
+        $datos = $stmt->fetch(PDO::FETCH_ASSOC) ?: [];
+    }
 
 } catch (PDOException $e) {
-    die("Error: " . $e->getMessage());
+    $conn = null;
 }
 
 $mensajeExito = "";
@@ -36,12 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     try {
         // Conectar nuevamente a SQL Server para guardar los datos del test.
-        $conn = new PDO(
-            "sqlsrv:Server=srvdbcacdev.database.windows.net;Database=dblotocacdev",
-            "LotoAdmin",
-            "LotAdmin1.",
-            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-        );
+        require_once __DIR__ . '/config/connection.php';
 
         // Preparar la consulta SQL para insertar las respuestas del test.
         $sql = "INSERT INTO Test_responsable_nic

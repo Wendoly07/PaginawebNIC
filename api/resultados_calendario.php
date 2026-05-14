@@ -3,26 +3,18 @@
 
 header('Content-Type: application/json');
 // Establece el tipo de contenido de la respuesta como JSON
-
-$host = "srvdbcacdev.database.windows.net";
 // Define el nombre del servidor de la base de datos
 
-$db   = "dblotocacdev";  // tu base de datos
 // Define el nombre de la base de datos (comentario original incluido)
-
-$user = "LotoAdmin";
 // Define el nombre de usuario para la conexión a la base de datos
-
-$pass = "LotAdmin1.";
 // Define la contraseña para la conexión a la base de datos
 
 try {
     // Inicia un bloque try para intentar la conexión a la base de datos
 
-    $conn = new PDO("sqlsrv:Server=$host;Database=$db", $user, $pass);
+    require_once __DIR__ . '/../config/connection.php';
     // Crea una nueva conexión PDO a SQL Server usando el host, base de datos, usuario y contraseña
 
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     // Configura PDO para lanzar excepciones en caso de errores
 
 } catch (PDOException $e) {

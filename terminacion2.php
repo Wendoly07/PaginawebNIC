@@ -1,13 +1,8 @@
 <?php
 $config = [];
-try {
-    $conn = new PDO(
-        "sqlsrv:Server=srvdbcacdev.database.windows.net;Database=dblotocacdev",
-        "LotoAdmin",
-        "LotAdmin1.",
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-    );
 
+try {
+    require_once __DIR__ . '/config/connection.php';
     $stmt = $conn->query("SELECT * from paginaweb_nic_terminacion2 WHERE id = 1");
     $config = $stmt->fetch(PDO::FETCH_ASSOC) ?: [];
 } catch (PDOException $e) {

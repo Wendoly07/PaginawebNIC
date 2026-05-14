@@ -3,19 +3,14 @@
 // CONFIGURACION DE BD
 // ==========================
 try {
-    $conn = new PDO(
-        "sqlsrv:Server=srvdbcacdev.database.windows.net;Database=dblotocacdev",
-        "LotoAdmin",
-        "LotAdmin1.",
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-    );
+    require_once __DIR__ . '/config/connection.php';
 } catch (PDOException $e) {
-    die("Error de conexion: " . $e->getMessage());
+    $conn = null;
 }
 
 $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 
-if ($id <= 0) {
+if ($id <= 0 || !$conn) {
     header("Location: index.php?pag=noticias");
     exit();
 }
