@@ -1,7 +1,9 @@
 <?php
-// Configuración para mostrar errores durante desarrollo
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+// En producci�n no se muestran errores al usuario; se registran en logs.
+$debug = getenv('APP_DEBUG') === 'true';
+ini_set('display_errors', $debug ? '1' : '0');
+ini_set('log_errors', '1');
+error_reporting($debug ? E_ALL : 0);
 
 // Variable para almacenar mensajes de éxito o error
 $mensajeExito = "";

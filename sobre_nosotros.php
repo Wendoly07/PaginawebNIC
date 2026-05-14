@@ -1,7 +1,9 @@
 <?php
-// Mostrar errores en pantalla para facilitar la depuración durante el desarrollo.
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+// En producci�n no se muestran errores al usuario; se registran en logs.
+$debug = getenv('APP_DEBUG') === 'true';
+ini_set('display_errors', $debug ? '1' : '0');
+ini_set('log_errors', '1');
+error_reporting($debug ? E_ALL : 0);
 
 // Establecer conexión PDO con SQL Server y manejar excepciones en caso de error.
 try {
