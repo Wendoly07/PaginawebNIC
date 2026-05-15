@@ -51,7 +51,7 @@ body{ font-family:'HelveticaRounded', sans-serif; background:#f4f4f4; }
 .container-general{ width:90%; max-width:1200px; margin:auto; }
 
 .titulo-noticias{
-  background:#a6d1f8;
+  background:#e30613;
   padding:80px 40px 45px;
   border-radius:0 0 14px 14px;
   text-align:center;
@@ -109,7 +109,7 @@ body{ font-family:'HelveticaRounded', sans-serif; background:#f4f4f4; }
   width:120px;
   height:120px;
   border-radius:50%;
-  background:rgba(255,102,0,0.1);
+  background:rgba(255,102,0,0.18);
 }
 
 .noticia-principal-contenido::after{
@@ -120,7 +120,7 @@ body{ font-family:'HelveticaRounded', sans-serif; background:#f4f4f4; }
   width:150px;
   height:150px;
   border-radius:50%;
-  background:rgba(26,115,232,0.1);
+  background:rgba(26,115,232,0.18);
 }
 
 .noticia-principal-contenido > *{
@@ -186,7 +186,7 @@ body{ font-family:'HelveticaRounded', sans-serif; background:#f4f4f4; }
   width:82px;
   height:82px;
   border-radius:50%;
-  background:rgba(255,102,0,0.1);
+  background:rgba(255,102,0,0.18);
   pointer-events:none;
 }
 .card-noticia::after{
@@ -197,7 +197,7 @@ body{ font-family:'HelveticaRounded', sans-serif; background:#f4f4f4; }
   width:96px;
   height:96px;
   border-radius:50%;
-  background:rgba(26,115,232,0.1);
+  background:rgba(26,115,232,0.18);
   pointer-events:none;
 }
 .card-noticia > *{

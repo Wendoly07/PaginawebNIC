@@ -36,15 +36,15 @@ $rseGaleria = array_values(array_filter($rseRows, function ($row) {
     background:
       linear-gradient(180deg, #ffffff 0%, #f5f8ff 62%, #ffffff 100%);
     color: #003399;
-    padding: 86px 24px 96px;
+    padding: 86px clamp(48px, 7vw, 132px) 96px;
   }
 
   .rse-layout {
-    width: min(1240px, 100%);
+    width: min(1320px, 100%);
     margin: 0 auto;
     display: grid;
-    grid-template-columns: minmax(360px, 0.88fr) minmax(480px, 560px);
-    gap: clamp(56px, 7vw, 96px);
+    grid-template-columns: minmax(420px, 0.9fr) minmax(500px, 1fr);
+    gap: clamp(44px, 5vw, 78px);
     align-items: start;
   }
 
@@ -102,7 +102,7 @@ $rseGaleria = array_values(array_filter($rseRows, function ($row) {
 
   .rse-impact {
     width: min(1240px, 100%);
-    margin: 42px auto 0;
+    margin: 52px auto 0;
     display: grid;
     grid-template-columns: repeat(3, minmax(180px, 1fr));
     gap: 18px;
@@ -135,12 +135,45 @@ $rseGaleria = array_values(array_filter($rseRows, function ($row) {
   }
 
   .rse-video-section {
-    width: min(1120px, 100%);
+    position: relative;
+    overflow: hidden;
+    width: min(920px, 100%);
     margin: 64px auto 0;
-    background: #003399;
-    border-radius: 12px;
-    padding: 42px clamp(20px, 4vw, 56px) 50px;
-    box-shadow: 0 24px 48px rgba(0, 51, 153, 0.2);
+    background:
+      radial-gradient(circle at 88% 12%, rgba(255,255,255,0.9) 0 58px, transparent 60px),
+      linear-gradient(145deg, #fff8f0 0%, #fff 52%, #eef6ff 100%);
+    border: 1px solid rgba(255, 126, 0, 0.12);
+    border-radius: 16px;
+    padding: 34px clamp(18px, 3vw, 42px) 40px;
+    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.12);
+  }
+
+  .rse-video-section::before {
+    content: "";
+    position: absolute;
+    inset: 18px 18px auto auto;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: rgba(255, 126, 0, 0.18);
+    pointer-events: none;
+  }
+
+  .rse-video-section::after {
+    content: "";
+    position: absolute;
+    right: -42px;
+    bottom: -42px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: rgba(0, 74, 173, 0.18);
+    pointer-events: none;
+  }
+
+  .rse-video-section > * {
+    position: relative;
+    z-index: 1;
   }
 
   .rse-video-header {
@@ -153,27 +186,51 @@ $rseGaleria = array_values(array_filter($rseRows, function ($row) {
 
   .rse-video-header h2 {
     margin: 0;
-    color: #fff;
+    color: #004aad;
     font-size: clamp(30px, 4vw, 48px);
     font-weight: 900;
     line-height: 1;
   }
 
   .rse-video-header span {
-    color: #ffdf00;
+    color: #ff7e00;
     font-size: 16px;
     font-weight: 900;
     text-transform: uppercase;
     white-space: nowrap;
   }
 
+  .rse-youtube-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 22px;
+    color: #fff;
+    background: #ff0000;
+    border-radius: 999px;
+    padding: 12px 22px;
+    font-size: 15px;
+    font-weight: 900;
+    text-decoration: none;
+    box-shadow: 0 10px 22px rgba(255, 0, 0, 0.22);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  }
+
+  .rse-youtube-link:hover {
+    background: #d90000;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(255, 0, 0, 0.28);
+  }
+
   .rse-video-frame {
     position: relative;
     overflow: hidden;
-    border-radius: 12px;
-    background: #001f66;
+    border-radius: 14px;
+    background: #fff;
     aspect-ratio: 16 / 9;
-    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.28);
+    border: 1px solid rgba(0, 74, 173, 0.1);
+    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.14);
   }
 
   .rse-video-frame iframe {
@@ -212,26 +269,38 @@ $rseGaleria = array_values(array_filter($rseRows, function ($row) {
   }
 
   .rse-photo-caption {
-    background: linear-gradient(135deg, #003399 0%, #004aad 100%);
-    color: #fff;
-    min-height: 116px;
-    padding: 20px 26px 22px;
-    border-top: 5px solid #ff7e00;
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 94% 24%, rgba(255, 126, 0, 0.14) 0 44px, transparent 46px),
+      linear-gradient(180deg, #fff 0%, #f7fbff 100%);
+    color: #004aad;
+    min-height: 112px;
+    padding: 22px 30px 28px;
+    border-top: 4px solid #ff7e00;
   }
 
   .rse-photo-caption h3 {
     margin: 0;
-    font-size: 23px;
+    color: #004aad;
+    font-size: 22px;
     font-weight: 900;
     line-height: 1.2;
+    max-width: calc(100% - 110px);
   }
 
   .rse-photo-caption time {
-    display: block;
-    margin-top: 8px;
-    color: #ffdf00;
-    font-size: 16px;
+    display: inline-flex;
+    align-items: center;
+    margin-top: 12px;
+    color: #ff7e00;
+    font-size: 14px;
     font-weight: 800;
+    line-height: 1;
+    background: rgba(255, 126, 0, 0.1);
+    border: 1px solid rgba(255, 126, 0, 0.18);
+    border-radius: 999px;
+    padding: 8px 12px;
   }
 
   .rse-arrow {
@@ -271,8 +340,8 @@ $rseGaleria = array_values(array_filter($rseRows, function ($row) {
 
   .rse-dots {
     position: absolute;
-    left: 26px;
-    bottom: 20px;
+    right: 30px;
+    bottom: 32px;
     display: flex;
     gap: 8px;
     z-index: 3;
@@ -283,7 +352,7 @@ $rseGaleria = array_values(array_filter($rseRows, function ($row) {
     height: 9px;
     border: 0;
     border-radius: 50%;
-    background: rgba(255,255,255,0.45);
+    background: rgba(0, 74, 173, 0.24);
     cursor: pointer;
     padding: 0;
     transition: width 0.2s ease, background 0.2s ease;
@@ -292,7 +361,7 @@ $rseGaleria = array_values(array_filter($rseRows, function ($row) {
   .rse-dot.active {
     width: 26px;
     border-radius: 999px;
-    background: #ffdf00;
+    background: #ff7e00;
   }
 
   @media (max-width: 1100px) {
@@ -344,7 +413,18 @@ $rseGaleria = array_values(array_filter($rseRows, function ($row) {
 
     .rse-photo-caption {
       min-height: auto;
-      padding-bottom: 42px;
+      padding: 20px 22px 56px;
+    }
+
+    .rse-photo-caption h3 {
+      max-width: none;
+      font-size: 20px;
+    }
+
+    .rse-dots {
+      right: auto;
+      left: 22px;
+      bottom: 22px;
     }
 
     .rse-impact {
@@ -366,6 +446,11 @@ $rseGaleria = array_values(array_filter($rseRows, function ($row) {
       display: block;
       margin-top: 10px;
       white-space: normal;
+    }
+
+    .rse-youtube-link {
+      width: 100%;
+      padding-inline: 16px;
     }
   }
 </style>
@@ -394,7 +479,26 @@ $rseGaleria = array_values(array_filter($rseRows, function ($row) {
                   <h3><?= htmlspecialchars($foto['imagen_titulo']) ?></h3>
                 <?php endif; ?>
                 <?php if (!empty($foto['fecha_creacion'])): ?>
-                  <time><?= htmlspecialchars(date('d/m/Y', strtotime($foto['fecha_creacion']))) ?></time>
+                  <?php
+                    $rseMeses = [
+                      1 => 'Enero',
+                      2 => 'Febrero',
+                      3 => 'Marzo',
+                      4 => 'Abril',
+                      5 => 'Mayo',
+                      6 => 'Junio',
+                      7 => 'Julio',
+                      8 => 'Agosto',
+                      9 => 'Septiembre',
+                      10 => 'Octubre',
+                      11 => 'Noviembre',
+                      12 => 'Diciembre',
+                    ];
+                    $rseFecha = strtotime($foto['fecha_creacion']);
+                    $rseMes = $rseMeses[(int) date('n', $rseFecha)] ?? '';
+                    $rseAnio = date('Y', $rseFecha);
+                  ?>
+                  <time><?= htmlspecialchars(trim($rseMes . ' ' . $rseAnio)) ?></time>
                 <?php endif; ?>
               </div>
             <?php endif; ?>
@@ -411,6 +515,29 @@ $rseGaleria = array_values(array_filter($rseRows, function ($row) {
     </div>
   </section>
 
+  <section class="rse-video-section" aria-label="Ultimo video RSE">
+    <div class="rse-video-header">
+      <h2>Cambiando vidas con alegría</h2>
+      <span>RSE en accion</span>
+    </div>
+
+    <div class="rse-video-frame">
+      <iframe
+        src="https://www.youtube.com/embed/videoseries?list=PLdWfIbhlaeKwgkFk2rnLkNQfVrvrjXYQL&rel=0"
+        title="Ultimo video de RSE LOTO Nicaragua"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+    </div>
+    <a
+      class="rse-youtube-link"
+      href="https://www.youtube.com/playlist?list=PLdWfIbhlaeKwgkFk2rnLkNQfVrvrjXYQL"
+      target="_blank"
+      rel="noopener noreferrer">
+      Ver más
+    </a>
+  </section>
+
   <section class="rse-impact" aria-label="Impacto social">
     <div class="rse-impact-item">
       <strong>+500M</strong>
@@ -423,22 +550,6 @@ $rseGaleria = array_values(array_filter($rseRows, function ($row) {
     <div class="rse-impact-item">
       <strong>28 mil</strong>
       <span>Jovenes vinculados a ligas deportivas estudiantiles.</span>
-    </div>
-  </section>
-
-  <section class="rse-video-section" aria-label="Ultimo video RSE">
-    <div class="rse-video-header">
-      <h2>Ultimo video</h2>
-      <span>RSE en accion</span>
-    </div>
-
-    <div class="rse-video-frame">
-      <iframe
-        src="https://www.youtube.com/embed/videoseries?list=PLdWfIbhlaeKwgkFk2rnLkNQfVrvrjXYQL&rel=0"
-        title="Ultimo video de RSE LOTO Nicaragua"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen>
-      </iframe>
     </div>
   </section>
 </main>
