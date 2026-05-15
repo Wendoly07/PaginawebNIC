@@ -25,12 +25,19 @@
       padding: 0;
       /* Elimina márgenes y padding por defecto */
     }
+    header,
+    .top-menu,
+    .main-header {
+      position: relative;
+      z-index: 10000;
+    }
 
     /* Dropdown juegos corregido */
     .dropdown {
       /* Contenedor del menú desplegable de juegos */
       position: relative;
       display: inline-block;
+      z-index: 10001;
     }
 
     .dropdown > a {
@@ -62,7 +69,7 @@
   box-shadow: 0 6px 12px rgba(0,0,0,0.2);
   /* Sombra para efecto visual */
   min-width: 180px;
-  z-index: 1000;
+  z-index: 10002;
   /* Asegura que aparezca sobre otros elementos */
 }
 
@@ -92,7 +99,7 @@
       color: white;
       text-decoration: none;
       font-weight: bold;
-      font-size: 14px !important;
+      font-size: 17px !important;
       line-height: 1.1;
       white-space: nowrap;
       padding: 5px 10px;
@@ -233,6 +240,7 @@
     <div class="top-menu">
       <!-- Enlaces de navegación secundaria en la parte superior -->
       <a href="index.php?pag=sobre_nosotros">Sobre nosotros</a>
+      <a href="index.php?pag=rse">RSE</a>
       <a href="index.php?pag=quiero_ser_agente">Quiero ser vendedor</a>
       <a href=" https://www.google.com/maps/d/u/1/edit?mid=1gerRqZPZbxOs3JlQuXiYnUMIGiLWpvA&usp=sharing" target="_blank">Puntos de venta</a>
       <a href="index.php?pag=aplica_con_nosotros">Aplicá con nosotros</a>

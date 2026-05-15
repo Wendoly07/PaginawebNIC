@@ -174,7 +174,7 @@
   <!-- Sección izquierda del footer - Logo principal -->
   <div class="footer-left">
    <!-- Logo de LOTO -->
-   <img src="/ImagesSV/LOGO JUEGOS DE LOTERIA FOOTER.svg" alt="Logo" class="footer-logo" style="transform: scale(2.5) translateX(40px); margin-top: 25px;">
+   <img src="/ImagesSV/LOGO JUEGOS DE LOTERIA FOOTER.svg" alt="Logo" class="footer-logo" style="transform: scale(2.5) translate(30px); margin-top: -4px;">
   </div>
 
   <!-- Sección derecha del footer - Contenido -->

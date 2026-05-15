@@ -63,6 +63,10 @@ switch ($pag) {
         // Página sobre la empresa
         include 'sobre_nosotros.php';
         break;
+    case 'rse':
+        // Pagina de responsabilidad social empresarial
+        include 'rse.php';
+        break;
     case 'instacash':
         // Página de Instacash
         include 'instacash.php';

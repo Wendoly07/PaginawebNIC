@@ -504,16 +504,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
 .res-card.verde .diaria-card-bola {
   display: inline-block;
-  width: 35px;
-  height: 35px;
-  min-width: 35px;
-  line-height: 35px;
+  width: 39px;
+  height: 39px;
+  min-width: 39px;
+  line-height: 39px;
   aspect-ratio: 1 / 1;
   text-align: center;
   border-radius: 50%;
   border: 0;
   font-weight: 900;
-  font-size: 17px;
+  font-size: 18px;
   color: #111;
   padding: 0;
   margin: 0;
@@ -1771,8 +1771,22 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 
 .card {
-  min-width: 300px;
-  flex: 0 0 auto;
+  min-width: 0;
+  flex: 0 0 calc((100% - 40px) / 3);
+}
+
+@media (min-width: 769px) {
+  .noticias-box .noticias-right .carousel {
+    width: 100%;
+    gap: 16px;
+  }
+
+  .noticias-box .noticias-right .carousel .card {
+    flex: 0 0 calc((100% - 32px) / 3) !important;
+    width: calc((100% - 32px) / 3) !important;
+    min-width: 0 !important;
+    max-width: none !important;
+  }
 }
 
 /*  DESCRIPCIÓN */
@@ -1811,6 +1825,79 @@ document.addEventListener("DOMContentLoaded", function() {
   .noticias-box .noticias-right .carousel .card {
     height: auto !important;
   }
+}
+
+.res-card .btn-container a {
+  display: inline-flex;
+  text-decoration: none;
+}
+
+.res-card .btn-jugar,
+.res-card .btn-info {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 16px;
+  transform: translateY(0);
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    filter 0.22s ease,
+    background-color 0.22s ease,
+    color 0.22s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.16);
+}
+
+.res-card .btn-jugar::before,
+.res-card .btn-info::before {
+  content: "";
+  position: absolute;
+  inset: -30% auto -30% -70%;
+  width: 52%;
+  background: linear-gradient(115deg, transparent, rgba(255,255,255,0.75), transparent);
+  transform: skewX(-18deg);
+  transition: left 0.45s ease;
+  z-index: -1;
+}
+
+.res-card .btn-jugar:hover,
+.res-card .btn-info:hover {
+  transform: translateY(-3px) scale(1.04);
+  filter: brightness(1.05);
+  box-shadow: 0 9px 18px rgba(0, 0, 0, 0.26);
+}
+
+.res-card .btn-jugar:hover::before,
+.res-card .btn-info:hover::before {
+  left: 120%;
+}
+
+.res-card .btn-jugar:active,
+.res-card .btn-info:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.res-card .btn-jugar:focus-visible,
+.res-card .btn-info:focus-visible {
+  outline: 3px solid rgba(255,255,255,0.75);
+  outline-offset: 3px;
+}
+
+.res-card .bola-blanca,
+.res-card .bola-mes-amarilla,
+.res-card .bola-verde,
+.res-card .bola-amarilla,
+.res-card .bola-diaria,
+.res-card .diaria-card-bola {
+  box-shadow:
+    inset -3px -3px 6px rgba(0,0,0,0.16),
+    inset 3px 3px 6px rgba(255,255,255,0.45),
+    2px 3px 6px rgba(0,0,0,0.22) !important;
 }
   </style>
 
@@ -2213,8 +2300,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const left = currentPage >= getMaxPage() ? maxScroll : requestedLeft;
 
     cards.scrollTo({ left, behavior: 'smooth' });
-    prev.style.display = currentPage === 0 ? 'none' : 'flex';
-    next.style.display = currentPage >= getMaxPage() ? 'none' : 'flex';
+    prev.style.display = 'flex';
+    next.style.display = 'flex';
+    prev.style.opacity = currentPage === 0 ? '0.55' : '1';
+    next.style.opacity = currentPage >= getMaxPage() ? '0.55' : '1';
+    prev.style.pointerEvents = currentPage === 0 ? 'none' : 'auto';
+    next.style.pointerEvents = currentPage >= getMaxPage() ? 'none' : 'auto';
   }
 
   prev.addEventListener('click', function () {
@@ -2546,7 +2637,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (!card) return;
     // Si no hay tarjetas, sale de la función
 
-    const gap = 20;
+    const gap = parseFloat(window.getComputedStyle(carousel).gap) || 0;
     // Espacio entre tarjetas
 
     const cardWidth = card.offsetWidth + gap;

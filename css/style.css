@@ -505,7 +505,7 @@ header {
   height: 40px;
   border-radius: 50%;
   font-weight: bold;
-  font-size: 19px;
+  font-size: 18px;
 }
 
 /* Esferas verdes (Diaria) */
@@ -1164,8 +1164,8 @@ img {
   color: white;
   padding: 50px 36px 36px;
   display: grid;
-  grid-template-columns: minmax(260px, 380px) minmax(620px, 1fr) minmax(120px, 170px);
-  column-gap: clamp(42px, 6vw, 110px);
+  grid-template-columns: minmax(220px, 320px) minmax(620px, 1fr) minmax(120px, 170px);
+  column-gap: clamp(24px, 4vw, 72px);
   row-gap: 34px;
   align-items: start;
 }
@@ -1191,7 +1191,7 @@ img {
 .footer-right {
   min-width: 0;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   margin: 0;
 }
 
@@ -1199,7 +1199,7 @@ img {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(4, minmax(130px, 1fr));
-  gap: clamp(24px, 4vw, 64px);
+  gap: clamp(20px, 3vw, 48px);
   justify-items: center;
 }
 

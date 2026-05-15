@@ -108,12 +108,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         /* =============== HEADER BANNER =============== */
         /* Estilos para el banner superior de la página. */
-       header {
+.sobre-hero {
     width: 100%;
     overflow: hidden;
 }
 
-header img {
+.sobre-hero img {
     width: 100%;
     height: auto;
     display: block;
@@ -744,7 +744,7 @@ header img {
        
 
 @media (max-width: 768px) {
-    header img {
+    .sobre-hero img {
         margin-bottom: 25px;
     }
 }
@@ -787,7 +787,7 @@ header img {
     }
 }
 @media (min-width: 769px) {
-    header {
+.sobre-hero {
         padding-top: 0 !important;
         height: auto !important;
         min-height: unset !important;
@@ -795,7 +795,7 @@ header img {
 }
 
 @media (max-width: 768px) {
-    header {
+.sobre-hero {
         height: auto !important;
         min-height: unset !important;
         overflow: visible !important;
@@ -803,7 +803,7 @@ header img {
 }
 
 @media (max-width: 768px) {
-    header img {
+    .sobre-hero img {
         width: 100%;
         height: auto;
         display: block;
@@ -999,9 +999,9 @@ if (window.history.replaceState) {
 </script>
 
 <body>
-    <header>
+    <section class="sobre-hero">
         <img src="<?= $datos['bannerImagen'] ?>">
-    </header>
+    </section>
 
     <!-- =============== QUIÉNES SOMOS =============== -->
     <!-- Sección que presenta la información de quiénes somos con métricas y tarjetas. -->
