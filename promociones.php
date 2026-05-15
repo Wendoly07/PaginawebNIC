@@ -51,7 +51,7 @@ body{ font-family:'HelveticaRounded', sans-serif; background:#f4f4f4; }
 .container-general{ width:90%; max-width:1200px; margin:auto; }
 
 .titulo-noticias{
-  background:#e30613;
+  background:#ff6a00;
   padding:80px 40px 45px;
   border-radius:0 0 14px 14px;
   text-align:center;
