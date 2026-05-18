@@ -2059,7 +2059,7 @@ try {
       </script>
 
       <div class="btn-container">
-        <button class="btn-jugar" onclick="window.location.href='index.php?pag=diaria'">
+        <button class="btn-jugar" onclick="window.open('https://juega.loto.com.ni/websales/', '_blank')">
           Jugá aquí
         </button>
 
@@ -2080,7 +2080,7 @@ try {
       </div>
 
       <div class="btn-container">
-        <button class="btn-jugar" onclick="window.location.href='index.php?pag=fechas_lotos'">
+        <button class="btn-jugar" onclick="window.open('https://juega.loto.com.ni/websales/', '_blank')">
           Jugá aquí
         </button>
         <a href="index.php?pag=fechas_lotos">
@@ -2120,7 +2120,7 @@ try {
         <span class="bola-blanca" id="jt-numero-3">-</span>
       </div>
       <div class="btn-container">
-        <button class="btn-jugar" onclick="window.location.href='index.php?pag=juga_tres'">
+        <button class="btn-jugar" onclick="window.open('https://juega.loto.com.ni/websales/', '_blank')">
           Jugá aquí
         </button>
         <a href="index.php?pag=juga_tres">
@@ -2161,7 +2161,7 @@ try {
         <span class="bola-blanca">-</span>
       </div>
       <div class="btn-container">
-        <button class="btn-jugar" onclick="window.location.href='index.php?pag=juga_cuatro'">
+        <button class="btn-jugar" onclick="window.open('https://juega.loto.com.ni/websales/', '_blank')">
           Jug&aacute; aqu&iacute;
         </button>
         <a href="index.php?pag=juga_cuatro">
@@ -2184,7 +2184,7 @@ try {
         </div>
       </div>
             <div class="btn-container">
-        <button class="btn-jugar" onclick="window.location.href='index.php?pag=premiado'">
+        <button class="btn-jugar" onclick="window.open('https://juega.loto.com.ni/websales/', '_blank')">
           Jugá aquí
         </button>
         <a href="index.php?pag=premiado">
@@ -2222,7 +2222,7 @@ try {
         <span class="bola-mes-amarilla" id="terminacion2-numero">--</span>
       </div>
       <div class="btn-container">
-        <button class="btn-jugar" onclick="window.location.href='index.php?pag=terminacion2'">
+        <button class="btn-jugar" onclick="window.open('https://juega.loto.com.ni/websales/', '_blank')">
           Jugá aquí
         </button>
         <a href="index.php?pag=terminacion2">

@@ -1,14 +1,16 @@
 <?php
 $rseRows = [];
 $rseTitulo = 'RSE';
+$rseTituloSecundario = 'Responsabilidad Social Empresarial';
 $rseContenido = 'Responsabilidad Social Empresarial';
+$rseImagenPrincipal = '';
 
 try {
     require_once __DIR__ . '/config/connection.php';
 
     if ($conn) {
         $stmt = $conn->prepare("
-            SELECT titulo, contenido, imagen_url, imagen_titulo, imagen_descripcion, fecha_creacion
+            SELECT titulo, titulo_secundario, contenido, imagen_principal_url, imagen_url, imagen_titulo, imagen_descripcion, fecha_creacion
             FROM paginaweb_nic_rse
             WHERE activo = ?
             ORDER BY orden ASC, id ASC
@@ -23,29 +25,75 @@ try {
 
 if (!empty($rseRows)) {
     $rseTitulo = $rseRows[0]['titulo'] ?? $rseTitulo;
+    $rseTituloSecundario = $rseRows[0]['titulo_secundario'] ?? $rseTituloSecundario;
     $rseContenido = $rseRows[0]['contenido'] ?? $rseContenido;
+    foreach ($rseRows as $row) {
+        if (!empty($row['imagen_principal_url'])) {
+            $rseImagenPrincipal = $row['imagen_principal_url'];
+            break;
+        }
+    }
 }
 
-$rseGaleria = array_values(array_filter($rseRows, function ($row) {
-    return !empty($row['imagen_url']);
+$rseGaleria = array_values(array_filter($rseRows, function ($row) use ($rseImagenPrincipal) {
+    return !empty($row['imagen_url']) && $row['imagen_url'] !== $rseImagenPrincipal;
 }));
+
+foreach ($rseGaleria as &$foto) {
+    $foto['imagen_mostrar'] = $foto['imagen_url'];
+}
+unset($foto);
 ?>
 
 <style>
+  .rse-hero {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .rse-hero img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .rse-hero-title {
+    width: min(1180px, calc(100% - 40px));
+    margin: 30px auto 0;
+    color: #004aad;
+    font-size: clamp(34px, 4.2vw, 56px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: 0;
+    text-align: center;
+  }
+
+  .rse-hero-content {
+    width: min(980px, calc(100% - 40px));
+    margin: 18px auto 0;
+    color: #222;
+    font-size: 18px;
+    line-height: 1.7;
+    font-weight: 500;
+    text-align: left;
+    border-left: 4px solid #ff7e00;
+    padding: 2px 0 2px 22px;
+  }
+
   .rse-page {
     background:
       linear-gradient(180deg, #ffffff 0%, #f5f8ff 62%, #ffffff 100%);
     color: #003399;
-    padding: 86px clamp(48px, 7vw, 132px) 96px;
+    padding: 64px clamp(48px, 7vw, 132px) 96px;
   }
 
   .rse-layout {
     width: min(1320px, 100%);
     margin: 0 auto;
     display: grid;
-    grid-template-columns: minmax(420px, 0.9fr) minmax(500px, 1fr);
-    gap: clamp(44px, 5vw, 78px);
-    align-items: start;
+    grid-template-columns: minmax(320px, 0.72fr) minmax(560px, 1fr);
+    gap: clamp(50px, 6vw, 92px);
+    align-items: center;
   }
 
   .rse-copy {
@@ -72,21 +120,21 @@ $rseGaleria = array_values(array_filter($rseRows, function ($row) {
     background: #ff7e00;
   }
 
-  .rse-copy h1 {
-    margin: 0 0 30px;
-    color: #004aad;
-    font-size: clamp(42px, 4.25vw, 64px);
-    font-weight: 900;
-    line-height: 1.04;
-    letter-spacing: 0;
-    max-width: 650px;
-  }
-
   .rse-text-panel {
     position: relative;
-    max-width: 620px;
-    padding-left: 22px;
-    border-left: 5px solid #ff7e00;
+    max-width: 520px;
+    padding: 18px 0 18px 24px;
+    border-left: 4px solid #ff7e00;
+  }
+
+  .rse-secondary-title {
+    margin: 0;
+    color: #004aad;
+    font-size: clamp(28px, 2.7vw, 38px);
+    font-weight: 850;
+    line-height: 1.12;
+    letter-spacing: 0;
+    max-width: 480px;
   }
 
   .rse-copy p,
@@ -187,9 +235,9 @@ $rseGaleria = array_values(array_filter($rseRows, function ($row) {
   .rse-video-header h2 {
     margin: 0;
     color: #004aad;
-    font-size: clamp(30px, 4vw, 48px);
-    font-weight: 900;
-    line-height: 1;
+    font-size: clamp(28px, 3.5vw, 42px);
+    font-weight: 850;
+    line-height: 1.06;
   }
 
   .rse-video-header span {
@@ -246,9 +294,9 @@ $rseGaleria = array_values(array_filter($rseRows, function ($row) {
     overflow: hidden;
     background: #fff;
     border: 1px solid rgba(0, 74, 173, 0.1);
-    border-radius: 12px;
-    box-shadow: 0 26px 56px rgba(0, 51, 153, 0.22);
-    min-height: 586px;
+    border-radius: 8px;
+    box-shadow: 0 24px 48px rgba(0, 51, 153, 0.18);
+    min-height: 520px;
   }
 
   .rse-slide {
@@ -262,9 +310,10 @@ $rseGaleria = array_values(array_filter($rseRows, function ($row) {
 
   .rse-slide img {
     width: 100%;
-    height: 455px;
+    height: 400px;
     display: block;
     object-fit: cover;
+    object-position: center top;
     background: #eef3fb;
   }
 
@@ -275,17 +324,17 @@ $rseGaleria = array_values(array_filter($rseRows, function ($row) {
       radial-gradient(circle at 94% 24%, rgba(255, 126, 0, 0.14) 0 44px, transparent 46px),
       linear-gradient(180deg, #fff 0%, #f7fbff 100%);
     color: #004aad;
-    min-height: 112px;
-    padding: 22px 30px 28px;
+    min-height: 96px;
+    padding: 18px 28px 24px;
     border-top: 4px solid #ff7e00;
   }
 
   .rse-photo-caption h3 {
     margin: 0;
     color: #004aad;
-    font-size: 22px;
-    font-weight: 900;
-    line-height: 1.2;
+    font-size: 18px;
+    font-weight: 850;
+    line-height: 1.22;
     max-width: calc(100% - 110px);
   }
 
@@ -305,15 +354,15 @@ $rseGaleria = array_values(array_filter($rseRows, function ($row) {
 
   .rse-arrow {
     position: absolute;
-    top: 228px;
+    top: 200px;
     transform: translateY(-50%);
-    width: 52px;
-    height: 52px;
+    width: 46px;
+    height: 46px;
     border: 0;
     border-radius: 50%;
     background: rgba(255, 126, 0, 0.95);
     color: #fff;
-    font-size: 30px;
+    font-size: 27px;
     font-weight: 900;
     line-height: 1;
     cursor: pointer;
@@ -341,7 +390,7 @@ $rseGaleria = array_values(array_filter($rseRows, function ($row) {
   .rse-dots {
     position: absolute;
     right: 30px;
-    bottom: 32px;
+    bottom: 24px;
     display: flex;
     gap: 8px;
     z-index: 3;
@@ -370,12 +419,23 @@ $rseGaleria = array_values(array_filter($rseRows, function ($row) {
       gap: 42px;
     }
 
-    .rse-copy h1 {
-      font-size: 54px;
-    }
   }
 
   @media (max-width: 900px) {
+    .rse-hero-title {
+      width: calc(100% - 32px);
+      margin-top: 18px;
+      font-size: 38px;
+      line-height: 1.08;
+    }
+
+    .rse-hero-content {
+      width: calc(100% - 32px);
+      font-size: 16px;
+      line-height: 1.55;
+      text-align: left;
+    }
+
     .rse-page {
       padding: 42px 18px 58px;
     }
@@ -385,17 +445,20 @@ $rseGaleria = array_values(array_filter($rseRows, function ($row) {
       gap: 30px;
     }
 
-    .rse-copy h1 {
-      margin-bottom: 28px;
-      font-size: 42px;
-      max-width: none;
-    }
-
     .rse-copy p,
     .rse-text {
       font-size: 16px;
       text-align: left;
       max-width: none;
+    }
+
+    .rse-text-panel {
+      padding: 18px 0 18px 18px;
+    }
+
+    .rse-secondary-title {
+      font-size: 34px;
+      line-height: 1.08;
     }
 
     .rse-gallery,
@@ -455,14 +518,21 @@ $rseGaleria = array_values(array_filter($rseRows, function ($row) {
   }
 </style>
 
+<?php if (!empty($rseImagenPrincipal)): ?>
+  <section class="rse-hero">
+    <img src="<?= htmlspecialchars($rseImagenPrincipal) ?>" alt="<?= htmlspecialchars($rseTitulo) ?>">
+    <h1 class="rse-hero-title"><?= htmlspecialchars($rseTitulo) ?></h1>
+    <div class="rse-hero-content"><?= nl2br(htmlspecialchars($rseContenido)) ?></div>
+  </section>
+<?php endif; ?>
+
 <main class="rse-page">
   <section class="rse-layout">
     <div class="rse-copy">
       <div class="rse-eyebrow">Compromiso social</div>
-      <h1><?= htmlspecialchars($rseTitulo) ?></h1>
 
       <div class="rse-text-panel">
-        <div class="rse-text"><?= nl2br(htmlspecialchars($rseContenido)) ?></div>
+        <h2 class="rse-secondary-title"><?= htmlspecialchars($rseTituloSecundario) ?></h2>
       </div>
     </div>
 
@@ -472,12 +542,10 @@ $rseGaleria = array_values(array_filter($rseRows, function ($row) {
       <?php if (!empty($rseGaleria)): ?>
         <?php foreach ($rseGaleria as $index => $foto): ?>
           <div class="rse-slide <?= $index === 0 ? 'active' : '' ?>">
-            <img src="<?= htmlspecialchars($foto['imagen_url']) ?>" alt="<?= htmlspecialchars($foto['imagen_descripcion'] ?: ($foto['imagen_titulo'] ?: 'RSE LOTO Nicaragua')) ?>">
-            <?php if (!empty($foto['imagen_titulo']) || !empty($foto['fecha_creacion'])): ?>
+            <img src="<?= htmlspecialchars($foto['imagen_mostrar']) ?>" alt="<?= htmlspecialchars($foto['imagen_descripcion'] ?: ($foto['imagen_titulo'] ?: 'RSE LOTO Nicaragua')) ?>">
+            <?php if (!empty($foto['imagen_titulo'])): ?>
               <div class="rse-photo-caption">
-                <?php if (!empty($foto['imagen_titulo'])): ?>
-                  <h3><?= htmlspecialchars($foto['imagen_titulo']) ?></h3>
-                <?php endif; ?>
+                <h3><?= htmlspecialchars($foto['imagen_titulo']) ?></h3>
                 <?php if (!empty($foto['fecha_creacion'])): ?>
                   <?php
                     $rseMeses = [

@@ -272,6 +272,11 @@
             Canadian Bank Note
           </a>
         </p>
+        <p>
+          <a href="https://www.loterianacional.com.ni/" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">
+            Loter&iacute;a Nacional
+          </a>
+        </p>
       </div>
 
     </div>

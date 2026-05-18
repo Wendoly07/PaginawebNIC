@@ -502,10 +502,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             margin-bottom: 15px;
         }
 
-        .mision-text-center p {
+        .mision-text-center .mision-title {
             text-align: center;
-            font-size: 18px;
-            color: #333;
+            font-size: 36px;
+            line-height: 1.2;
+            font-weight: bold;
+            color: #005bbb;
             margin-bottom: 30px;
         }
 
@@ -1091,8 +1093,7 @@ if (window.history.replaceState) {
 
         <!-- NUESTRA MISIÓN -->
         <div class="mision-text-center">
-            <h2>NUESTRA MISIÓN ES QUE JUGUÉS CON RESPONSABILIDAD</h2>
-            <p><?= nl2br(htmlspecialchars($datos['misionTexto'])) ?></p>
+            <h2 class="mision-title"><?= nl2br(htmlspecialchars($datos['misionTexto'])) ?></h2>
         </div>
 
         <!-- CONTAINER BLANCO PARA QUÉ ES EL JUEGO DE AZAR -->

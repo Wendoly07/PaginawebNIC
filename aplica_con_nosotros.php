@@ -1,5 +1,5 @@
 <?php
-// En producci�n no se muestran errores al usuario; se registran en logs.
+// En producci�n no se muestran errores al usuario; se registran en logs.
 $debug = getenv('APP_DEBUG') === 'true';
 ini_set('display_errors', $debug ? '1' : '0');
 ini_set('log_errors', '1');
@@ -190,19 +190,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     position: relative;
     background: linear-gradient(135deg, #0070d9 0%, #0062c4 100%);
     /* Fondo azul */
-    min-height: 300px;
+    min-height: 230px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 44px;
-    padding: 34px 54px;
+    gap: 34px;
     /* Espacio para la imagen */
     border-radius: 8px;
     box-sizing: border-box;
     color: white;
-    width: calc(100% + 72px);
+    width: calc(100% + 36px);
     /* Ancho extendido */
-    margin-left: -36px;
+    margin-left: -18px;
     /* Compensación del margen del contenedor */
   }
 
@@ -212,8 +211,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     top: auto;
     /* Posicionamiento para que sobresalga */
     left: auto;
-    width: 230px;
-    flex: 0 0 230px;
+    width: 190px;
+    flex: 0 0 190px;
     align-self: center;
     z-index: 2;
     /* Asegura que esté sobre otros elementos */
@@ -221,15 +220,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
   .banner-content {
     /* Contenido de texto del banner */
-    max-width: 500px;
+    max-width: 470px;
     margin-left: 0;
   }
 
   .banner-text {
     /* Texto principal del banner */
     color: white;
-    font-size: 17px;
-    line-height: 1.45;
+    font-size: 16px;
+    line-height: 1.4;
     font-weight: 600;
     text-wrap: pretty;
   }
