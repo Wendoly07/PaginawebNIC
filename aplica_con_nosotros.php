@@ -180,55 +180,52 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     color: #ff6a00;
     /* Color naranja */
     line-height: 1.1;
-    margin: 22px auto 22px;
+    margin: 22px auto 24px;
     text-align: center;
     max-width: 560px;
   }
 
-  .banner {
-    /* Estilo del banner superior */
+.banner {
     position: relative;
-    background: linear-gradient(135deg, #0070d9 0%, #0062c4 100%);
-    /* Fondo azul */
-    min-height: 230px;
+    background: #0070d9;
+    height: 150px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 34px;
-    /* Espacio para la imagen */
-    border-radius: 8px;
+    padding-left: 250px;
+    border-radius: 1px;
     box-sizing: border-box;
     color: white;
-    width: calc(100% + 36px);
-    /* Ancho extendido */
-    margin-left: -18px;
-    /* Compensación del margen del contenedor */
-  }
+    width: calc(100% + 100px);
+    margin-left: -50px;
+}
 
   .banner-img {
     /* Imagen del banner */
-    position: relative;
-    top: auto;
+    position: absolute;
+    bottom: -12px;
     /* Posicionamiento para que sobresalga */
-    left: auto;
-    width: 190px;
-    flex: 0 0 190px;
-    align-self: center;
+    left: 0px;
+    width: 250px;
+    max-height: 300px;
+    object-fit: contain;
+    object-position: bottom center;
+    flex: 0 0 auto;
+    align-self: auto;
     z-index: 2;
     /* Asegura que esté sobre otros elementos */
   }
 
   .banner-content {
     /* Contenido de texto del banner */
-    max-width: 470px;
+    max-width: 560px;
     margin-left: 0;
   }
 
   .banner-text {
     /* Texto principal del banner */
     color: white;
-    font-size: 16px;
-    line-height: 1.4;
+    font-size: 17px;
+    line-height: 1.45;
     font-weight: 600;
     text-wrap: pretty;
   }

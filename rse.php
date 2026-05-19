@@ -57,51 +57,50 @@ unset($foto);
     display: block;
   }
 
-  .rse-hero-title {
-    width: min(1180px, calc(100% - 40px));
-    margin: 30px auto 0;
-    color: #004aad;
-    font-size: clamp(34px, 4.2vw, 56px);
-    font-weight: 900;
-    line-height: 1.05;
-    letter-spacing: 0;
-    text-align: center;
-  }
-
-  .rse-hero-content {
-    width: min(980px, calc(100% - 40px));
-    margin: 18px auto 0;
-    color: #222;
-    font-size: 18px;
-    line-height: 1.7;
-    font-weight: 500;
-    text-align: left;
-    border-left: 4px solid #ff7e00;
-    padding: 2px 0 2px 22px;
-  }
-
   .rse-page {
-    background:
-      linear-gradient(180deg, #ffffff 0%, #f5f8ff 62%, #ffffff 100%);
+    background: #ffffff;
     color: #003399;
-    padding: 64px clamp(48px, 7vw, 132px) 96px;
+    padding: 64px clamp(22px, 5vw, 90px) 78px;
   }
 
   .rse-layout {
-    width: min(1320px, 100%);
+    width: min(1180px, 100%);
     margin: 0 auto;
+    position: relative;
     display: grid;
-    grid-template-columns: minmax(320px, 0.72fr) minmax(560px, 1fr);
-    gap: clamp(50px, 6vw, 92px);
-    align-items: center;
+    grid-template-columns: minmax(320px, 0.43fr) minmax(0, 1fr);
+    gap: clamp(24px, 3vw, 42px);
+    align-items: end;
+    background: transparent;
+    border-radius: 0;
+    padding: 0 28px 28px;
+    box-shadow: 0 18px 42px rgba(0, 51, 153, 0.08);
+  }
+
+  .rse-layout::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 60%;
+    background: #fff8ed;
+    border-radius: 0 0 18px 18px;
+    z-index: 0;
+  }
+
+  .rse-layout > * {
+    position: relative;
+    z-index: 1;
   }
 
   .rse-copy {
     min-width: 0;
+    order: 2;
   }
 
   .rse-eyebrow {
-    display: inline-flex;
+    display: none;
     align-items: center;
     gap: 10px;
     margin-bottom: 18px;
@@ -122,30 +121,34 @@ unset($foto);
 
   .rse-text-panel {
     position: relative;
-    max-width: 520px;
-    padding: 18px 0 18px 24px;
-    border-left: 4px solid #ff7e00;
+    max-width: none;
+    padding: 0 0 28px;
+    border-left: 0;
   }
 
   .rse-secondary-title {
     margin: 0;
-    color: #004aad;
-    font-size: clamp(28px, 2.7vw, 38px);
-    font-weight: 850;
-    line-height: 1.12;
+    color: #ff7900;
+    font-size: clamp(30px, 3.2vw, 48px);
+    font-weight: 900;
+    line-height: 1.02;
     letter-spacing: 0;
-    max-width: 480px;
+    max-width: 860px;
+    text-transform: uppercase;
   }
 
   .rse-copy p,
   .rse-text {
-    margin: 0 0 18px;
-    color: #111;
-    font-size: 17px;
-    line-height: 1.45;
-    font-weight: 500;
+    margin: 18px 0 0;
+    color: #004aad;
+    font-size: 15px;
+    line-height: 1.15;
+    font-weight: 850;
     text-align: justify;
-    max-width: 610px;
+    max-width: 780px;
+    background: transparent;
+    border-radius: 0;
+    padding: 22px 28px 24px 0;
   }
 
   .rse-impact {
@@ -292,11 +295,12 @@ unset($foto);
   .rse-gallery {
     position: relative;
     overflow: hidden;
-    background: #fff;
-    border: 1px solid rgba(0, 74, 173, 0.1);
-    border-radius: 8px;
-    box-shadow: 0 24px 48px rgba(0, 51, 153, 0.18);
-    min-height: 520px;
+    background: linear-gradient(180deg, #ffd9b0 0%, #ff7900 100%);
+    border: 0;
+    border-radius: 0 90px 12px 12px;
+    box-shadow: none;
+    min-height: 385px;
+    order: 1;
   }
 
   .rse-slide {
@@ -310,59 +314,57 @@ unset($foto);
 
   .rse-slide img {
     width: 100%;
-    height: 400px;
+    height: 285px;
     display: block;
     object-fit: cover;
     object-position: center top;
-    background: #eef3fb;
+    background: #ff7900;
   }
 
   .rse-photo-caption {
     position: relative;
     overflow: hidden;
-    background:
-      radial-gradient(circle at 94% 24%, rgba(255, 126, 0, 0.14) 0 44px, transparent 46px),
-      linear-gradient(180deg, #fff 0%, #f7fbff 100%);
+    background: transparent;
     color: #004aad;
-    min-height: 96px;
-    padding: 18px 28px 24px;
-    border-top: 4px solid #ff7e00;
+    min-height: 80px;
+    padding: 14px 16px 42px;
+    border-top: 0;
   }
 
   .rse-photo-caption h3 {
     margin: 0;
-    color: #004aad;
-    font-size: 18px;
+    color: #fff;
+    font-size: 15px;
     font-weight: 850;
     line-height: 1.22;
-    max-width: calc(100% - 110px);
+    max-width: none;
   }
 
   .rse-photo-caption time {
     display: inline-flex;
     align-items: center;
     margin-top: 12px;
-    color: #ff7e00;
-    font-size: 14px;
+    color: #ff7900;
+    font-size: 13px;
     font-weight: 800;
     line-height: 1;
-    background: rgba(255, 126, 0, 0.1);
-    border: 1px solid rgba(255, 126, 0, 0.18);
+    background: #fff8ed;
+    border: 1px solid rgba(255, 255, 255, 0.65);
     border-radius: 999px;
     padding: 8px 12px;
   }
 
   .rse-arrow {
     position: absolute;
-    top: 200px;
+    top: 142px;
     transform: translateY(-50%);
-    width: 46px;
-    height: 46px;
+    width: 38px;
+    height: 38px;
     border: 0;
     border-radius: 50%;
-    background: rgba(255, 126, 0, 0.95);
+    background: rgba(255, 126, 0, 0.96);
     color: #fff;
-    font-size: 27px;
+    font-size: 22px;
     font-weight: 900;
     line-height: 1;
     cursor: pointer;
@@ -380,17 +382,17 @@ unset($foto);
   }
 
   .rse-arrow.prev {
-    left: 20px;
+    left: 22px;
   }
 
   .rse-arrow.next {
-    right: 20px;
+    right: 22px;
   }
 
   .rse-dots {
     position: absolute;
-    right: 30px;
-    bottom: 24px;
+    right: 18px;
+    bottom: 18px;
     display: flex;
     gap: 8px;
     z-index: 3;
@@ -415,34 +417,32 @@ unset($foto);
 
   @media (max-width: 1100px) {
     .rse-layout {
-      grid-template-columns: minmax(320px, 0.9fr) minmax(420px, 520px);
-      gap: 42px;
+      grid-template-columns: minmax(280px, 0.44fr) minmax(0, 1fr);
+      gap: 26px;
     }
 
   }
 
   @media (max-width: 900px) {
-    .rse-hero-title {
-      width: calc(100% - 32px);
-      margin-top: 18px;
-      font-size: 38px;
-      line-height: 1.08;
-    }
-
-    .rse-hero-content {
-      width: calc(100% - 32px);
-      font-size: 16px;
-      line-height: 1.55;
-      text-align: left;
-    }
-
     .rse-page {
       padding: 42px 18px 58px;
     }
 
     .rse-layout {
       grid-template-columns: 1fr;
-      gap: 30px;
+      gap: 24px;
+      padding: 0 16px 28px;
+      border-radius: 0 0 16px 16px;
+    }
+
+    .rse-layout::before {
+      height: 70%;
+      border-radius: 0 0 16px 16px;
+    }
+
+    .rse-copy,
+    .rse-gallery {
+      order: initial;
     }
 
     .rse-copy p,
@@ -450,14 +450,17 @@ unset($foto);
       font-size: 16px;
       text-align: left;
       max-width: none;
+      line-height: 1.25;
+      border-radius: 0;
+      padding: 18px;
     }
 
     .rse-text-panel {
-      padding: 18px 0 18px 18px;
+      padding: 0;
     }
 
     .rse-secondary-title {
-      font-size: 34px;
+      font-size: 32px;
       line-height: 1.08;
     }
 
@@ -467,11 +470,14 @@ unset($foto);
     }
 
     .rse-slide img {
-      height: 300px;
+      height: 260px;
     }
 
     .rse-arrow {
-      top: 150px;
+      top: 130px;
+      width: 34px;
+      height: 34px;
+      font-size: 20px;
     }
 
     .rse-photo-caption {
@@ -521,8 +527,6 @@ unset($foto);
 <?php if (!empty($rseImagenPrincipal)): ?>
   <section class="rse-hero">
     <img src="<?= htmlspecialchars($rseImagenPrincipal) ?>" alt="<?= htmlspecialchars($rseTitulo) ?>">
-    <h1 class="rse-hero-title"><?= htmlspecialchars($rseTitulo) ?></h1>
-    <div class="rse-hero-content"><?= nl2br(htmlspecialchars($rseContenido)) ?></div>
   </section>
 <?php endif; ?>
 
@@ -532,7 +536,8 @@ unset($foto);
       <div class="rse-eyebrow">Compromiso social</div>
 
       <div class="rse-text-panel">
-        <h2 class="rse-secondary-title"><?= htmlspecialchars($rseTituloSecundario) ?></h2>
+        <h2 class="rse-secondary-title"><?= htmlspecialchars($rseTitulo) ?></h2>
+        <div class="rse-text"><?= nl2br(htmlspecialchars($rseContenido)) ?></div>
       </div>
     </div>
 

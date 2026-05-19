@@ -1192,6 +1192,7 @@ document.addEventListener("DOMContentLoaded", function() {
   .hero img[src="/ImagesSV/conductora.png"] {
     position: relative;
     left: 0 !important;
+    transform: none !important;
   }
 
 }
@@ -1389,6 +1390,34 @@ document.addEventListener("DOMContentLoaded", function() {
 
 .hero-carousel .hero {
   margin-top: 0 !important;
+}
+
+@media (min-width: 769px) {
+  .hero-carousel .hero {
+    min-height: 470px !important;
+    padding: 58px 5% 64px !important;
+    align-items: center !important;
+  }
+
+  .hero-carousel .texto-hero {
+    margin-left: 80px !important;
+    max-width: 650px !important;
+  }
+
+  .hero-carousel .texto-hero h1 {
+    font-size: 55px !important;
+    line-height: 1.3 !important;
+  }
+
+  .hero-carousel .texto-hero .horarios {
+    font-size: 41px !important;
+    line-height: 1.5 !important;
+  }
+
+  .hero-carousel .hero img[src="/ImagesSV/conductora.png"] {
+    max-height: 400px !important;
+    transform: translate(-34px, 28px);
+  }
 }
 
 /* Flechas */

@@ -136,7 +136,7 @@ header {
 
 /* Texto principal */
 .hero h1 {
-  font-size: 48px;
+  font-size: 45px;
   /* Más grande */
   font-weight: 900;
   /* Súper grueso */
@@ -193,11 +193,11 @@ header {
 
 /* Texto principal */
 .hero h1 {
-  font-size: 55px;
+  font-size: 45px;
   /* Más grande */
   font-weight: 920;
   /* Súper grueso */
-  line-height: 1.3;
+  line-height: 1.2;
   margin-bottom: 20px;
   text-transform: uppercase;
   color: #fff;

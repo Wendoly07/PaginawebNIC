@@ -1,5 +1,5 @@
 <?php
-// En producci�n no se muestran errores al usuario; se registran en logs.
+// En producci�n no se muestran errores al usuario; se registran en logs.
 $debug = getenv('APP_DEBUG') === 'true';
 ini_set('display_errors', $debug ? '1' : '0');
 ini_set('log_errors', '1');
@@ -259,24 +259,37 @@ $municipiosNI = [
   text-align: center;
 }
   /* ===== HERO ===== */
-  /* Estilos de la sección inicial de presentación de la página. */
+  /* Banner principal de una sola imagen, igual al estilo de sobre_nosotros. */
   .hero {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
     background: #FF9800;
-    padding: 40px 20px;
+    padding: 0;
   }
-  .hero-content {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    gap: 30px;
-    max-width: 1000px;
-    margin: 0 auto;
+
+  .hero img {
+    width: 100%;
+    height: clamp(430px, 34vw, 560px);
+    display: block;
+    object-fit: cover;
+    object-position: center center;
   }
-  .hero-img { max-width: 300px; width: 100%; border-radius: 12px; margin-left: -20px; }
-  .hero-text-container { display: flex; flex-direction: column; align-items: flex-start; }
-  .hero-text-img { max-width: 400px; width: 100%; }
-  .hero-subtitle { text-align: center; font-weight: 800; font-size: 34px; line-height: 1.2; color: white; }
+
+  .hero-title {
+    position: absolute;
+    top: 53%;
+    left: 68%;
+    transform: translate(-50%, -50%);
+    width: min(600px, 40vw);
+    margin: 0;
+    color: #ffffff;
+    font-size: clamp(22px, 2.25vw, 36px);
+    font-weight: 900;
+    line-height: 1.18;
+    text-align: center;
+    text-shadow: 0 4px 16px rgba(0,0,0,0.16);
+  }
 
   /* ===== CONTENEDOR BEIGE PRINCIPAL ===== */
   /* Contenedor principal que agrupa requisitos, formulario y beneficios. */
@@ -291,7 +304,7 @@ $municipiosNI = [
     gap: 40px;
     position: relative;   /* habilita z-index */
   z-index: 10;          /* lo trae al frente */
-  margin-top: -50px;   /* lo sube encima del hero */
+  margin-top: 50px;
   }
 
   /* ===== REQUISITOS ===== */
@@ -542,12 +555,14 @@ $municipiosNI = [
    BAJAR IMAGEN HERO EN MÓVIL
    ================================= */
 @media (max-width: 768px) {
-
-  .hero {
-    padding-top: 180px; /* empuja todo el hero hacia abajo */
+  .hero img {
+    height: 340px;
   }
-  .hero-img {
-    margin-top: 100px; /* baja SOLO la imagen */
+
+  .hero-title {
+    right: 18px;
+    width: min(360px, 56vw);
+    font-size: clamp(18px, 4vw, 26px);
   }
 }
 /* =================================
@@ -580,15 +595,8 @@ $municipiosNI = [
 <!-- HERO -->
 <!-- Sección de cabecera con imágenes y mensaje principal de la página. -->
 <section class="hero">
-  <div class="hero-content">
-    <img src="<?= htmlspecialchars($config['hero_imagen1']) ?>" class="hero-img">
-<img src="<?= htmlspecialchars($config['hero_imagen2']) ?>" class="hero-text-img">
-<p class="hero-subtitle">
-  <?= nl2br(htmlspecialchars($config['hero_titulo'])) ?>
-</p>
-      </p>
-    </div>
-  </div>
+  <img src="<?= htmlspecialchars($config['hero_imagen1']) ?>" alt="Quiero ser vendedor">
+  <h1 class="hero-title"><?= nl2br(htmlspecialchars($config['hero_titulo'])) ?></h1>
 </section>
 
 <!-- CONTENEDOR PRINCIPAL BEIGE -->
