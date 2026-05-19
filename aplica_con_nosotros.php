@@ -202,7 +202,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   .banner-img {
     /* Imagen del banner */
     position: absolute;
-    bottom: -12px;
+    bottom: -30px;
     /* Posicionamiento para que sobresalga */
     left: 0px;
     width: 250px;
