@@ -2740,6 +2740,9 @@ $stmt = $conn->prepare("
 ");
 $stmt->execute();
 $rse = $stmt->fetch(PDO::FETCH_ASSOC);
+$rseMontoPremios = $rse['titulo'] ?? 7983;
+$rseMontoPremios = is_numeric($rseMontoPremios) ? (int) $rseMontoPremios : 8893;
+$rseTextoPremios = $rse['texto'] ?? 'Millones de cordobas';
 ?>
 
   <div class="rse">
@@ -2751,10 +2754,10 @@ $rse = $stmt->fetch(PDO::FETCH_ASSOC);
         LOTO ha entregado en premios, m&aacute;s de
       </p>
 
-      <h2 class="numero" id="contador">C$7,983</h2>
+      <h2 class="numero" id="contador">C$<?= number_format($rseMontoPremios, 0, '.', ',') ?></h2>
 
       <p style="font-size:30px; font-weight:600; margin-left:25px;">
-        Millones de c&oacute;rdobas
+        <?= htmlspecialchars($rseTextoPremios, ENT_QUOTES, 'UTF-8') ?>
       </p>
     </div>
 
@@ -2807,8 +2810,7 @@ $rse = $stmt->fetch(PDO::FETCH_ASSOC);
         }
         // Formatear con separador de miles (coma) y agregar + al inicio
         elemento.textContent = "C$" + valorInicial
-  .toLocaleString("es-ES")
-  .replace(/\./g, ",");
+  .toLocaleString("en-US");
         // Actualiza el texto del elemento con el valor formateado
 
       }, 30);
@@ -2817,7 +2819,7 @@ $rse = $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     // Llamada a la función
-    animarContador("contador", 7983, 2000);
+    animarContador("contador", <?= json_encode($rseMontoPremios) ?>, 2000);
     // Anima el contador con el valor de la base de datos o un valor por defecto
 
   </script>

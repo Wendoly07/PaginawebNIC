@@ -28,7 +28,7 @@ switch ($pag) {
         include 'diaria.php';
         break;
     case 'quiero_ser_agente':
-        // Página para solicitar ser agente
+        // Pagina para solicitar ser agente
         include 'quiero_ser_agente.php';
         break;
     case 'noticias':

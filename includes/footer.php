@@ -230,7 +230,7 @@
       </p>
         <p>
         <a href="index.php?pag=quiero_ser_agente" style="color: inherit; text-decoration: none;">
-        Quiero ser vendedor
+        Quiero ser agente
       </a>
         </p>
        <p>

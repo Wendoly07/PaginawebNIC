@@ -266,14 +266,15 @@ $municipiosNI = [
     overflow: hidden;
     background: #FF9800;
     padding: 0;
+    height: clamp(620px, 45vw, 780px);
   }
 
   .hero img {
     width: 100%;
-    height: clamp(430px, 34vw, 560px);
+    height: 100%;
     display: block;
     object-fit: cover;
-    object-position: center center;
+    object-position: center top;
   }
 
   .hero-title {
@@ -555,8 +556,12 @@ $municipiosNI = [
    BAJAR IMAGEN HERO EN MÓVIL
    ================================= */
 @media (max-width: 768px) {
+  .hero {
+    height: 430px;
+  }
+
   .hero img {
-    height: 340px;
+    height: 100%;
   }
 
   .hero-title {
@@ -596,7 +601,6 @@ $municipiosNI = [
 <!-- Sección de cabecera con imágenes y mensaje principal de la página. -->
 <section class="hero">
   <img src="<?= htmlspecialchars($config['hero_imagen1']) ?>" alt="Quiero ser vendedor">
-  <h1 class="hero-title"><?= nl2br(htmlspecialchars($config['hero_titulo'])) ?></h1>
 </section>
 
 <!-- CONTENEDOR PRINCIPAL BEIGE -->

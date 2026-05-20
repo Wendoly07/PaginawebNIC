@@ -107,6 +107,17 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Premiado2.png'
       color: #111 !important;
     }
 
+    .nums .bola-amarilla {
+      align-items: center;
+      display: inline-flex;
+      font-size: 20px;
+      justify-content: center;
+      line-height: 1;
+      overflow: hidden;
+      padding: 0 3px;
+      white-space: nowrap;
+    }
+
     .num-mes {
       width: 65px;
       height: 65px;
@@ -492,6 +503,11 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Premiado2.png'
         font-size: 16px;
       }
 
+      .nums .bola-amarilla {
+        font-size: 15px;
+        padding: 0 2px;
+      }
+
       .etiqueta-hola {
         font-size: 15px;
         padding: 6px 12px;
@@ -558,6 +574,10 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Premiado2.png'
         height: 44px;
         line-height: 44px;
         font-size: 16px;
+      }
+
+      .nums .bola-amarilla {
+        font-size: 14px;
       }
 
       .menu {
