@@ -260,21 +260,17 @@ $municipiosNI = [
 }
   /* ===== HERO ===== */
   /* Banner principal de una sola imagen, igual al estilo de sobre_nosotros. */
-  .hero {
+  .agente-banner {
     width: 100%;
-    position: relative;
     overflow: hidden;
-    background: #FF9800;
-    padding: 0;
-    height: clamp(620px, 45vw, 780px);
+    background: #ffffff;
+    line-height: 0;
   }
 
-  .hero img {
+  .agente-banner img {
     width: 100%;
-    height: 100%;
+    height: auto;
     display: block;
-    object-fit: cover;
-    object-position: center top;
   }
 
   .hero-title {
@@ -556,12 +552,10 @@ $municipiosNI = [
    BAJAR IMAGEN HERO EN MÓVIL
    ================================= */
 @media (max-width: 768px) {
-  .hero {
-    height: 430px;
-  }
-
-  .hero img {
-    height: 100%;
+  .agente-banner img {
+    width: 100%;
+    height: auto;
+    display: block;
   }
 
   .hero-title {
@@ -599,7 +593,7 @@ $municipiosNI = [
 
 <!-- HERO -->
 <!-- Sección de cabecera con imágenes y mensaje principal de la página. -->
-<section class="hero">
+<section class="agente-banner">
   <img src="<?= htmlspecialchars($config['hero_imagen1']) ?>" alt="Quiero ser vendedor">
 </section>
 

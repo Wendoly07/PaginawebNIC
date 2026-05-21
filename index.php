@@ -31,6 +31,10 @@ switch ($pag) {
         // Pagina para solicitar ser agente
         include 'quiero_ser_agente.php';
         break;
+    case 'acumulado':
+        // Pagina para revisar las pantallas de El Acumulado
+        include 'acumulado.php';
+        break;
     case 'noticias':
         // Página de noticias
         include 'noticias.php';

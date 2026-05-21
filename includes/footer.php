@@ -234,7 +234,7 @@
       </a>
         </p>
        <p>
-  <a href="https://www.google.com/maps/d/u/1/edit?mid=1gerRqZPZbxOs3JlQuXiYnUMIGiLWpvA&usp=sharing" target="_blank" style="color: inherit; text-decoration: none;">
+  <a href="https://www.google.com/maps/d/embed?mid=1gU5almbNwtb0Re0GCqQigj5IJ9RarxY&ehbc=2E312F" target="_blank" style="color: inherit; text-decoration: none;">
 
     Puntos de venta
   </a>
