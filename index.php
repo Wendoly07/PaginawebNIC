@@ -31,10 +31,6 @@ switch ($pag) {
         // Pagina para solicitar ser agente
         include 'quiero_ser_agente.php';
         break;
-    case 'acumulado':
-        // Pagina para revisar las pantallas de El Acumulado
-        include 'acumulado.php';
-        break;
     case 'noticias':
         // Página de noticias
         include 'noticias.php';
@@ -51,10 +47,6 @@ switch ($pag) {
         // Pagina de detalle de una promocion
         include 'promociones_detallado.php';
         break;
-    case 'apostemos':
-        // Página de apuestas deportivas
-        include 'apostemos.php';
-        break;
     case 'aplica_con_nosotros':
         // Página para aplicar con nosotros
         include 'aplica_con_nosotros.php';
@@ -70,10 +62,6 @@ switch ($pag) {
     case 'rse':
         // Pagina de responsabilidad social empresarial
         include 'rse.php';
-        break;
-    case 'instacash':
-        // Página de Instacash
-        include 'instacash.php';
         break;
     case 'suerte':
         // Página de Suerte
