@@ -845,11 +845,13 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Premiado2.png'
     </section>
   <?php endforeach; ?>
   <!-- BOTÓN REGLAMENTO -->
+  <!--
   <div class="reglamento">
     <a href="/ImagesSV/documentos/Reglamento Premiado2.pdf" target="_blank">
       <button>LEER EL REGLAMENTO</button>
     </a>
   </div>
+  -->
 
   <script>
     function toggleAcordeon(header) {

@@ -786,11 +786,13 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Logo Juga4 - L
     </section>
   <?php endforeach; ?>
   <!-- BOTÓN REGLAMENTO -->
+  <!--
   <div class="reglamento">
     <a href="/ImagesSV/documentos/Reglamento Juga Cuatro.pdf" target="_blank">
       <button>LEER EL REGLAMENTO</button>
     </a>
   </div>
+  -->
 
   <script>
     function toggleAcordeon(header) {

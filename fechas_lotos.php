@@ -788,11 +788,13 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO FECHAS LO
     </section>
   <?php endforeach; ?>
   <!-- BOTÓN REGLAMENTO -->
+  <!--
   <div class="reglamento">
     <a href="/ImagesSV/documentos/Reglamento Fechas Lotos.pdf" target="_blank">
       <button>LEER EL REGLAMENTO</button>
     </a>
   </div>
+  -->
 
   <script>
     function toggleAcordeon(header) {

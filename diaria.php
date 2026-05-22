@@ -1103,6 +1103,7 @@ body {
       <?php endif; ?>
     </section>
   <?php endforeach; ?>
+<!--
 <div class="reglamento">
   <a href="/ImagesSV/documentos/Reglamento La Diaria El Salvador.pdf" target="_blank">
     <button class="btn-reglamento">
@@ -1110,6 +1111,7 @@ body {
     </button>
   </a>
 </div>
+-->
 
   <script>
     function toggleAcordeon(header) {
