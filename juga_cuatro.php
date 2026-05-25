@@ -20,13 +20,19 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Logo Juga4 - L
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Helvetica+Rounded:wght@400;700;900&display=swap');
+    @font-face {
+      font-family: 'HelveticaRounded';
+      src: url('/fonts/HelveticaRoundedLTStd-Bd.ttf') format('truetype');
+      font-weight: 700 900;
+      font-style: normal;
+      font-display: swap;
+    }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Helvetica Rounded', Arial, sans-serif;
+      font-family: 'HelveticaRounded', Arial, sans-serif;
     }
 
     body {

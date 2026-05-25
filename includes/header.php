@@ -19,7 +19,7 @@
 
     body {
       /* Estilos base para el cuerpo de la página */
-      font-family: 'Helvetica Rounded Black', Arial, sans-serif;
+      font-family: 'HelveticaRounded', Arial, sans-serif;
       /* Fuente principal del sitio */
       margin: 0;
       padding: 0;

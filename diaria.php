@@ -22,15 +22,20 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO DIARIA.sv
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
-    /* Importa la fuente Helvetica Rounded desde Google Fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Helvetica+Rounded:wght@400;700;900&display=swap');
+    @font-face {
+      font-family: 'HelveticaRounded';
+      src: url('/fonts/HelveticaRoundedLTStd-Bd.ttf') format('truetype');
+      font-weight: 700 900;
+      font-style: normal;
+      font-display: swap;
+    }
 
     /* Reinicio básico y tipografía global */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Helvetica Rounded', Arial, sans-serif;
+      font-family: 'HelveticaRounded', Arial, sans-serif;
     }
 
     /* Fondo general de la página */
@@ -510,7 +515,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO DIARIA.sv
 
  /*  TODO EN HELVETICA ROUNDED SEMIBOLD */
 body {
-  font-family: 'Helvetica Rounded', Arial, sans-serif;
+  font-family: 'HelveticaRounded', Arial, sans-serif;
   font-weight: 600;
 }
 

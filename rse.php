@@ -83,7 +83,7 @@ $mostrarModelo = $rseModeloTitulo !== '' || $rseModeloSubtitulo !== '' || !empty
 <style>
 /* ─── Tipografía global RSE ────────────────────────────────────────────────── */
 .rse-hero,.rse-page,.rse-stats-wrap,.rse-modelo,.rse-video-wrap{
-  font-family:'HelveticaRounded','Helvetica Rounded',Helvetica,Arial,sans-serif;
+  font-family:'HelveticaRounded',Arial,sans-serif;
 }
 
 /* ─── Hero ─────────────────────────────────────────────────────────────────── */
@@ -114,7 +114,7 @@ $mostrarModelo = $rseModeloTitulo !== '' || $rseModeloSubtitulo !== '' || !empty
 .rse-copy{min-width:0;order:2;}
 .rse-text-panel{position:relative;max-width:none;padding:0 0 28px;}
 .rse-secondary-title{
-  margin:0;color:#ff7900;font-size:clamp(28px,3.1vw,44px);
+  margin:50px 0 0;color:#ff7900;font-size:clamp(28px,3.1vw,44px);
   font-weight:900;line-height:1.3;text-transform:uppercase;
   max-width:760px;
 }

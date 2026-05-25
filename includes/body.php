@@ -180,6 +180,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
     /* FUENTE PARA TODA LA PÁGINA */
     body, h1, h2, h3, h4, h5, h6, p, button, a, span, div {
+      font-family: 'HelveticaRounded', Arial, sans-serif !important;
+    }
+
+    .hero-carousel .hero,
+    .hero-carousel .hero h1,
+    .hero-carousel .hero .horarios,
+    .hero-carousel .hero .boton {
       font-family: "Helvetica Rounded", "Helvetica Rounded Black", Arial, sans-serif !important;
     }
 
@@ -2005,7 +2012,7 @@ if ($rss && isset($rss->entry[0])) {
   <div class="resultados-header">
     <h2>
       <span class="titulo-naranja">ÚLTIMOS RESULTADOS,</span>
-      <span class="titulo-azul" id="fecha-api" style="font-size: 45px; color: #fff; font-family: Nunito; font-weight:795;">
+      <span class="titulo-azul" id="fecha-api" style="font-size: 45px; color: #fff; font-family: 'HelveticaRounded', Arial, sans-serif; font-weight:795;">
   <?php echo $videoDate; ?>
 </span>
     </h2>

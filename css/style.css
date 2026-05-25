@@ -1,8 +1,31 @@
 /* Estilos básicos del cuerpo de la página */
+@font-face {
+  font-family: 'HelveticaRounded';
+  src: url('/fonts/HelveticaRoundedLTStd-Bd.ttf') format('truetype');
+  font-weight: 700 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-primary: 'HelveticaRounded', Arial, sans-serif;
+}
+
+* {
+  font-family: var(--font-primary);
+}
+
 body {
   margin: 0;
-  font-family: 'HelveticaRounded', Arial, sans-serif;
+  font-family: var(--font-primary);
   background: #fff;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: var(--font-primary);
 }
 
 /* Encabezado azul superior */
