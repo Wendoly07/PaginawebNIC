@@ -254,7 +254,7 @@
         <!-- Sección del logo -->
         <a href="index.php?pag=body">
           <!-- Enlace al login al hacer click en el logo -->
-          <img src="/ImagesSV/logo-02-LOTO.png" alt="Logo" style="cursor:pointer;">
+          <img src="/ImagesSV/logo-02-LOTO.svg" alt="Logo" style="cursor:pointer;">
           <!-- Imagen del logo con cursor de puntero -->
         </a>
       </div>

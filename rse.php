@@ -169,8 +169,15 @@ $mostrarModelo = $rseModeloTitulo !== '' || $rseModeloSubtitulo !== '' || !empty
   box-shadow:0 6px 20px rgba(0,0,0,0.07);
   display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;
   padding-top:60px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
   position:relative;
   overflow:visible;
+}
+
+.rse-stats-item:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 .rse-stats-item:nth-child(1){--stat-color:#16a34a;background:rgba(22,163,74,0.08);}
 .rse-stats-item:nth-child(2){--stat-color:#db2777;background:rgba(219,39,119,0.08);}

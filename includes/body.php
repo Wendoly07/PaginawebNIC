@@ -98,26 +98,18 @@ document.addEventListener("DOMContentLoaded", async function() {
 </script>
 
 <!-- POPUP PRINCIPAL-->
+<?php if (!empty($popup['imagen_url'])): ?>
 <div id="popupOverlay" class="popup-overlay">
   <div class="popup-content">
     <div class="popup-image-wrapper">
-      <?php
-      // Traemos imagen y link
-      $stmt = $conn->prepare("SELECT imagen_url, link_url FROM paginaweb_nic_sobre_inicio WHERE seccion='popup_principal'");
-      $stmt->execute();
-      $popup = $stmt->fetch(PDO::FETCH_ASSOC);
-      ?>
-
-      <!-- Envolvemos la imagen en un enlace -->
       <a href="<?= $popup['link_url'] ?>" target="_blank">
         <img src="<?= $popup['imagen_url'] ?>" alt="Popup principal">
       </a>
-
       <button class="popup-close" id="cerrarPopup">&times;</button>
     </div>
   </div>
 </div>
-
+<?php endif; ?>
 
 <script>
 // Script para manejar el popup principal
@@ -605,7 +597,7 @@ document.addEventListener("DOMContentLoaded", function() {
   margin-right: auto;
   text-align: center;
   position: absolute;
-  top: 305px;
+  top: 275px;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -1401,6 +1393,7 @@ document.addEventListener("DOMContentLoaded", function() {
   .hero-carousel .texto-hero {
     margin-left: 80px !important;
     max-width: 650px !important;
+    transform: translateY(28px);
   }
 
   .hero-carousel .texto-hero h1 {
@@ -1693,7 +1686,7 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 
 .res-card.magenta-jugacuatro {
-  background: radial-gradient(circle at 50% 0%, #d6008f 0%, #a50064 46%, #5b123f 100%);
+  background:  #9e1e5c;
   border-radius: 15px;
   padding: 15px;
   text-align: center;
@@ -1752,7 +1745,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 .res-card.magenta-jugacuatro .btn-jugar {
   background-color: white;
-  color: #a50064;
+  color: #9e1e5c;
   font-weight: bold;
 }
 

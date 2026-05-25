@@ -41,7 +41,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Logo Juga4 - L
 
     /* ================= HEADER ================= */
     .top {
-      background: radial-gradient(circle at 50% 0%, #d6008f 0%, #a50064 44%, #5b123f 100%);
+      background: #9e1e5c;
       display: flex;
       justify-content: center;
       padding: 25px 10px;
@@ -130,14 +130,14 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Logo Juga4 - L
       display: flex;
       justify-content: center;
       gap: 18px;
-      background: #a50064;
+      background:  #9e1e5c;
       padding: 16px;
       flex-wrap: wrap;
     }
 
     .menu a { /* juega aquí y conocé más botones */
-      background: linear-gradient(135deg, #ffffff, #c5eefe);
-      color: #5b123f;
+      background: linear-gradient(135deg, #ffffff, #9e1e5c);
+      color: #5b163f;
       text-decoration: none;
       padding: 10px 22px;
       border-radius: 30px;
@@ -162,7 +162,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Logo Juga4 - L
 
     /* ================= RESULTADOS ================= */
     .resultados {
-      border: 1px solid #a50064;
+      border: 1px solid #9e1e5c;
       display: grid;
       grid-template-columns: 1fr 320px 1fr;
       align-items: center;
@@ -198,7 +198,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Logo Juga4 - L
     .izquierda h2 {
       font-size: 42px;
       font-weight: 900;
-      color: #a50064;
+      color: #9e1e5c;
       margin: 0;
       line-height: 1.1;
     }
@@ -206,8 +206,8 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Logo Juga4 - L
     .label-fecha {
       font-size: 18px;
       font-weight: 700;
-      background: #ffb800;
-      color: #5b123f;
+      background: #f78f1e;
+      color: #5b163f;
       padding: 8px 16px;
       border-radius: 20px;
       display: inline-block;
@@ -238,7 +238,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Logo Juga4 - L
       width: 14.285%;
       font-size: 10px;
       font-weight: 800;
-      color: #a50064;
+      color: #9e1e5c;
       padding: 6px 2px;
       text-transform: uppercase;
       white-space: nowrap;
@@ -262,7 +262,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Logo Juga4 - L
     }
 
     .calendario-real td.activo {
-      background: linear-gradient(135deg, #d6008f, #5b123f);
+      background: linear-gradient(135deg, #9e1e5c, #5b163f);
       color: white;
       border-radius: 50%;
       font-weight: bold;
@@ -286,7 +286,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Logo Juga4 - L
       box-shadow: inset 0 2px 5px rgba(0,0,0,0.15);
       cursor: pointer;
       font-weight: 700;
-      color: #a50064;
+      color: #9e1e5c;
       transition: 0.3s;
     }
 
@@ -310,7 +310,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Logo Juga4 - L
     .derecha h3 {
       font-size: 18px;
       font-weight: 900;
-      color: #a50064;
+      color: #9e1e5c;
       margin-bottom: 8px;
       text-align: center;
     }
@@ -339,7 +339,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Logo Juga4 - L
       border-radius: 12px;
       overflow: hidden;
       background: white;
-      border: 2px solid #a50064;
+      border: 2px solid #9e1e5c;
     }
 
     .accordion-header {
@@ -351,12 +351,12 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Logo Juga4 - L
       font-weight: 800;
       font-size: 20px;
       cursor: pointer;
-      background: #d6008f;
+      background: #9e1e5c;
       transition: background 0.3s;
     }
 
     .accordion-header:hover {
-      background: #a50064;
+      background: #5b163f;
     }
 
     .accordion-header .arrow-circle {
