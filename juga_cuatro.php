@@ -136,7 +136,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Logo Juga4 - L
     }
 
     .menu a { /* juega aquí y conocé más botones */
-      background: linear-gradient(135deg, #ffffff, #9e1e5c);
+      background: linear-gradient(135deg, #ffffff, #5b163f);
       color: #5b163f;
       text-decoration: none;
       padding: 10px 22px;
