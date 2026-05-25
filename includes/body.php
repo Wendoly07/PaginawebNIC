@@ -731,73 +731,65 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 }
 
-/* ===== HERO RESPONSIVE MOVIL COMO PC ===== */
+/* ===== HERO RESPONSIVE MÓVIL ===== */
 @media (max-width: 768px) {
 
-  .hero-carousel {
-    margin-top: 0 !important;
-  }
-
   .hero {
-    display: flex !important;
     flex-direction: column !important;
-    justify-content: center;
-    align-items: center;
-    position: relative !important;
-    width: 95%;
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 24px 14px 18px !important;
-    gap: 16px;
-    text-align: center;
-    flex-wrap: nowrap;
+    align-items: center !important;
+    text-align: center !important;
+    padding: 24px 16px 20px !important;
+    min-height: auto !important;
+    gap: 16px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
   }
 
   .texto-hero {
-    flex: 0 0 auto;
-    width: 100%;
+    order: 1 !important;
+    width: 100% !important;
+    margin-left: 0 !important;
     text-align: center !important;
-    margin-left: 0;
-    order: 1;
   }
 
   .texto-hero h1 {
-    font-size: 1.2rem !important;
+    font-size: 1.3rem !important;
     line-height: 1.3 !important;
   }
 
   .texto-hero .horarios {
     font-size: 1rem !important;
-    margin: 5px 0 10px 0 !important;
+    margin: 8px 0 !important;
   }
 
   .texto-hero .boton {
-    font-size: 0.9rem !important;
-    padding: 8px 18px !important;
+    font-size: 0.95rem !important;
+    padding: 10px 20px !important;
   }
 
+  /* Conductora debajo del texto, no superpuesta */
   .hero img:not(.esfera) {
-    flex: 0 0 auto;
-    width: min(240px, 74vw);
-    max-width: 74vw;
-    height: auto;
+    order: 2 !important;
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    transform: none !important;
+    width: min(220px, 60vw) !important;
+    max-width: 60vw !important;
+    height: auto !important;
+    margin: 0 auto !important;
     display: block !important;
-    margin: 0 auto;
-    position: relative;
-    order: 2;
   }
 
-  .esfera {
-    width: 30px !important;
-    height: 30px !important;
-    line-height: 30px !important;
-    font-size: 14px !important;
-    position: absolute !important;
+  /* Esferas pequeñas */
+  .hero .esfera {
+    width: 26px !important;
+    height: 26px !important;
   }
 
-  .esfera:nth-of-type(1) { top: 18% !important; left: 62% !important; }
-  .esfera:nth-of-type(2) { top: 74% !important; left: 16% !important; }
-  .esfera:nth-of-type(3) { top: 70% !important; left: 77% !important; }
+  .hero .esfera:nth-of-type(1) { top: 55% !important; left: 72% !important; }
+  .hero .esfera:nth-of-type(2) { top: 78% !important; left: 8% !important; }
+  .hero .esfera:nth-of-type(3) { top: 73% !important; left: 84% !important; }
 }
 
 @media (max-width: 768px) {
