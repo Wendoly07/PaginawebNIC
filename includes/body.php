@@ -2365,41 +2365,6 @@ document.addEventListener("DOMContentLoaded", function () {
   </div>
   <br>
 
-<?php
-// ====================== CONSULTA JACKPOT ======================
-$stmt = $conn->prepare("
-    SELECT TOP 1 *
-    FROM paginaweb_nic_sobre_inicio
-    WHERE seccion = 'popup_home'
-    ORDER BY orden ASC
-");
-$stmt->execute();
-$jackpot = $stmt->fetch(PDO::FETCH_ASSOC);
-?>
-
-<!-- BANNER JACKPOT -->
-<div style="width: 100%; text-align: center; position: relative; margin-bottom: 20px;">
-
-    <?php if($jackpot): ?>
-        <a href="<?= htmlspecialchars($jackpot['link_url'] ?? '#') ?>" target="_blank">
-            <img
-                src="<?= htmlspecialchars($jackpot['imagen_url']) ?>"
-                alt="Jackpot"
-                style="width: 100%; max-width: 1700px; height: auto; border-radius: 16px; display: block; margin: 0 auto;"
-            >
-        </a>
-
-    <?php else: ?>
-        <!-- Fallback si no hay jackpot -->
-        <img
-            src="/ImagesSV/BannerDefault.png"
-            alt="Jackpot por defecto"
-            style="width: 100%; max-width: 1700px; height: auto; border-radius: 16px; display: block; margin: 0 auto;"
-        >
-    <?php endif; ?>
-
-</div>
-
 <script>
 // Script para cargar el jackpot de Super Premio
 
