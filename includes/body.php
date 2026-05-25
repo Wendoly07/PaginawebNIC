@@ -2551,7 +2551,7 @@ $apostemos = $stmt->fetch(PDO::FETCH_ASSOC);
 
  <!-- Banner Superpremio -->
 <a href="<?= $superpremio['link_url'] ?? 'https://juega.loto.sv/' ?>" target="_blank">
-  <div class="banner-superpremio" style="width: 100%; max-width: 1700px; margin: 0 auto;">
+  <div class="banner-superpremio" style="width: calc(100% - 32px); max-width: 1200px; margin: 0 auto;">
 
     <img
       src="<?= $superpremio['imagen_url'] ?? '/ImagesSV/Banner Sp.gif' ?>"
