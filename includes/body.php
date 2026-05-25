@@ -2366,42 +2366,6 @@ document.addEventListener("DOMContentLoaded", function () {
   <br>
 
 <script>
-// Script para cargar el jackpot de Super Premio
-
-async function cargarJackpot() {
-    // Función asíncrona para cargar el jackpot
-
-    try {
-        // Intenta realizar la solicitud
-
-        const response = await fetch('/api/jackpot_superpremio.php');
-        // Realiza una solicitud fetch a la API del jackpot
-
-        if (!response.ok) throw new Error('Error en la API');
-        // Lanza un error si la respuesta no es OK
-
-        const data = await response.json();
-        // Convierte la respuesta a JSON
-
-        console.log("Jackpot API:", data);
-        // Registra los datos en la consola para depuración
-
-        const monto = data.jackpot != null ? Number(data.jackpot) : 0;
-        // Convierte el jackpot a número, o 0 si es null
-
-        // Formateamos con coma para miles
-        document.getElementById('jackpot-num-banner').innerText = "$" +
-            monto.toLocaleString("es-ES").replace(/\./g, ",");
-        // Actualiza el texto del elemento con el monto formateado
-
-    } catch (error) {
-        // Captura cualquier error
-
-        console.error("No se pudo cargar el Jackpot:", error);
-        // Registra el error en la consola
-
-    }
-}
 
 // Llamamos a la función
 cargarJackpot();
