@@ -2537,6 +2537,15 @@ $stmt = $conn->prepare("
 ");
 $stmt->execute();
 $superpremio = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$stmt = $conn->prepare("
+    SELECT TOP 1 *
+    FROM paginaweb_nic_sobre_inicio
+    WHERE seccion='banner_apostemos'
+    ORDER BY id ASC
+");
+$stmt->execute();
+$apostemos = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 
 
@@ -2552,6 +2561,19 @@ $superpremio = $stmt->fetch(PDO::FETCH_ASSOC);
 
   </div>
 </a>
+
+<?php if (!empty($apostemos['imagen_url'])): ?>
+<!-- Banner Apostemos -->
+<a href="<?= htmlspecialchars($apostemos['link_url'] ?? '#', ENT_QUOTES, 'UTF-8') ?>" target="_blank" rel="noopener">
+  <div class="banner-apostemos" style="width: 100%; max-width: 1700px; margin: 24px auto 0;">
+    <img
+      src="<?= htmlspecialchars($apostemos['imagen_url'], ENT_QUOTES, 'UTF-8') ?>"
+      alt="Banner Apostemos"
+      style="width: 100%; height: auto; border-radius: 16px; display: block; margin: 0 auto;"
+    >
+  </div>
+</a>
+<?php endif; ?>
 
 <?php
 
