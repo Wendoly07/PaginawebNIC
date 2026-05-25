@@ -402,7 +402,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Logo Juga4 - L
 
     .contenido-visible img {
       display: block;
-      width: min(100%, 520px);
+      width: min(100%, 1300px);
       height: auto;
       margin: 0 auto;
     }

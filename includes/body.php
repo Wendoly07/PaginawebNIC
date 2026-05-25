@@ -2389,21 +2389,6 @@ $jackpot = $stmt->fetch(PDO::FETCH_ASSOC);
             >
         </a>
 
-        <!-- NÚMERO DEL JACKPOT SOBRE EL BANNER -->
-        <div id="jackpot-num-banner" style="
-            position: absolute;
-            top: 47%;
-            left: 65%;
-            transform: translateY(-50%);
-            font-size: 62px;
-            font-weight: 900;
-            color: #fafaf9ff;
-            text-shadow: 3px 3px 8px rgba(0,0,0,0.5);
-            z-index: 10;
-        ">
-            $ 0
-        </div>
-
     <?php else: ?>
         <!-- Fallback si no hay jackpot -->
         <img
