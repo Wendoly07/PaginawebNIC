@@ -329,7 +329,7 @@ header {
 .banner-superpremio img { width: 100%; height: auto; display: block; }
 
 .banner-apostemos { width: 100%; display: flex; justify-content: center; align-items: center; margin: 20px 0; }
-.banner-apostemos img { width: 80%; max-width: 600px; height: auto; border-radius: 20px; display: block; }
+.banner-apostemos img { width: 100%; max-width: none; height: auto; border-radius: 20px; display: block; }
 
 /* ══════════════════════════════════════
    YOUTUBE
