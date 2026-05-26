@@ -2381,19 +2381,21 @@ cargarJackpot();
 $CHANNEL_ID = "UCwnJv1k2PKCpJeJWrtSaQPg"; // Canal de LOTO Nicaragua
 $youtubeStreamsUrl = "https://www.youtube.com/@LotoNicaragua/streams";
 $rss_url = "https://www.youtube.com/feeds/videos.xml?channel_id=$CHANNEL_ID";
+$uploadsPlaylistId = 'UU' . substr($CHANNEL_ID, 2);
 
 // Cargar el RSS
 $rss = simplexml_load_file($rss_url);
 
 // Datos por defecto
-$videoId = "1qsx5zpIp7w";
-$videoTitle = "Sorteo LOTO 11:00 a.m 25 de Julio del 2025";
+$youtubeEmbedSrc = "https://www.youtube.com/embed/videoseries?list=" . rawurlencode($uploadsPlaylistId);
+$videoTitle = "LOTO Nicaragua";
 $videoDate = date('j \d\e F \d\e Y');
 
 if ($rss && isset($rss->entry[0])) {
     $videoId = (string)$rss->entry[0]->children('yt', true)->videoId;
     $videoTitle = (string)$rss->entry[0]->title;
     $videoDate = date('j \d\e F \d\e Y', strtotime($rss->entry[0]->published));
+    $youtubeEmbedSrc = "https://www.youtube.com/embed/" . rawurlencode($videoId);
 }
 ?>
 
@@ -2405,7 +2407,7 @@ if ($rss && isset($rss->entry[0])) {
       <!-- Video que sale a la par del mesaje visualiza nuestros sorteos -->
       <div class="youtube-video">
         <iframe width="100%" height="315"
-          src="https://www.youtube.com/embed/<?php echo htmlspecialchars($videoId, ENT_QUOTES, 'UTF-8'); ?>"
+          src="<?php echo htmlspecialchars($youtubeEmbedSrc, ENT_QUOTES, 'UTF-8'); ?>"
           title="YouTube video player"
           frameborder="0"
           allowfullscreen>
