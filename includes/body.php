@@ -2494,7 +2494,7 @@ $apostemos = $stmt->fetch(PDO::FETCH_ASSOC);
 <?php if (!empty($apostemos['imagen_url'])): ?>
 <!-- Banner Apostemos -->
 <a href="<?= htmlspecialchars($apostemos['link_url'] ?? '#', ENT_QUOTES, 'UTF-8') ?>" target="_blank" rel="noopener">
-  <div class="banner-apostemos" style="width: calc(100% - 32px); max-width: 1200px; margin: 44px auto 0;">
+  <div class="banner-apostemos" style="width: calc(100% - 32px); max-width: 1200px; margin: 50px auto 0;">
     <img
       src="<?= htmlspecialchars($apostemos['imagen_url'], ENT_QUOTES, 'UTF-8') ?>"
       alt="Banner Apostemos"
