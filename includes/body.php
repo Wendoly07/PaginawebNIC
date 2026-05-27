@@ -1923,7 +1923,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 .banner-antes-youtube {
   width: min(100%, 1180px);
-  margin: -82px auto 48px;
+  margin: -82px auto 92px;
   padding: 0 18px;
   position: relative;
   z-index: 2;
