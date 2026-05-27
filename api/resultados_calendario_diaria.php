@@ -47,6 +47,7 @@ $sql = "
 SELECT
     DATEPART(HOUR, draw_time) AS hora_sorteo,
     UPPER(LTRIM(RTRIM(game_name))) AS game_name,
+    result_raw,
     par1,
     par2,
     par3
@@ -95,6 +96,15 @@ $resultados = [
 
 $filas = 0;
 
+function valorResultRaw($row, $indice, $default = null) {
+    if (!isset($row['result_raw']) || $row['result_raw'] === null) {
+        return $default;
+    }
+
+    $partes = array_map('trim', explode(',', (string) $row['result_raw']));
+    return ($partes[$indice] ?? '') !== '' ? $partes[$indice] : $default;
+}
+
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     // Inicia un bucle while para recorrer cada fila del resultado de la consulta
 
@@ -122,16 +132,17 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $gameName = strtoupper(trim((string) $row['game_name']));
 
         if ($gameName === '13' || $gameName === 'DIARIA') {
-            $numero = str_pad($row['par1'], 2, '0', STR_PAD_LEFT);
+            $numeroBase = $row['par1'] ?? valorResultRaw($row, 0, '0');
+            $numero = str_pad((string) $numeroBase, 2, '0', STR_PAD_LEFT);
             $resultados[$clave][0] = $numero[0];
             $resultados[$clave][1] = $numero[1];
             if ($gameName === 'DIARIA') {
-                $resultados[$clave][2] = (string) ($row['par2'] ?? '0');
+                $resultados[$clave][2] = (string) ($row['par2'] ?? valorResultRaw($row, 1, '0'));
             }
         } elseif ($gameName === 'MULTI-X-DIARIA') {
-            $resultados[$clave][2] = (string) ($row['par2'] ?? $row['par1'] ?? '0');
+            $resultados[$clave][2] = (string) ($row['par2'] ?? $row['par1'] ?? valorResultRaw($row, 1, '0'));
         } elseif ($gameName === 'MÁS 1' || $gameName === 'MAS 1') {
-            $resultados[$clave][3] = (string) ($row['par2'] ?? $row['par1'] ?? '0');
+            $resultados[$clave][3] = (string) ($row['par2'] ?? valorResultRaw($row, 1, $row['par1'] ?? '0'));
         }
     }
     // Fin del bucle if-elseif

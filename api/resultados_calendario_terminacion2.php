@@ -27,7 +27,7 @@ FROM numeros_ganadores_sorteos_prod
 WHERE UPPER(LTRIM(RTRIM(game_name))) IN (:game_name_id, :game_name_texto)
 AND UPPER(LTRIM(RTRIM(pais))) = 'NICARAGUA'
 AND CONVERT(date, draw_date) = :fecha
-AND DATEPART(HOUR, draw_time) = 18
+AND DATEPART(HOUR, draw_time) IN (17, 18)
 ORDER BY draw_time ASC
 ";
 
@@ -57,7 +57,8 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $filas++;
     $numero = isset($row['par1']) ? (string) $row['par1'] : null;
 
-    if ($row['hora_sorteo'] == 18) {
+    $hora = (int) $row['hora_sorteo'];
+    if ($hora == 17 || $hora == 18) {
         $resultados['18:00'] = $numero;
     }
 }

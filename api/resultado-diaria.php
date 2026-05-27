@@ -2,6 +2,15 @@
 // Inicia el bloque de código PHP
 header('Content-Type: application/json');
 // Establece el tipo de contenido de la respuesta como JSON
+function valorResultRaw($row, $indice, $default = null) {
+    if (!isset($row['result_raw']) || $row['result_raw'] === null) {
+        return $default;
+    }
+
+    $partes = array_map('trim', explode(',', (string) $row['result_raw']));
+    return ($partes[$indice] ?? '') !== '' ? $partes[$indice] : $default;
+}
+
 // Define el nombre del servidor de la base de datos
 // Define el nombre de la base de datos
 // Define el nombre de usuario para la conexión a la base de datos
@@ -65,12 +74,12 @@ try {
         if ($gameName === "13" || $gameName === "DIARIA") {
             $row = $fila;
             if ($gameName === "DIARIA") {
-                $multiX = $fila["par2"] ?? $multiX;
+                $multiX = $fila["par2"] ?? valorResultRaw($fila, 1, $multiX);
             }
         } elseif ($gameKey === "MULTIXDIARIA") {
-            $multiX = $fila["par2"] ?? $fila["par1"] ?? null;
+            $multiX = $fila["par2"] ?? $fila["par1"] ?? valorResultRaw($fila, 1);
         } elseif ($gameKey === "MAS1") {
-            $mas1 = $fila["par1"] ?? $fila["par2"] ?? null;
+            $mas1 = $fila["par2"] ?? valorResultRaw($fila, 1, $fila["par1"] ?? null);
         }
     }
 
@@ -81,7 +90,7 @@ try {
 
     if ($mas1 === null || $mas1 === '') {
         $stmtMas1 = $conn->prepare("
-            SELECT TOP 1 par1, par2
+            SELECT TOP 1 par1, par2, result_raw
             FROM numeros_ganadores_sorteos_prod
             WHERE REPLACE(REPLACE(UPPER(LTRIM(RTRIM(game_name))) COLLATE Latin1_General_CI_AI, ' ', ''), '-', '') = 'MAS1'
             AND UPPER(LTRIM(RTRIM(pais))) = 'NICARAGUA'
@@ -90,11 +99,12 @@ try {
         $stmtMas1->execute();
         $rowMas1 = $stmtMas1->fetch(PDO::FETCH_ASSOC);
         if ($rowMas1) {
-            $mas1 = $rowMas1["par1"] ?? $rowMas1["par2"] ?? null;
+            $mas1 = $rowMas1["par2"] ?? valorResultRaw($rowMas1, 1, $rowMas1["par1"] ?? null);
         }
     }
 
-    $numero = str_pad($row["par1"], 2, "0", STR_PAD_LEFT);
+    $numeroBase = $row["par1"] ?? valorResultRaw($row, 0, "0");
+    $numero = str_pad((string) $numeroBase, 2, "0", STR_PAD_LEFT);
     // Formatea el valor de par1 con ceros a la izquierda hasta tener 2 dígitos y lo asigna a $numero
     echo json_encode([
         // Codifica y envía un array JSON con los detalles del resultado

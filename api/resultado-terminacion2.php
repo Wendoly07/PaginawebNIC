@@ -10,8 +10,8 @@ try {
                           FROM numeros_ganadores_sorteos_prod
                           WHERE UPPER(LTRIM(RTRIM(game_name))) IN ('5', 'TERMINACION 2')
                           AND UPPER(LTRIM(RTRIM(pais))) = 'NICARAGUA'
-                          AND DATEPART(HOUR, draw_time) = 18
-                          ORDER BY draw_date DESC, draw_time DESC");
+                          AND DATEPART(HOUR, draw_time) IN (17, 18)
+                          ORDER BY draw_date DESC, draw_time DESC, draw_number DESC");
     $stmt->execute();
 
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -21,8 +21,10 @@ try {
         exit;
     }
 
+    $numero = $row["par1"] ?? $row["result_raw"] ?? null;
+
     echo json_encode([
-        "numero" => isset($row["par1"]) ? (string) $row["par1"] : null,
+        "numero" => isset($numero) ? (string) $numero : null,
         "draw_number" => $row["draw_number"],
         "draw_time" => $row["draw_time"],
         "draw_date" => $row["draw_date"]

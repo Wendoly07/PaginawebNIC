@@ -69,14 +69,14 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         isset($row['par4']) ? (string) $row['par4'] : null
     ];
 
-    $hora = $row['hora_sorteo'];
-    if ($hora == 12) {
+    $hora = (int) $row['hora_sorteo'];
+    if ($hora == 11 || $hora == 12) {
         $resultados['12:00'] = $numero;
-    } elseif ($hora == 15) {
+    } elseif ($hora == 14 || $hora == 15) {
         $resultados['15:00'] = $numero;
-    } elseif ($hora == 18) {
+    } elseif ($hora == 17 || $hora == 18) {
         $resultados['18:00'] = $numero;
-    } elseif ($hora == 21) {
+    } elseif ($hora == 20 || $hora == 21) {
         $resultados['21:00'] = $numero;
     }
 }
