@@ -41,6 +41,7 @@ try {
     error_log(__FILE__ . ': ' . $e->getMessage());
 echo json_encode([
         'error' => 'Error interno',
+        '11:00' => null,
         '12:00' => null,
         '15:00' => null,
         '18:00' => null,
@@ -50,6 +51,7 @@ echo json_encode([
 }
 
 $resultados = [
+    '11:00' => null,
     '12:00' => null,
     '15:00' => null,
     '18:00' => null,
@@ -66,13 +68,15 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     ];
 
     $hora = (int) $row['hora_sorteo'];
-    if ($hora == 11 || $hora == 12) {
+    if ($hora == 10) {
+        $resultados['11:00'] = $resultado;
+    } elseif ($hora == 11) {
         $resultados['12:00'] = $resultado;
-    } elseif ($hora == 14 || $hora == 15) {
+    } elseif ($hora == 14) {
         $resultados['15:00'] = $resultado;
-    } elseif ($hora == 17 || $hora == 18) {
+    } elseif ($hora == 17) {
         $resultados['18:00'] = $resultado;
-    } elseif ($hora == 20 || $hora == 21) {
+    } elseif ($hora == 20) {
         $resultados['21:00'] = $resultado;
     }
 }

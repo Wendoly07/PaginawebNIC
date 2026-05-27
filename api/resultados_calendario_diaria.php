@@ -78,6 +78,7 @@ try {
     error_log(__FILE__ . ': ' . $e->getMessage());
 echo json_encode([
         'error' => 'Error interno',
+        '11:00' => null,
         '12:00' => null,
         '15:00' => null,
         '18:00' => null,
@@ -87,6 +88,7 @@ echo json_encode([
 }
 
 $resultados = [
+    '11:00' => null,
     '12:00' => null,
     '15:00' => null,
     '18:00' => null,
@@ -114,13 +116,15 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $filas++;
 
     $clave = null;
-    if ($hora == 11 || $hora == 12) {
+    if ($hora == 10) {
+        $clave = '11:00';
+    } elseif ($hora == 11) {
         $clave = '12:00';
-    } elseif ($hora == 14 || $hora == 15) {
+    } elseif ($hora == 14) {
         $clave = '15:00';
-    } elseif ($hora == 17 || $hora == 18) {
+    } elseif ($hora == 17) {
         $clave = '18:00';
-    } elseif ($hora == 20 || $hora == 21) {
+    } elseif ($hora == 20) {
         $clave = '21:00';
     }
 

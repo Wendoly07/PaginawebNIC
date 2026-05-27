@@ -330,7 +330,13 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/logo terminaci
       text-align: center;
       box-shadow: 0 3px 8px rgba(0,0,0,0.2);
     }
-   
+
+    .sin-resultados {
+      color: #aaa;
+      font-size: 14px;
+      margin-top: 20px;
+      text-align: center;
+    }
 
     /* ================= ACCORDION ================= */
     .accordion {
@@ -686,11 +692,8 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/logo terminaci
 
     </div>
 
-    <div class="col derecha">
-      <div class="sorteo">
-        <h3>SORTEO 6:00 P.M.</h3>
-        <span class="num-numero" id="num18_num">--</span>
-      </div>
+    <!-- COLUMNA DERECHA: sorteo dinámico, se renderiza desde JS -->
+    <div class="col derecha" id="contenedor-sorteos">
     </div>
 
   </div>
@@ -779,10 +782,10 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/logo terminaci
   </script>
 
   <script>
-    function pintarTerminacion2(id, resultado) {
-      const elem = document.getElementById(id);
-      if (elem) elem.innerText = resultado ?? '--';
-    }
+    // Este juego solo tiene sorteo a las 6:00 P.M. (registrado en BD a las 17:58)
+    const ETIQUETAS_TERMINACION2 = {
+      '18:00': 'SORTEO 6:00 P.M.'
+    };
 
     function actualizarResultadosTerminacion2(fecha) {
       fetch(`/api/resultados_calendario_terminacion2.php?fecha=${fecha}`)
@@ -792,7 +795,33 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/logo terminaci
         })
         .then(data => {
           if (data.error) throw new Error(data.error);
-          pintarTerminacion2('num18_num', data['18:00']);
+
+          const contenedor = document.getElementById('contenedor-sorteos');
+          contenedor.innerHTML = '';
+
+          let hayResultados = false;
+
+          for (const [clave, etiqueta] of Object.entries(ETIQUETAS_TERMINACION2)) {
+            const resultado = data[clave];
+            if (!resultado) continue; // si no hay datos para este horario, no renderiza
+
+            hayResultados = true;
+
+            const div = document.createElement('div');
+            div.className = 'sorteo';
+            div.innerHTML = `
+              <h3>${etiqueta}</h3>
+              <span class="num-numero">${resultado ?? '--'}</span>
+            `;
+            contenedor.appendChild(div);
+          }
+
+          if (!hayResultados) {
+            const p = document.createElement('p');
+            p.className = 'sin-resultados';
+            p.textContent = 'Sin resultados para esta fecha';
+            contenedor.appendChild(p);
+          }
         })
         .catch(err => console.error('Error al obtener resultados Terminacion 2:', err));
     }
@@ -921,4 +950,3 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/logo terminaci
 
 </body>
 </html>
-

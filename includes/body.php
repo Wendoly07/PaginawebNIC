@@ -1974,12 +1974,33 @@ $banners = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
   <?php
-$CHANNEL_ID = "UCwnJv1k2PKCpJeJWrtSaQPg";
-$rss_url = "https://www.youtube.com/feeds/videos.xml?channel_id=$CHANNEL_ID";
+$mesesFecha = [
+    1 => 'Enero',
+    2 => 'Febrero',
+    3 => 'Marzo',
+    4 => 'Abril',
+    5 => 'Mayo',
+    6 => 'Junio',
+    7 => 'Julio',
+    8 => 'Agosto',
+    9 => 'Septiembre',
+    10 => 'Octubre',
+    11 => 'Noviembre',
+    12 => 'Diciembre',
+];
 
-$videoDate = "Cargando...";
+$formatearFechaVideo = function ($fecha) use ($mesesFecha) {
+    $timestamp = strtotime((string) $fecha);
+    if (!$timestamp) {
+        return '';
+    }
 
-$rss = simplexml_load_file($rss_url);
+    return date('j', $timestamp) . ' de ' . $mesesFecha[(int) date('n', $timestamp)] . ' ' . date('Y', $timestamp);
+};
+
+$videoDate = $formatearFechaVideo('now');
+
+$rss = false;
 
 if ($rss && isset($rss->entry[0])) {
     $videoTitle = (string)$rss->entry[0]->title;
@@ -1988,7 +2009,7 @@ if ($rss && isset($rss->entry[0])) {
     if (preg_match('/\d{1,2}\s*de\s*\w+\s*\d{4},?\s*\d{1,2}:\d{2}\s*(?:A\.M\.|P\.M\.|AM|PM)/i', $videoTitle, $matches)) {
         $videoDate = $matches[0]; // Extrae solo: 29 de Diciembre 2025, 11:00 A.M.
     } else {
-        $videoDate = "Fecha no disponible";
+        $videoDate = $formatearFechaVideo($rss->entry[0]->published) ?: $videoDate;
     }
 }
 ?>

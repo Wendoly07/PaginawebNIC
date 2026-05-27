@@ -99,22 +99,21 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGOJUGATRES.p
       text-align: center;
     }
 
-.derecha .num-numero {
-    width: 48px;
-    height: 48px;
-    line-height: 48px;
-    display: inline-block;
-    background: #fff;
-    border-radius: 50%;
-    font-weight: 900;
-    font-size: 18px;
-    color: #333;
-    margin: 0 4px;
-    border: 2px solid #ddd;
-    text-align: center;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-}
-
+    .derecha .num-numero {
+      width: 48px;
+      height: 48px;
+      line-height: 48px;
+      display: inline-block;
+      background: #fff;
+      border-radius: 50%;
+      font-weight: 900;
+      font-size: 18px;
+      color: #333;
+      margin: 0 4px;
+      border: 2px solid #ddd;
+      text-align: center;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    }
 
     .etiqueta-hola {
       background: #ffcb00;
@@ -135,7 +134,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGOJUGATRES.p
       flex-wrap: wrap;
     }
 
-    .menu a { /* juega aquí y conocé más botones */
+    .menu a {
       background: linear-gradient(135deg, #ffffff, #c5eefe);
       color: #0075bf;
       text-decoration: none;
@@ -222,15 +221,15 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGOJUGATRES.p
       box-shadow: 0 8px 18px rgba(0,0,0,0.15);
       border: 1px solid #e5e5e5;
       width: min(100%, 300px);
-  max-width: 300px;
+      max-width: 300px;
       margin: auto;
     }
 
     .calendario-real table {
       width: 100%;
       table-layout: fixed;
-  border-collapse: separate;
-  border-spacing: 0 4px;
+      border-collapse: separate;
+      border-spacing: 0 4px;
       text-align: center;
     }
 
@@ -330,7 +329,13 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGOJUGATRES.p
       text-align: center;
       box-shadow: 0 3px 8px rgba(0,0,0,0.2);
     }
-   
+
+    .sin-resultados {
+      color: #aaa;
+      font-size: 14px;
+      margin-top: 20px;
+      text-align: center;
+    }
 
     /* ================= ACCORDION ================= */
     .accordion {
@@ -385,7 +390,6 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGOJUGATRES.p
       line-height: 1.7;
       color: #333;
     }
-
 
     .contenido-visible {
       max-width: 1100px;
@@ -497,7 +501,32 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGOJUGATRES.p
       .label-fecha {
         margin-left: 0;
       }
+
+      .top {
+        min-height: 0 !important;
+        padding: 16px 10px !important;
+      }
+
+      .top-content {
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 12px !important;
+        margin-top: 0 !important;
+      }
+
+      .top img {
+        display: block !important;
+        width: min(210px, 78vw) !important;
+        max-width: 78vw !important;
+        margin: 0 auto 10px !important;
+      }
+
+      .ganador-box {
+        width: 100%;
+        margin: 0 auto !important;
+      }
     }
+
     @media (max-width: 480px) {
       .top {
         padding: 18px 10px;
@@ -544,7 +573,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGOJUGATRES.p
       .menu a {
         width: 100%;
         width: min(100%, 300px);
-  max-width: 300px;
+        max-width: 300px;
         text-align: center;
         margin-left: 0 !important;
         margin-right: 0 !important;
@@ -581,31 +610,6 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGOJUGATRES.p
         width: calc(100% - 20px);
         margin-left: auto;
         margin-right: auto;
-      }
-    }
-    @media (max-width: 768px) {
-      .top {
-        min-height: 0 !important;
-        padding: 16px 10px !important;
-      }
-
-      .top-content {
-        justify-content: center !important;
-        align-items: center !important;
-        gap: 12px !important;
-        margin-top: 0 !important;
-      }
-
-      .top img {
-        display: block !important;
-        width: min(210px, 78vw) !important;
-        max-width: 78vw !important;
-        margin: 0 auto 10px !important;
-      }
-
-      .ganador-box {
-        width: 100%;
-        margin: 0 auto !important;
       }
     }
   </style>
@@ -688,35 +692,8 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGOJUGATRES.p
 
     </div>
 
-    <div class="col derecha">
-      <div class="sorteo">
-        <h3>SORTEO 12:00 P.M.</h3>
-        <span class="num-numero" id="num12_1">--</span>
-        <span class="num-numero" id="num12_2">--</span>
-        <span class="num-numero" id="num12_3">--</span>
-
-      </div>
-
-      <div class="sorteo">
-        <h3>SORTEO 3:00 P.M.</h3>
-        <span class="num-numero" id="num15_1">--</span>
-        <span class="num-numero" id="num15_2">--</span>
-        <span class="num-numero" id="num15_3">--</span>
-      </div>
-
-      <div class="sorteo">
-        <h3>SORTEO 6:00 P.M.</h3>
-        <span class="num-numero" id="num18_1">--</span>
-        <span class="num-numero" id="num18_2">--</span>
-        <span class="num-numero" id="num18_3">--</span>
-      </div>
-
-      <div class="sorteo">
-        <h3>SORTEO 9:00 P.M.</h3>
-        <span class="num-numero" id="num21_1">--</span>
-        <span class="num-numero" id="num21_2">--</span>
-        <span class="num-numero" id="num21_3">--</span>
-      </div>
+    <!-- COLUMNA DERECHA: sorteos dinámicos, se renderizan desde JS -->
+    <div class="col derecha" id="contenedor-sorteos">
     </div>
 
   </div>
@@ -786,6 +763,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGOJUGATRES.p
       <?php endif; ?>
     </section>
   <?php endforeach; ?>
+
   <!-- BOTÓN REGLAMENTO -->
   <!--
   <div class="reglamento">
@@ -805,12 +783,15 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGOJUGATRES.p
   </script>
 
   <script>
-    function pintarJugaTres(prefix, resultado) {
-      for (let i = 1; i <= 3; i++) {
-        const elem = document.getElementById(`${prefix}_${i}`);
-        if (elem) elem.innerText = resultado?.[i - 1] ?? '--';
-      }
-    }
+    // Mapa de clave (que devuelve el PHP) → etiqueta visible
+    // El PHP ya normaliza las horas: 11 u 12 → '12:00', 14 o 15 → '15:00', etc.
+    const ETIQUETAS_SORTEO = {
+      '11:00': 'SORTEO 11:00 A.M.',
+      '12:00': 'SORTEO 12:00 P.M.',
+      '15:00': 'SORTEO 3:00 P.M.',
+      '18:00': 'SORTEO 6:00 P.M.',
+      '21:00': 'SORTEO 9:00 P.M.'
+    };
 
     function actualizarResultadosJugaTres(fecha) {
       fetch(`/api/resultados_calendario_juga_tres.php?fecha=${fecha}`)
@@ -820,14 +801,40 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGOJUGATRES.p
         })
         .then(data => {
           if (data.error) throw new Error(data.error);
-          pintarJugaTres('num12', data['12:00']);
-          pintarJugaTres('num15', data['15:00']);
-          pintarJugaTres('num18', data['18:00']);
-          pintarJugaTres('num21', data['21:00']);
+
+          const contenedor = document.getElementById('contenedor-sorteos');
+          contenedor.innerHTML = '';
+
+          let hayResultados = false;
+
+          for (const [clave, etiqueta] of Object.entries(ETIQUETAS_SORTEO)) {
+            const resultado = data[clave];
+            if (!resultado) continue; // si no hay datos para este horario, no renderiza
+
+            hayResultados = true;
+
+            const div = document.createElement('div');
+            div.className = 'sorteo';
+            div.innerHTML = `
+              <h3>${etiqueta}</h3>
+              <span class="num-numero">${resultado[0] ?? '--'}</span>
+              <span class="num-numero">${resultado[1] ?? '--'}</span>
+              <span class="num-numero">${resultado[2] ?? '--'}</span>
+            `;
+            contenedor.appendChild(div);
+          }
+
+          if (!hayResultados) {
+            const p = document.createElement('p');
+            p.className = 'sin-resultados';
+            p.textContent = 'Sin resultados para esta fecha';
+            contenedor.appendChild(p);
+          }
         })
         .catch(err => console.error('Error al obtener resultados Juga Tres:', err));
     }
 
+    // Último número ganador (header)
     fetch('/api/resultado-juga-tres.php')
       .then(res => res.json())
       .then(data => {
@@ -899,9 +906,9 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGOJUGATRES.p
       const calendario = document.querySelector('.calendario-real table tbody');
 
       function renderizarCalendario(mes, ano) {
-        const primerDia   = new Date(ano, mes - 1, 1);
-        const ultimoDia   = new Date(ano, mes, 0);
-        const diaInicio   = primerDia.getDay();
+        const primerDia    = new Date(ano, mes - 1, 1);
+        const ultimoDia    = new Date(ano, mes, 0);
+        const diaInicio    = primerDia.getDay();
         const cantidadDias = ultimoDia.getDate();
 
         calendario.innerHTML = '';
@@ -960,4 +967,3 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGOJUGATRES.p
 
 </body>
 </html>
-

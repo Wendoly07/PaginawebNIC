@@ -347,11 +347,11 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO DIARIA.sv
 }
 
 .derecha h3 {
-  font-size: 20px;        /* Más grande */
-  font-weight: 900;      /* ULTRA BOLD */
+  font-size: 20px;
+  font-weight: 900;
   color: #13a538;
   margin-bottom: 12px;
-  text-align: center;    /* Bien centrado */
+  text-align: center;
   letter-spacing: 0.5px;
 }
 
@@ -373,6 +373,13 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO DIARIA.sv
 
 .derecha .num-numero.naranja {
   background: #f59a55;
+}
+
+.sin-resultados {
+  color: #aaa;
+  font-size: 14px;
+  margin-top: 20px;
+  text-align: center;
 }
 
     /* ================= ACCORDION ================= */
@@ -1005,39 +1012,8 @@ body {
       </div>
     </div>
 
-    
-      <div class="col derecha">
-      <div class="sorteo">
-        <h3>SORTEO 12:00 P.M.</h3>
-<span class="diaria-bola-grupo sin-label"><span class="num-numero" id="num12_1">--</span></span>
-<span class="diaria-bola-grupo sin-label"><span class="num-numero" id="num12_2">--</span></span>
-<span class="diaria-bola-grupo"><span class="diaria-bola-label">MULTI-X</span><span class="num-numero naranja" id="num12_3">--</span></span>
-<span class="diaria-bola-grupo"><span class="diaria-bola-label">MAS 1</span><span class="num-numero naranja" id="num12_4">--</span></span>
-      </div>
-
-      <div class="sorteo">
-        <h3>SORTEO 3:00 P.M.</h3>
-<span class="diaria-bola-grupo sin-label"><span class="num-numero" id="num15_1">--</span></span>
-<span class="diaria-bola-grupo sin-label"><span class="num-numero" id="num15_2">--</span></span>
-<span class="diaria-bola-grupo"><span class="diaria-bola-label">MULTI-X</span><span class="num-numero naranja" id="num15_3">--</span></span>
-<span class="diaria-bola-grupo"><span class="diaria-bola-label">MAS 1</span><span class="num-numero naranja" id="num15_4">--</span></span>
-      </div>
-
-      <div class="sorteo">
-        <h3>SORTEO 6:00 P.M.</h3>
-<span class="diaria-bola-grupo sin-label"><span class="num-numero" id="num18_1">--</span></span>
-<span class="diaria-bola-grupo sin-label"><span class="num-numero" id="num18_2">--</span></span>
-<span class="diaria-bola-grupo"><span class="diaria-bola-label">MULTI-X</span><span class="num-numero naranja" id="num18_3">--</span></span>
-<span class="diaria-bola-grupo"><span class="diaria-bola-label">MAS 1</span><span class="num-numero naranja" id="num18_4">--</span></span>
-      </div>
-
-      <div class="sorteo">
-        <h3>SORTEO 9:00 P.M.</h3>
-<span class="diaria-bola-grupo sin-label"><span class="num-numero" id="num21_1">--</span></span>
-<span class="diaria-bola-grupo sin-label"><span class="num-numero" id="num21_2">--</span></span>
-<span class="diaria-bola-grupo"><span class="diaria-bola-label">MULTI-X</span><span class="num-numero naranja" id="num21_3">--</span></span>
-<span class="diaria-bola-grupo"><span class="diaria-bola-label">MAS 1</span><span class="num-numero naranja" id="num21_4">--</span></span>
-      </div>
+    <!-- COLUMNA DERECHA: sorteos dinámicos, se renderizan desde JS -->
+    <div class="col derecha" id="contenedor-sorteos">
     </div>
   </div>
 
@@ -1297,37 +1273,56 @@ let x = setInterval(function () {
     return num.toString().padStart(2, '0');
   }
 
-  // Función para obtener resultados desde la API remota según la fecha seleccionada
+  // Mapa de clave (que devuelve el PHP) → etiqueta visible
+  // El PHP normaliza: hora 11 → '12:00', hora 14 → '15:00', etc.
+  const ETIQUETAS_DIARIA = {
+    '11:00': 'SORTEO 11:00 A.M.',
+    '12:00': 'SORTEO 12:00 P.M.',
+    '15:00': 'SORTEO 3:00 P.M.',
+    '18:00': 'SORTEO 6:00 P.M.',
+    '21:00': 'SORTEO 9:00 P.M.'
+  };
+
   function actualizarResultados(fecha) {
     fetch(`/api/resultados_calendario_diaria.php?fecha=${fecha}`)
       .then(res => {
-        if (!res.ok) {
-          throw new Error(`Error HTTP ${res.status}`);
-        }
+        if (!res.ok) throw new Error(`Error HTTP ${res.status}`);
         return res.json();
       })
       .then(data => {
-        if (data.error) {
-          throw new Error(data.error);
-        }
-        pintarResultadoDiaria('num12', data['12:00']);
-        pintarResultadoDiaria('num15', data['15:00']);
-        pintarResultadoDiaria('num18', data['18:00']);
-        pintarResultadoDiaria('num21', data['21:00']);
-      })
-      .catch(err => {
-        console.error('Error al obtener resultados:', err);
-        ['num12', 'num15', 'num18', 'num21'].forEach(prefix => {
-          pintarResultadoDiaria(prefix, null);
-        });
-      });
-  }
+        if (data.error) throw new Error(data.error);
 
-  function pintarResultadoDiaria(prefix, resultado) {
-    for (let i = 1; i <= 4; i++) {
-      const elem = document.getElementById(`${prefix}_${i}`);
-      if (elem) elem.innerText = resultado?.[i - 1] ?? '0';
-    }
+        const contenedor = document.getElementById('contenedor-sorteos');
+        contenedor.innerHTML = '';
+
+        let hayResultados = false;
+
+        for (const [clave, etiqueta] of Object.entries(ETIQUETAS_DIARIA)) {
+          const resultado = data[clave];
+          if (!resultado) continue; // si no hay datos para este horario, no renderiza
+
+          hayResultados = true;
+
+          const div = document.createElement('div');
+          div.className = 'sorteo';
+          div.innerHTML = `
+            <h3>${etiqueta}</h3>
+            <span class="diaria-bola-grupo sin-label"><span class="num-numero">${resultado[0] ?? '0'}</span></span>
+            <span class="diaria-bola-grupo sin-label"><span class="num-numero">${resultado[1] ?? '0'}</span></span>
+            <span class="diaria-bola-grupo"><span class="diaria-bola-label">MULTI-X</span><span class="num-numero naranja">${resultado[2] ?? '0'}</span></span>
+            <span class="diaria-bola-grupo"><span class="diaria-bola-label">MAS 1</span><span class="num-numero naranja">${resultado[3] ?? '0'}</span></span>
+          `;
+          contenedor.appendChild(div);
+        }
+
+        if (!hayResultados) {
+          const p = document.createElement('p');
+          p.className = 'sin-resultados';
+          p.textContent = 'Sin resultados para esta fecha';
+          contenedor.appendChild(p);
+        }
+      })
+      .catch(err => console.error('Error al obtener resultados:', err));
   }
 
   document.addEventListener('DOMContentLoaded', function () {
@@ -1404,4 +1399,3 @@ let x = setInterval(function () {
 </script>
 </body>
 </html>
-

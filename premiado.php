@@ -116,7 +116,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Premiado2.png'
     .nums .bola-amarilla {
       align-items: center;
       display: inline-flex;
-      font-size: 20px;
+      font-size: 32px;
       justify-content: center;
       line-height: 1;
       overflow: hidden;
@@ -368,6 +368,13 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Premiado2.png'
       border: 2px solid #ddd;
       text-align: center;
       box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    }
+
+    .sin-resultados {
+      color: #aaa;
+      font-size: 14px;
+      margin-top: 20px;
+      text-align: center;
     }
 
     /* ================= ACCORDION ================= */
@@ -741,46 +748,8 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Premiado2.png'
 
     </div>
 
-    <div class="col derecha">
-      <div class="sorteo">
-        <h3>SORTEO 12:00 P.M.</h3>
-<div class="nums">
-  <span class="num-numero bola-blanca" id="num12_1">-</span>
-  <span class="num-numero bola-blanca" id="num12_2">-</span>
-  <span class="num-numero bola-amarilla" id="num12_3">-</span>
-  <span class="num-numero bola-amarilla" id="num12_4">-</span>
-</div>
-      </div>
-
-      <div class="sorteo">
-        <h3>SORTEO 3:00 P.M.</h3>
-<div class="nums">
-  <span class="num-numero bola-blanca" id="num15_1">-</span>
-  <span class="num-numero bola-blanca" id="num15_2">-</span>
-  <span class="num-numero bola-amarilla" id="num15_3">-</span>
-  <span class="num-numero bola-amarilla" id="num15_4">-</span>
-</div>
-      </div>
-
-      <div class="sorteo">
-        <h3>SORTEO 6:00 P.M.</h3>
-<div class="nums">
-  <span class="num-numero bola-blanca" id="num18_1">-</span>
-  <span class="num-numero bola-blanca" id="num18_2">-</span>
-  <span class="num-numero bola-amarilla" id="num18_3">-</span>
-  <span class="num-numero bola-amarilla" id="num18_4">-</span>
-</div>
-      </div>
-
-      <div class="sorteo">
-        <h3>SORTEO 9:00 P.M.</h3>
-<div class="nums">
-  <span class="num-numero bola-blanca" id="num21_1">-</span>
-  <span class="num-numero bola-blanca" id="num21_2">-</span>
-  <span class="num-numero bola-amarilla" id="num21_3">-</span>
-  <span class="num-numero bola-amarilla" id="num21_4">-</span>
-</div>
-      </div>
+    <!-- COLUMNA DERECHA: sorteos dinámicos, se renderizan desde JS -->
+    <div class="col derecha" id="contenedor-sorteos">
     </div>
 
   </div>
@@ -870,13 +839,15 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Premiado2.png'
 
   <!-- CONTADOR -->
   <script>
-    function pintarPremiado(prefix, valores) {
-      const nums = Array.isArray(valores) ? valores : ['-', '-', '-', '-'];
-      for (let i = 1; i <= 4; i++) {
-        const elem = document.getElementById(`${prefix}_${i}`);
-        if (elem) elem.innerText = nums[i - 1] || '-';
-      }
-    }
+    // Mapa de clave (que devuelve el PHP) → etiqueta visible
+    // El PHP normaliza: hora 10 → '11:00', hora 11 → '12:00', hora 14 → '15:00', etc.
+    const ETIQUETAS_PREMIADO = {
+      '11:00': 'SORTEO 11:00 A.M.',
+      '12:00': 'SORTEO 12:00 P.M.',
+      '15:00': 'SORTEO 3:00 P.M.',
+      '18:00': 'SORTEO 6:00 P.M.',
+      '21:00': 'SORTEO 9:00 P.M.'
+    };
 
     function actualizarResultadosPremiado(fecha) {
       fetch(`/api/resultados_calendario_premiado.php?fecha=${fecha}`)
@@ -886,10 +857,39 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Premiado2.png'
         })
         .then(data => {
           if (data.error) throw new Error(data.error);
-          pintarPremiado('num12', data['12:00']);
-          pintarPremiado('num15', data['15:00']);
-          pintarPremiado('num18', data['18:00']);
-          pintarPremiado('num21', data['21:00']);
+
+          const contenedor = document.getElementById('contenedor-sorteos');
+          contenedor.innerHTML = '';
+
+          let hayResultados = false;
+
+          for (const [clave, etiqueta] of Object.entries(ETIQUETAS_PREMIADO)) {
+            const resultado = data[clave];
+            if (!resultado) continue; // si no hay datos para este horario, no renderiza
+
+            hayResultados = true;
+
+            const div = document.createElement('div');
+            div.className = 'sorteo';
+            // Las 2 primeras esferas son bola-blanca, las 2 últimas bola-amarilla
+            div.innerHTML = `
+              <h3>${etiqueta}</h3>
+              <div class="nums">
+                <span class="num-numero bola-blanca">${resultado[0] ?? '-'}</span>
+                <span class="num-numero bola-blanca">${resultado[1] ?? '-'}</span>
+                <span class="num-numero bola-amarilla">${resultado[2] ?? '-'}</span>
+                <span class="num-numero bola-amarilla">${resultado[3] ?? '-'}</span>
+              </div>
+            `;
+            contenedor.appendChild(div);
+          }
+
+          if (!hayResultados) {
+            const p = document.createElement('p');
+            p.className = 'sin-resultados';
+            p.textContent = 'Sin resultados para esta fecha';
+            contenedor.appendChild(p);
+          }
         })
         .catch(err => console.error('Error al obtener resultados Premia2:', err));
     }
@@ -1027,4 +1027,3 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/Premiado2.png'
 
 </body>
 </html>
-

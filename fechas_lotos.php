@@ -345,6 +345,13 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO FECHAS LO
       box-shadow: 0 3px 8px rgba(0,0,0,0.2);
     }
 
+    .sin-resultados {
+      color: #aaa;
+      font-size: 14px;
+      margin-top: 20px;
+      text-align: center;
+    }
+
     /* ================= ACCORDION ================= */
     .accordion {
       max-width: 1100px;
@@ -700,30 +707,8 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO FECHAS LO
 
     </div>
 
-    <div class="col derecha">
-      <div class="sorteo">
-        <h3>SORTEO 12:00 P.M.</h3>
-        <span class="num-numero" id="num12_num">--</span>
-        <span class="num-mes" id="num12_mes">---</span>
-      </div>
-
-      <div class="sorteo">
-        <h3>SORTEO 3:00 P.M.</h3>
-        <span class="num-numero" id="num15_num">--</span>
-        <span class="num-mes" id="num15_mes">---</span>
-      </div>
-
-      <div class="sorteo">
-        <h3>SORTEO 6:00 P.M.</h3>
-        <span class="num-numero" id="num18_num">--</span>
-        <span class="num-mes" id="num18_mes">---</span>
-      </div>
-
-      <div class="sorteo">
-        <h3>SORTEO 9:00 P.M.</h3>
-        <span class="num-numero" id="num21_num">--</span>
-        <span class="num-mes" id="num21_mes">---</span>
-      </div>
+    <!-- COLUMNA DERECHA: sorteos dinámicos, se renderizan desde JS -->
+    <div class="col derecha" id="contenedor-sorteos">
     </div>
 
   </div>
@@ -812,13 +797,15 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO FECHAS LO
   </script>
 
   <script>
-    function pintarFechasLotos(prefix, resultado) {
-      const numeroElem = document.getElementById(`${prefix}_num`);
-      const mesElem = document.getElementById(`${prefix}_mes`);
-
-      if (numeroElem) numeroElem.innerText = resultado?.numero || '--';
-      if (mesElem) mesElem.innerText = resultado?.mes || '---';
-    }
+    // Mapa de clave (que devuelve el PHP) → etiqueta visible
+    // El PHP normaliza: hora 10 → '11:00', hora 11 → '12:00', hora 14 → '15:00', etc.
+    const ETIQUETAS_FECHAS = {
+      '11:00': 'SORTEO 11:00 A.M.',
+      '12:00': 'SORTEO 12:00 P.M.',
+      '15:00': 'SORTEO 3:00 P.M.',
+      '18:00': 'SORTEO 6:00 P.M.',
+      '21:00': 'SORTEO 9:00 P.M.'
+    };
 
     function actualizarResultadosFechasLotos(fecha) {
       fetch(`/api/resultados_calendario_fechas_lotos.php?fecha=${fecha}`)
@@ -828,10 +815,34 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO FECHAS LO
         })
         .then(data => {
           if (data.error) throw new Error(data.error);
-          pintarFechasLotos('num12', data['12:00']);
-          pintarFechasLotos('num15', data['15:00']);
-          pintarFechasLotos('num18', data['18:00']);
-          pintarFechasLotos('num21', data['21:00']);
+
+          const contenedor = document.getElementById('contenedor-sorteos');
+          contenedor.innerHTML = '';
+
+          let hayResultados = false;
+
+          for (const [clave, etiqueta] of Object.entries(ETIQUETAS_FECHAS)) {
+            const resultado = data[clave];
+            if (!resultado) continue; // si no hay datos para este horario, no renderiza
+
+            hayResultados = true;
+
+            const div = document.createElement('div');
+            div.className = 'sorteo';
+            div.innerHTML = `
+              <h3>${etiqueta}</h3>
+              <span class="num-numero">${resultado.numero ?? '--'}</span>
+              <span class="num-mes">${resultado.mes ?? '---'}</span>
+            `;
+            contenedor.appendChild(div);
+          }
+
+          if (!hayResultados) {
+            const p = document.createElement('p');
+            p.className = 'sin-resultados';
+            p.textContent = 'Sin resultados para esta fecha';
+            contenedor.appendChild(p);
+          }
         })
         .catch(err => console.error('Error al obtener resultados Fechas Lotos:', err));
     }
@@ -967,4 +978,3 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO FECHAS LO
 
 </body>
 </html>
-
