@@ -337,7 +337,7 @@ $logoUrl = !empty($config['logo']) ? $config['logo'] : '/ImagesSV/LOGO FECHAS LO
       background: #f5e200;
       border-radius: 50%;
       font-weight: 900;
-      font-size: 13px;
+      font-size: 16px;
       color: #333;
       margin: 0 4px;
       border: 2px solid #ddd;

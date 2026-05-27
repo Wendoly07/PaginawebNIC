@@ -1920,6 +1920,25 @@ document.addEventListener("DOMContentLoaded", function() {
     inset 3px 3px 6px rgba(255,255,255,0.45),
     2px 3px 6px rgba(0,0,0,0.22) !important;
 }
+
+.banner-antes-youtube {
+  width: min(100%, 1180px);
+  margin: -82px auto 48px;
+  padding: 0 18px;
+  position: relative;
+  z-index: 2;
+}
+
+.banner-antes-youtube a,
+.banner-antes-youtube img {
+  display: block;
+}
+
+.banner-antes-youtube img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
   </style>
 
   <div style="display:none;"></div>
@@ -2379,6 +2398,29 @@ cargarJackpot();
 <br>
 
 <!-- SECCIÓN YOUTUBE -->
+<?php
+$stmt = $conn->prepare("
+    SELECT TOP 1 *
+    FROM paginaweb_nic_sobre_inicio
+    WHERE seccion='banner_antes_youtube'
+    ORDER BY id ASC
+");
+$stmt->execute();
+$bannerAntesYoutube = $stmt->fetch(PDO::FETCH_ASSOC);
+?>
+
+<?php if (!empty($bannerAntesYoutube['imagen_url'])): ?>
+  <div class="banner-antes-youtube">
+    <?php if (!empty($bannerAntesYoutube['link_url'])): ?>
+      <a href="<?= htmlspecialchars($bannerAntesYoutube['link_url'], ENT_QUOTES, 'UTF-8') ?>" target="_blank" rel="noopener">
+        <img src="<?= htmlspecialchars($bannerAntesYoutube['imagen_url'], ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($bannerAntesYoutube['titulo'] ?? 'Banner', ENT_QUOTES, 'UTF-8') ?>">
+      </a>
+    <?php else: ?>
+      <img src="<?= htmlspecialchars($bannerAntesYoutube['imagen_url'], ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($bannerAntesYoutube['titulo'] ?? 'Banner', ENT_QUOTES, 'UTF-8') ?>">
+    <?php endif; ?>
+  </div>
+<?php endif; ?>
+
 <?php
 $CHANNEL_ID = "UCwnJv1k2PKCpJeJWrtSaQPg"; // Canal de LOTO Nicaragua
 $youtubeStreamsUrl = "https://www.youtube.com/@LotoNicaragua/streams";
