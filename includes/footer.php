@@ -206,11 +206,6 @@
           </a>
         </p>
         <p>
-          <a href="index.php?pag=juga_cuatro" style="color: inherit; text-decoration: none;">
-            Jug&aacute;4
-          </a>
-        </p>
-        <p>
           <a href="index.php?pag=terminacion2" style="color: inherit; text-decoration: none;">
             Terminaci&oacute;n2
           </a>

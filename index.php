@@ -80,8 +80,8 @@ switch ($pag) {
         include 'juga_tres.php';
         break;
     case 'juga_cuatro':
-        // Pagina de Juga Cuatro
-        include 'juga_cuatro.php';
+        // Juga Cuatro desactivado temporalmente
+        include 'includes/body.php';
         break;
     case 'premiado':
         // Página de Premiado

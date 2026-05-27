@@ -2170,26 +2170,7 @@ try {
       }
       cargarResultadoJugaTresCard();
       </script>
-  <!-- JUGA CUATRO -->
-    <div class="res-card magenta-jugacuatro">
-      <img src="<?= htmlspecialchars($logoJugaCuatro) ?>"
-           alt="Juga Cuatro"
-           style="width:205px; height:auto; position:relative; top:12px;">
-      <div class="numeros" style="position:relative; top:12px;">
-        <span class="bola-blanca">-</span>
-        <span class="bola-blanca">-</span>
-        <span class="bola-blanca">-</span>
-        <span class="bola-blanca">-</span>
-      </div>
-      <div class="btn-container">
-        <button class="btn-jugar" onclick="window.open('https://juega.loto.com.ni/websales/', '_blank')">
-          Jug&aacute; aqu&iacute;
-        </button>
-        <a href="index.php?pag=juga_cuatro">
-          <button class="btn-info">Conoc&eacute; m&aacute;s</button>
-        </a>
-      </div>
-    </div>
+  <!-- JUGA CUATRO DESACTIVADO TEMPORALMENTE -->
        <!-- Premiados 2 -->
     <div class="res-card morado-premiado">
       <img src="<?= htmlspecialchars($logoPremiado) ?>"

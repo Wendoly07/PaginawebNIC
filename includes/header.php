@@ -271,7 +271,6 @@
             <a href="index.php?pag=fechas_lotos">Fechas</a>
             <a href="index.php?pag=premiado">Premia2</a>
             <a href="index.php?pag=juga_tres">Jugá Tres</a>
-            <a href="index.php?pag=juga_cuatro">Jugá4</a>
             <a href="index.php?pag=terminacion2">Terminación2</a>
           </div>
         </div>
